@@ -17,7 +17,7 @@ echo "📋 Display name: $SERVICE_DISPLAY_NAME"
 
 # 2. Add template remote and pull
 echo "📥 Pulling from template..."
-git remote add template https://github.com/the-cyber-boardroom/MGraph-AI__Service__Base.git || true
+git remote add template https://github.com/the-cyber-boardroom/MGraph-AI__Service__LLMs.git || true
 git fetch template
 git merge template/main --allow-unrelated-histories -m "Initial template import" || {
     echo "⚠️  Merge conflict detected. This is normal for the first setup."
@@ -28,9 +28,9 @@ git merge template/main --allow-unrelated-histories -m "Initial template import"
 echo "🔄 Renaming service..."
 
 # Rename directories
-find . -type d -name "*mgraph_ai_service_base*" | while read dir; do
+find . -type d -name "*mgraph_ai_service_llms*" | while read dir; do
     if [[ "$dir" != *".git"* ]]; then
-        newdir=$(echo "$dir" | sed "s/mgraph_ai_service_base/$SERVICE_NAME/g")
+        newdir=$(echo "$dir" | sed "s/mgraph_ai_service_llms/$SERVICE_NAME/g")
         if [ "$dir" != "$newdir" ]; then
             mv "$dir" "$newdir"
             echo "  Renamed: $dir -> $newdir"
@@ -49,9 +49,9 @@ find . -type f \( -name "*.py" -o -name "*.md" -o -name "*.yml" -o -name "*.yaml
     cp "$file" "$file.bak"
 
     # Replace service names
-    sed -i.tmp "s/mgraph_ai_service_base/$SERVICE_NAME/g" "$file"
-    sed -i.tmp "s/MGraph-AI__Service__Base/$REPO_NAME/g" "$file"
-    sed -i.tmp "s/MGraph-AI Service Base/$SERVICE_DISPLAY_NAME/g" "$file"
+    sed -i.tmp "s/mgraph_ai_service_llms/$SERVICE_NAME/g" "$file"
+    sed -i.tmp "s/MGraph-AI__Service__LLMs/$REPO_NAME/g" "$file"
+    sed -i.tmp "s/MGraph-AI Service LLMs/$SERVICE_DISPLAY_NAME/g" "$file"
 
     # Clean up temp files
     rm -f "$file.tmp"
@@ -95,7 +95,7 @@ else
     echo "💾 Committing changes..."
     git commit -m "Initialize $SERVICE_DISPLAY_NAME from template
 
-- Based on MGraph-AI__Service__Base v1.0.0
+- Based on MGraph-AI__Service__LLMs v1.0.0
 - Service name: $SERVICE_NAME
 - Repository: $REPO_NAME" || echo "No changes to commit"
 

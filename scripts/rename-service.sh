@@ -8,7 +8,7 @@ if [ -z "$1" ]; then
     exit 1
 fi
 
-OLD_NAME="mgraph_ai_service_base"
+OLD_NAME="mgraph_ai_service_llms"
 NEW_NAME="$1"
 NEW_NAME_HYPHEN=$(echo "$NEW_NAME" | tr '_' '-')
 

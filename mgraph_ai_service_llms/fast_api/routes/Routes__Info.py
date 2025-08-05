@@ -1,5 +1,5 @@
 from osbot_fast_api.api.Fast_API_Routes                import Fast_API_Routes
-from mgraph_ai_service_base.service.info.Service_Info  import Service_Info
+from mgraph_ai_service_llms.service.info.Service_Info  import Service_Info
 
 TAG__ROUTES_INFO                  = 'info'
 ROUTES_PATHS__INFO                = [ f'/{TAG__ROUTES_INFO}/health'  ,
