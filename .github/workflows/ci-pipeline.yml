@@ -32,7 +32,9 @@ on:
         required: false
 
 env:
-  PACKAGE_NAME: 'mgraph_ai_service_llms'
+  PACKAGE_NAME        : 'mgraph_ai_service_llms'
+  # temp adding this so that tests pass (this will not be needed once we have the cache in palce)
+  OPEN_ROUTER__API_KEY: ${{ secrets.OPEN_ROUTER__API_KEY           }}
 
 jobs:
   run-tests:

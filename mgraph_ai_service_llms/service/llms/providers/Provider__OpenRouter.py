@@ -10,7 +10,7 @@ ENV_NAME_OPEN_ROUTER__API_KEY = "OPEN_ROUTER__API_KEY"
 class Provider__OpenRouter(Type_Safe):
     api_url     : str = "https://openrouter.ai/api/v1/chat/completions"
     api_key_name: str = ENV_NAME_OPEN_ROUTER__API_KEY
-    http_referer: str = "the-cyber-boardroom/MGraph-AI__Service__LLMs"
+    http_referer: str = "https://github.com/the-cyber-boardroom/MGraph-AI__Service__LLMs"
 
     def api_key(self) -> str:
         return get_env(self.api_key_name)
