@@ -32,7 +32,9 @@ on:
         required: false
 
 env:
-  PACKAGE_NAME: 'mgraph_ai_service_llms'
+  PACKAGE_NAME        : 'mgraph_ai_service_llms'
+  # temp adding this so that tests pass (this will not be needed once we have the cache in palce)
+  OPEN_ROUTER__API_KEY: ${{ secrets.OPEN_ROUTER__API_KEY           }}
 
 jobs:
   run-tests:
@@ -104,11 +106,12 @@ jobs:
       - name: Deploy Service Lambda function
         uses: ./.github/actions/aws__deploy__lambda
         env:
-          AWS_SECRET_ACCESS_KEY         : ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_DEFAULT_REGION            : ${{ secrets.AWS_DEFAULT_REGION }}
-          AWS_ACCOUNT_ID                : ${{ secrets.AWS_ACCOUNT_ID }}
-          AWS_ACCESS_KEY_ID             : ${{ secrets.AWS_ACCESS_KEY_ID }}
-          FAST_API__AUTH__API_KEY__NAME : ${{ secrets.FAST_API__AUTH__API_KEY__NAME }}
+          AWS_SECRET_ACCESS_KEY         : ${{ secrets.AWS_SECRET_ACCESS_KEY          }}
+          AWS_DEFAULT_REGION            : ${{ secrets.AWS_DEFAULT_REGION             }}
+          AWS_ACCOUNT_ID                : ${{ secrets.AWS_ACCOUNT_ID                 }}
+          AWS_ACCESS_KEY_ID             : ${{ secrets.AWS_ACCESS_KEY_ID              }}
+          FAST_API__AUTH__API_KEY__NAME : ${{ secrets.FAST_API__AUTH__API_KEY__NAME  }}
           FAST_API__AUTH__API_KEY__VALUE: ${{ secrets.FAST_API__AUTH__API_KEY__VALUE }}
+          OPEN_ROUTER__API_KEY          : ${{ secrets.OPEN_ROUTER__API_KEY           }}
         with:
           target: ${{ inputs.target_deploy }}
