@@ -6,7 +6,7 @@ from osbot_utils.helpers.Random_Guid                            import Random_Gu
 from osbot_utils.type_safe.Type_Safe                            import Type_Safe
 from osbot_utils.utils.Env                                      import set_env
 from starlette.testclient                                       import TestClient
-from mgraph_ai_service_base.fast_api.Service__Fast_API          import Service__Fast_API
+from mgraph_ai_service_llms.fast_api.Service__Fast_API          import Service__Fast_API
 
 TEST_API_KEY__NAME = 'key-used-in-pytest'
 TEST_API_KEY__VALUE = Random_Guid()

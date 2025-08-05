@@ -1,8 +1,8 @@
-# MGraph-AI Service Base Documentation
+# MGraph-AI Service LLMs Documentation
 
 ## Overview
 
-MGraph-AI Service Base will be a production-ready FastAPI microservice that provides Large Language Model (BASE) capabilities through a secure, type-safe API. 
+MGraph-AI Service LLMs will be a production-ready FastAPI microservice that provides Large Language Model (BASE) capabilities through a secure, type-safe API. 
 
 ## Architecture
 
@@ -50,8 +50,8 @@ The service follows a clean architecture pattern with clear separation of concer
 ### Local Development
 ```bash
 # Clone the repository
-git clone https://github.com/the-cyber-boardroom/MGraph-AI__Service__Base.git
-cd MGraph-AI__Service__Base
+git clone https://github.com/the-cyber-boardroom/MGraph-AI__Service__LLMs.git
+cd MGraph-AI__Service__LLMs
 
 # Install dependencies
 pip install -r requirements-test.txt
@@ -71,7 +71,7 @@ export FAST_API__AUTH__API_KEY__VALUE="your-secret-key"
 pytest
 
 # Run with coverage
-pytest --cov=mgraph_ai_service_base
+pytest --cov=mgraph_ai_service_llms
 
 # Run specific test file
 pytest tests/unit/fast_api/test_Service__Fast_API__client.py
@@ -120,7 +120,7 @@ The service uses GitHub Actions for continuous deployment:
 ### AWS Lambda Configuration
 ```yaml
 Runtime: python3.12
-Handler: mgraph_ai_service_base.fast_api.lambda_handler.run
+Handler: mgraph_ai_service_llms.fast_api.lambda_handler.run
 MemorySize: 512
 Timeout: 30
 Environment:
@@ -153,8 +153,8 @@ Environment:
 
 ## Support
 
-- **Issues**: [GitHub Issues](https://github.com/the-cyber-boardroom/MGraph-AI__Service__Base/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/the-cyber-boardroom/MGraph-AI__Service__Base/discussions)
+- **Issues**: [GitHub Issues](https://github.com/the-cyber-boardroom/MGraph-AI__Service__LLMs/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/the-cyber-boardroom/MGraph-AI__Service__LLMs/discussions)
 - **Documentation**: This document and inline code documentation
 
 ---

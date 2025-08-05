@@ -3,9 +3,9 @@ from osbot_fast_api.api.Fast_API_Routes                                     impo
 from osbot_utils.type_safe.Type_Safe                                        import Type_Safe
 from osbot_utils.utils.Misc                                                 import list_set
 from osbot_utils.utils.Objects                                              import base_classes
-from mgraph_ai_service_base.fast_api.routes.Routes__Info                    import Routes__Info
-from mgraph_ai_service_base.service.info.schemas.Schema__Server__Versions   import Schema__Server__Versions
-from mgraph_ai_service_base.utils.Version                                   import version__mgraph_ai_service_base
+from mgraph_ai_service_llms.fast_api.routes.Routes__Info                    import Routes__Info
+from mgraph_ai_service_llms.service.info.schemas.Schema__Server__Versions   import Schema__Server__Versions
+from mgraph_ai_service_llms.utils.Version                                   import version__mgraph_ai_service_llms
 
 
 class test_Routes__Info(TestCase):
@@ -22,9 +22,9 @@ class test_Routes__Info(TestCase):
     def test_versions(self):
         with self.routes_info.versions() as _:
             assert type(_) is Schema__Server__Versions
-            assert list_set(_) == [ 'mgraph_ai_service_base'   ,
+            assert list_set(_) == [ 'mgraph_ai_service_llms'   ,
                                     'osbot_aws'                ,
                                     'osbot_fast_api'           ,
                                     'osbot_fast_api_serverless',
                                     'osbot_utils'              ]
-            assert _.mgraph_ai_service_base == version__mgraph_ai_service_base
+            assert _.mgraph_ai_service_llms == version__mgraph_ai_service_llms
