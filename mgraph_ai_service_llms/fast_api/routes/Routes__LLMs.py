@@ -15,23 +15,28 @@ class Routes__LLMs(Fast_API_Routes):
         super().__init__(**kwargs)
         self.llm_service = LLM__Service()
 
-    def models(self) -> Dict[str, Any]: # List available models"""
+    def models(self) -> Dict[str, Any]:                             # List available models
         return {
             "models": [
                 {
-                    "id"     : model.value,
-                    "name"   : model.name,
-                    "is_free": model.is_free,
+                    "id"      : model.value,
+                    "name"    : model.name,
+                    "is_free" : model.is_free,
                     "provider": model.provider
                 }
                 for model in Schema__LLM__Models
             ]
         }
 
-    def complete(self, prompt: str,
-                       model: Schema__LLM__Models = Schema__LLM__Models.MISTRAL_SMALL_FREE,
-                  ) -> Dict[str, Any]:              # Execute completion request
-        result = self.llm_service.execute_request(prompt=prompt, model=model.value)
+    def complete(self, prompt     : str,
+                       model      : Schema__LLM__Models = Schema__LLM__Models.MISTRAL_SMALL_FREE,
+                       temperature: float               = 0.7,
+                       max_tokens : int                 = 1000
+                  ) -> Dict[str, Any]:                               # Execute completion request
+        result = self.llm_service.execute_request(prompt      = prompt,
+                                                   model       = model.value,
+                                                   temperature = temperature,
+                                                   max_tokens  = max_tokens)
         return result
 
     def setup_routes(self):
