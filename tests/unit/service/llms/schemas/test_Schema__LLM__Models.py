@@ -13,11 +13,13 @@ class test_Schema__LLM__Models(TestCase):
         expected_names = [
             'MISTRAL_SMALL_FREE',
             'MOONSHOT_KIMI_FREE',
-            'QWEN_235B_FREE',
-            'DEEPSEEK_FREE',
-            'GEMINI_2_FLASH',
-            'GPT_4O_MINI',
-            'GPT_4_1_MINI'
+            'QWEN_235B_FREE'    ,
+            'DEEPSEEK_FREE'     ,
+            'GEMINI_2_FLASH'    ,
+            'GPT_4O_MINI'       ,
+            'GPT_4_1_MINI'      ,
+            'GPT_OSS_120B'      ,
+            'GPT_OSS_20B'       ,
         ]
         assert model_names == expected_names
 
@@ -71,12 +73,12 @@ class test_Schema__LLM__Models(TestCase):
 
     def test__all_models_count(self):
         all_models = list(Schema__LLM__Models)
-        assert len(all_models) == 7
+        assert len(all_models) == 9
 
         # Count free vs paid
         free_count = sum(1 for m in all_models if m.is_free)
         paid_count = sum(1 for m in all_models if not m.is_free)
 
         assert free_count == 4
-        assert paid_count == 3
+        assert paid_count == 5
         assert free_count + paid_count == len(all_models)

@@ -25,7 +25,7 @@ class test_Routes__LLMs__client(TestCase):
 
         # Verify we have all expected models
         assert len(models) == len(Schema__LLM__Models)
-        assert len(models) == 7
+        assert len(models) == 9
 
         # Check structure of first model
         first_model = models[0]

@@ -33,7 +33,7 @@ class test_Routes__LLMs(TestCase):
         assert type(result) is dict
         assert 'models'     in result
         models = result['models']
-        assert len(models) == 7  # We have 7 models defined
+        assert len(models) == 9
 
         # Check first model structure
         first_model = models[0]
