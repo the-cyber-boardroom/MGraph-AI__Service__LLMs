@@ -1,5 +1,5 @@
-from unittest                                                    import TestCase
-from enum                                                        import Enum
+from unittest                                                   import TestCase
+from enum                                                       import Enum
 from mgraph_ai_service_llms.service.schemas.Schema__LLM__Models import Schema__LLM__Models
 
 
