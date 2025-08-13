@@ -6,8 +6,7 @@ from osbot_utils.utils.Env                                                      
 from osbot_utils.utils.Misc import list_set
 
 from mgraph_ai_service_llms.service.llms.LLM__Execute_Request                       import LLM__Execute_Request
-from mgraph_ai_service_llms.service.llms.prompts.LLM__Prompt__Extract_Facts import LLM__Prompt__Extract_Facts, \
-    SYSTEM_PROMPT__EXTRACT_FACTS
+from mgraph_ai_service_llms.service.llms.prompts.LLM__Prompt__Extract_Facts         import LLM__Prompt__Extract_Facts, SYSTEM_PROMPT__EXTRACT_FACTS
 from mgraph_ai_service_llms.service.llms.prompts.schemas.Schema__Facts              import Schema__Facts
 from mgraph_ai_service_llms.service.llms.providers.open_router.Provider__OpenRouter import ENV_NAME_OPEN_ROUTER__API_KEY
 from tests.unit.Service__Fast_API__Test_Objs                                        import setup__service_fast_api_test_objs
