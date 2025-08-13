@@ -5,7 +5,7 @@ from osbot_utils.utils.Env                                            import get
 from starlette.testclient                                             import TestClient
 from osbot_fast_api_serverless.utils.testing.skip_tests               import skip__if_not__in_github_actions
 from mgraph_ai_service_llms.fast_api.Service__Fast_API                import Service__Fast_API
-from mgraph_ai_service_llms.fast_api.routes.Routes__Cache import ROUTES_PATHS__CACHE
+from mgraph_ai_service_llms.fast_api.routes.Routes__Cache             import ROUTES_PATHS__CACHE
 from mgraph_ai_service_llms.fast_api.routes.Routes__Info              import ROUTES_PATHS__INFO, ROUTES_INFO__HEALTH__RETURN_VALUE
 from mgraph_ai_service_llms.fast_api.routes.Routes__LLMs              import ROUTES_PATHS__LLMS
 from mgraph_ai_service_llms.utils.LocalStack__Setup                   import LocalStack__Setup

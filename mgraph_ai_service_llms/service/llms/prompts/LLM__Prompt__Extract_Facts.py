@@ -1,3 +1,4 @@
+from osbot_utils.helpers.llms.schemas.Safe_Str__LLM__Model_Name import Safe_Str__LLM__Model_Name
 from osbot_utils.helpers.safe_str.Safe_Str__Text                        import Safe_Str__Text
 from osbot_utils.helpers.llms.builders.LLM_Request__Builder__Open_AI    import LLM_Request__Builder__Open_AI
 from osbot_utils.helpers.llms.schemas.Schema__LLM_Request               import Schema__LLM_Request
@@ -47,7 +48,7 @@ Extract:
 class LLM__Prompt__Extract_Facts(Type_Safe):
     request_builder: LLM_Request__Builder__Open_AI
 
-    def llm_request(self, text_content: str, model_to_use: Safe_Str__Text = None) -> Schema__LLM_Request:
+    def llm_request(self, text_content: str, model_to_use: Safe_Str__LLM__Model_Name = None) -> Schema__LLM_Request:
         system_prompt = SYSTEM_PROMPT__EXTRACT_FACTS
         user_prompt   = USER_PROMPT__EXTRACT_FACTS.format(text_content=text_content)
 
