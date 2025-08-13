@@ -1,7 +1,5 @@
 from fastapi                                                    import FastAPI
-from osbot_aws.testing.Temp__Random__AWS_Credentials            import Temp_AWS_Credentials
 from osbot_fast_api.api.Fast_API                                import ENV_VAR__FAST_API__AUTH__API_KEY__NAME, ENV_VAR__FAST_API__AUTH__API_KEY__VALUE
-from osbot_local_stack.local_stack.Local_Stack                  import Local_Stack
 from osbot_utils.helpers.Random_Guid                            import Random_Guid
 from osbot_utils.type_safe.Type_Safe                            import Type_Safe
 from osbot_utils.utils.Env                                      import set_env

@@ -8,8 +8,9 @@ from mgraph_ai_service_llms.service.llms.providers.open_router.Schema__Open_Rout
 from mgraph_ai_service_llms.service.schemas.Schema__LLM__Models                                      import Schema__LLM__Models
 
 TAG__ROUTES_LLMS                  = 'llms'
-ROUTES_PATHS__LLMS                = [ f'/{TAG__ROUTES_LLMS}/models'  ,
-                                      f'/{TAG__ROUTES_LLMS}/complete']
+ROUTES_PATHS__LLMS                = [ f'/{TAG__ROUTES_LLMS}/models'       ,
+                                      f'/{TAG__ROUTES_LLMS}/complete'     ,
+                                      f'/{TAG__ROUTES_LLMS}/extract-facts']
 
 class Routes__LLMs(Fast_API_Routes):
     tag                     : str                    = TAG__ROUTES_LLMS
@@ -57,3 +58,4 @@ class Routes__LLMs(Fast_API_Routes):
     def setup_routes(self):
         self.add_route_get (self.models )
         self.add_route_post(self.complete)
+        self.add_route_post(self.extract_facts)
