@@ -60,7 +60,7 @@ class Routes__LLMs(Fast_API_Routes):
     def extract_facts_request_hash(self, text_content: str                                   = TEST_DATA__SIMPLE_TEXT,
                                          model       : Schema__Open_Router__Supported_Models = LLM__MODEL_TO_USE__DEFAULT
                                     ) -> dict:
-        result = self.llm_execute_request.extract_facts__request_hash(text_content=text_content, model_to_use=Safe_Str__LLM__Model_Name(model))
+        result = self.llm_execute_request.extract_facts__request_hash(text_content=text_content, model_to_use=Safe_Str__LLM__Model_Name(model.value))
         return { 'text_content' : text_content,
                  'model'        : model       ,
                  'result'       : result      }
