@@ -7,7 +7,7 @@ from osbot_utils.utils.Misc                                             import l
 from osbot_utils.utils.Objects                                          import base_classes
 from mgraph_ai_service_llms.fast_api.routes.Routes__LLMs                import Routes__LLMs, TAG__ROUTES_LLMS, ROUTES_PATHS__LLMS
 from mgraph_ai_service_llms.service.llms.LLM__Service                   import LLM__Service
-from mgraph_ai_service_llms.service.llms.providers.Provider__OpenRouter import ENV_NAME_OPEN_ROUTER__API_KEY
+from mgraph_ai_service_llms.service.llms.providers.open_router.Provider__OpenRouter import ENV_NAME_OPEN_ROUTER__API_KEY
 from mgraph_ai_service_llms.service.schemas.Schema__LLM__Models         import Schema__LLM__Models
 
 

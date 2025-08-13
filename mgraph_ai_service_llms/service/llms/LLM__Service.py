@@ -1,7 +1,8 @@
-from typing                                                             import Dict, Any, Optional
-from osbot_utils.type_safe.Type_Safe                                    import Type_Safe
-from osbot_utils.decorators.methods.cache_on_self                       import cache_on_self
-from mgraph_ai_service_llms.service.llms.providers.Provider__OpenRouter import Provider__OpenRouter
+from typing                                                                         import Dict, Any, Optional
+from osbot_utils.type_safe.Type_Safe                                                import Type_Safe
+from osbot_utils.decorators.methods.cache_on_self                                   import cache_on_self
+from mgraph_ai_service_llms.service.llms.providers.open_router.Provider__OpenRouter import Provider__OpenRouter
+
 
 class LLM__Service(Type_Safe):                                      # Main LLM service orchestrator
 
