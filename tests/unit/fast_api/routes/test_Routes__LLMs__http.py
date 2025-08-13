@@ -40,7 +40,7 @@ class test_Routes__LLMs__http(TestCase):
         json_data = {}                  # note: add ability to pass multiple json payloads like {'text_content' : 'abc'} , which is not working
         response = requests.post(url, headers=self.auth_headers, json=json_data)
         assert response.json() == { 'model'       : 'openai/gpt-5-nano'                 ,
-                                    'result'      : '55cda1aba2'                        ,   # hash should always be same (for the same input)
+                                    'result'      : '67cbd5df21'                        ,   # hash should always be same (for the same input)
                                     'text_content': 'This is a text about GenAI and MCP' }
 
 

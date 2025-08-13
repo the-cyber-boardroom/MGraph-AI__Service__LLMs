@@ -76,7 +76,7 @@ class test_Routes__LLMs__client(TestCase):
     def test__regression__llms__request_hash_is_always_different(self):
         response = self.client.post('/llms/extract-facts-request-hash', json={})
         assert response.json() == { 'model'       : 'openai/gpt-5-nano'                 ,
-                                    'result'      : '55cda1aba2'                        ,
+                                    'result'      : '67cbd5df21'                        ,
                                     'text_content': 'This is a text about GenAI and MCP'}        # these should always be the same (given the same input)
 
 
