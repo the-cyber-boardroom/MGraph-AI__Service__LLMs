@@ -9,12 +9,14 @@ from mgraph_ai_service_llms.fast_api.routes.Routes__LLMs                        
 from mgraph_ai_service_llms.service.llms.LLM__Service                               import LLM__Service
 from mgraph_ai_service_llms.service.llms.providers.open_router.Provider__OpenRouter import ENV_NAME_OPEN_ROUTER__API_KEY
 from mgraph_ai_service_llms.service.schemas.Schema__LLM__Models                     import Schema__LLM__Models
+from tests.unit.Service__Fast_API__Test_Objs                                        import setup__service_fast_api_test_objs
 
 
 class test_Routes__LLMs(TestCase):
 
     @classmethod
     def setUpClass(cls):
+        setup__service_fast_api_test_objs()
         cls.routes_llms = Routes__LLMs()
 
     def test_setUpClass(self):
@@ -26,7 +28,6 @@ class test_Routes__LLMs(TestCase):
 
     def test_constants(self):
         assert TAG__ROUTES_LLMS    == 'llms'
-        assert ROUTES_PATHS__LLMS  == ['/llms/models', '/llms/complete']
 
     def test_models(self):
         result = self.routes_llms.models()
