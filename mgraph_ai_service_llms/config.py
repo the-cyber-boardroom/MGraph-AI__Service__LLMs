@@ -5,8 +5,6 @@ from mgraph_ai_service_llms.service.llms.providers.open_router.Schema__Open_Rout
 SERVICE_NAME                             = package_name
 FAST_API__TITLE                          = "MGraph-AI LLM Service"
 FAST_API__DESCRIPTION                    = "Production-ready LLM service with multiple providers"
-LAMBDA_DEPENDENCIES__FAST_API_SERVERLESS = ['osbot-fast-api-serverless==v1.5.0',
-                                            'osbot-local-stack==0.5.0'         ]
 
 LOCALSTACK__ENDPOINT_URL                 = 'http://localhost:4566'
 LOCALSTACK__REGION_NAME                  = 'us-east-1'
