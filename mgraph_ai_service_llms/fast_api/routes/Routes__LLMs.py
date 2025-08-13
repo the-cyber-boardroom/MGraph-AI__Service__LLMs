@@ -5,6 +5,8 @@ from osbot_utils.utils.Env                                                      
 from mgraph_ai_service_llms.config                                                                   import LLM__MODEL_TO_USE__DEFAULT, TEST_DATA__SIMPLE_TEXT
 from mgraph_ai_service_llms.service.llms.LLM__Execute_Request                                        import LLM__Execute_Request
 from mgraph_ai_service_llms.service.llms.LLM__Service                                                import LLM__Service
+from mgraph_ai_service_llms.service.llms.providers.open_router.Schema__Open_Router__Providers import \
+    Schema__Open_Router__Providers
 from mgraph_ai_service_llms.service.llms.providers.open_router.Schema__Open_Router__Supported_Models import Schema__Open_Router__Supported_Models
 from mgraph_ai_service_llms.service.schemas.Schema__LLM__Models                                      import Schema__LLM__Models
 
@@ -39,22 +41,27 @@ class Routes__LLMs(Fast_API_Routes):
         }
 
     def complete(self, prompt     : str,
-                       model      : Schema__LLM__Models = Schema__LLM__Models.MISTRAL_SMALL_FREE,
-                       temperature: float               = 0.7,
-                       max_tokens : int                 = 1000
+                       model      : Schema__LLM__Models            = Schema__LLM__Models.MISTRAL_SMALL_FREE,
+                       temperature: float                          = 0.7,
+                       max_tokens : int                            = 1000,
+                       provider   : Schema__Open_Router__Providers = Schema__Open_Router__Providers.AUTO
                   ) -> Dict[str, Any]:                               # Execute completion request
-        result = self.llm_service.execute_request(prompt      = prompt,
+        result = self.llm_service.execute_request (prompt      = prompt     ,
                                                    model       = model.value,
                                                    temperature = temperature,
-                                                   max_tokens  = max_tokens)
+                                                   max_tokens  = max_tokens ,
+                                                   provider    = provider   )
         return result
 
-    def extract_facts(self, text_content: str                                   = TEST_DATA__SIMPLE_TEXT,
-                            model       : Schema__Open_Router__Supported_Models = LLM__MODEL_TO_USE__DEFAULT
+    def extract_facts(self, text_content: str                                   = TEST_DATA__SIMPLE_TEXT             ,
+                            model       : Schema__Open_Router__Supported_Models = LLM__MODEL_TO_USE__DEFAULT         ,
+                            provider    : Schema__Open_Router__Providers        = Schema__Open_Router__Providers.AUTO
                        ) -> Dict[str, Any]:                                 # Extract facts from text content"""
 
         # Execute fact extraction with caching
-        result = self.llm_execute_request.extract_facts(text_content=text_content, model_to_use=Safe_Str__LLM__Model_Name(model.value))
+        result = self.llm_execute_request.extract_facts(text_content  =text_content,
+                                                        model_to_use = Safe_Str__LLM__Model_Name(model.value),
+                                                        provider     = provider )
         return result
 
     def extract_facts_request_hash(self, text_content: str                                   = TEST_DATA__SIMPLE_TEXT,

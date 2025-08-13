@@ -7,6 +7,8 @@ from osbot_utils.utils.Env                                                      
 from mgraph_ai_service_llms.service.cache.LLM__Cache                                  import LLM__Cache
 from mgraph_ai_service_llms.service.llms.prompts.LLM__Prompt__Extract_Facts           import LLM__Prompt__Extract_Facts
 from mgraph_ai_service_llms.service.llms.providers.open_router.API__LLM__Open_Router  import API__LLM__Open_Router
+from mgraph_ai_service_llms.service.llms.providers.open_router.Schema__Open_Router__Providers import \
+    Schema__Open_Router__Providers
 
 
 class LLM__Execute_Request(Type_Safe):
@@ -26,7 +28,9 @@ class LLM__Execute_Request(Type_Safe):
                                                       request_builder = self.request_builder)
         return self
 
-    def extract_facts(self, text_content, model_to_use: Safe_Str__LLM__Model_Name):
+    def extract_facts(self, text_content,
+                            model_to_use: Safe_Str__LLM__Model_Name,
+                            provider    : Schema__Open_Router__Providers  = None):
         model_to_use          = Safe_Str__LLM__Model_Name(model_to_use)
         prompt_extract_facts =  LLM__Prompt__Extract_Facts()
         llm_request           = prompt_extract_facts.llm_request(text_content=text_content, model_to_use=model_to_use)
