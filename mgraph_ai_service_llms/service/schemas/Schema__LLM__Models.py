@@ -1,5 +1,6 @@
 from enum import Enum
 
+# refactor with Schema__Open_Router__Supported_Models
 
 class Schema__LLM__Models(Enum):
     """Supported LLM models with their identifiers and metadata"""

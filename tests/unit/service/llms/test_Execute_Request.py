@@ -1,10 +1,9 @@
 import pytest
 from unittest                                                                       import TestCase
 from osbot_utils.helpers.llms.schemas.Schema__LLM_Request__Message__Role            import Schema__LLM_Request__Message__Role
-from osbot_utils.utils.Dev import pprint
-from osbot_utils.utils.Env                                                          import get_env
-from osbot_utils.utils.Misc import list_set
-
+from osbot_utils.utils.Env import get_env, load_dotenv
+from osbot_utils.utils.Misc                                                         import list_set
+from mgraph_ai_service_llms.config                                                  import TEST_DATA__SIMPLE_TEXT
 from mgraph_ai_service_llms.service.llms.LLM__Execute_Request                       import LLM__Execute_Request
 from mgraph_ai_service_llms.service.llms.prompts.LLM__Prompt__Extract_Facts         import LLM__Prompt__Extract_Facts, SYSTEM_PROMPT__EXTRACT_FACTS
 from mgraph_ai_service_llms.service.llms.prompts.schemas.Schema__Facts              import Schema__Facts
@@ -21,7 +20,7 @@ class test_Execute_Request(TestCase):
         if get_env(ENV_NAME_OPEN_ROUTER__API_KEY) is None:
             pytest.skip('This test requires OpenAI API Key to run')
         cls.prompt_extract_facts  = LLM__Prompt__Extract_Facts()
-        cls.llm_execute_request   = LLM__Execute_Request()
+        cls.llm_execute_request   = LLM__Execute_Request().setup()
 
 
     def test_llm_request(self):
@@ -45,5 +44,3 @@ class test_Execute_Request(TestCase):
             #llm_request = self.prompt_extract_facts.llm_request(text_content=text_content, model_to_use='')
             result = _.extract_facts(text_content=text_content)
             assert list_set(result) == ['cache_id', 'data', 'model']
-
-TEST_DATA__SIMPLE_TEXT = "This is a text about GenAI and MCP"

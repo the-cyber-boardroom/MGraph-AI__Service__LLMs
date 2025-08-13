@@ -1,15 +1,13 @@
-from osbot_utils.helpers.llms.actions.LLM_Request__Execute              import LLM_Request__Execute
-from osbot_utils.helpers.llms.builders.LLM_Request__Builder__Open_AI    import LLM_Request__Builder__Open_AI
-from osbot_utils.helpers.llms.cache.LLM_Request__Cache__File_System     import LLM_Request__Cache__File_System
-from osbot_utils.type_safe.Type_Safe                                    import Type_Safe
-from osbot_utils.utils.Env                                              import load_dotenv
-
-from mgraph_ai_service_llms.config import LLM__MODEL_TO_USE__DEFAULT
-from mgraph_ai_service_llms.service.cache.LLM__Cache                    import LLM__Cache
-from mgraph_ai_service_llms.service.llms.prompts.LLM__Prompt__Extract_Facts import LLM__Prompt__Extract_Facts
-from mgraph_ai_service_llms.service.llms.providers.open_router.API__LLM__Open_Router import API__LLM__Open_Router
-from mgraph_ai_service_llms.service.llms.providers.open_router.Schema__Open_Router__Supported_Models import \
-    Schema__Open_Router__Supported_Models
+from osbot_utils.helpers.llms.actions.LLM_Request__Execute                                           import LLM_Request__Execute
+from osbot_utils.helpers.llms.builders.LLM_Request__Builder__Open_AI                                 import LLM_Request__Builder__Open_AI
+from osbot_utils.helpers.llms.cache.LLM_Request__Cache__File_System                                  import LLM_Request__Cache__File_System
+from osbot_utils.type_safe.Type_Safe                                                                 import Type_Safe
+from osbot_utils.utils.Env                                                                           import load_dotenv
+from mgraph_ai_service_llms.config                                                                   import LLM__MODEL_TO_USE__DEFAULT
+from mgraph_ai_service_llms.service.cache.LLM__Cache                                                 import LLM__Cache
+from mgraph_ai_service_llms.service.llms.prompts.LLM__Prompt__Extract_Facts                          import LLM__Prompt__Extract_Facts
+from mgraph_ai_service_llms.service.llms.providers.open_router.API__LLM__Open_Router                 import API__LLM__Open_Router
+from mgraph_ai_service_llms.service.llms.providers.open_router.Schema__Open_Router__Supported_Models import Schema__Open_Router__Supported_Models
 
 
 class LLM__Execute_Request(Type_Safe):
@@ -17,17 +15,18 @@ class LLM__Execute_Request(Type_Safe):
 
     def __init__(self):
         load_dotenv()
-        super().__init__()
+        super().__init__()      # refact all this into and .setup() method
 
+    def setup(self):
         self.virtual_storage   = LLM__Cache().setup()
         self.llm_cache         = LLM_Request__Cache__File_System(virtual_storage = self.virtual_storage  ).setup()
-        #self.llm_api           = API__LLM__Open_AI()
         self.llm_api           = API__LLM__Open_Router()
         self.request_builder   = LLM_Request__Builder__Open_AI()
         self.llm_execute       = LLM_Request__Execute(llm_cache       = self.llm_cache      ,
                                                       llm_api         = self.llm_api        ,
                                                       request_builder = self.request_builder)
         self.prompt_extract_facts = LLM__Prompt__Extract_Facts()
+        return self
 
     def extract_facts(self, text_content, model_to_use:Schema__Open_Router__Supported_Models = LLM__MODEL_TO_USE__DEFAULT):
         llm_request           = self.prompt_extract_facts.llm_request(text_content=text_content, model_to_use=model_to_use.value)

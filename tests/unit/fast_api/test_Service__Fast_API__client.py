@@ -8,6 +8,7 @@ from osbot_fast_api_serverless.utils.testing.skip_tests               import ski
 from mgraph_ai_service_llms.fast_api.Service__Fast_API                import Service__Fast_API
 from mgraph_ai_service_llms.fast_api.routes.Routes__Info              import ROUTES_PATHS__INFO, ROUTES_INFO__HEALTH__RETURN_VALUE
 from mgraph_ai_service_llms.fast_api.routes.Routes__LLMs              import ROUTES_PATHS__LLMS
+from mgraph_ai_service_llms.utils.LocalStack__Setup import LocalStack__Setup
 from tests.unit.Service__Fast_API__Test_Objs                          import setup__service_fast_api_test_objs, Service__Fast_API__Test_Objs, TEST_API_KEY__NAME
 
 
@@ -27,7 +28,7 @@ class test_Service__Fast_API__client(TestCase):
             assert type(_.fast_api        ) is Service__Fast_API
             assert type(_.fast_api__app   ) is FastAPI
             assert type(_.fast_api__client) is TestClient
-            assert type(_.local_stack     ) is Local_Stack
+            assert type(_.localstack_setup) is LocalStack__Setup
             assert self.fast_api            == _.fast_api
             assert self.client              == _.fast_api__client
 

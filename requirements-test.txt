@@ -1,5 +1,6 @@
 # for main app
 osbot-fast-api-serverless
+osbot_local_stack
 
 # for pytest
 pytest
@@ -10,4 +11,3 @@ httpx
 requests
 
 # for local-stack support
-osbot_local_stack
