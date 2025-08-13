@@ -1,7 +1,7 @@
 import pytest
 from unittest                                                                       import TestCase
 from osbot_utils.helpers.llms.schemas.Schema__LLM_Request__Message__Role            import Schema__LLM_Request__Message__Role
-from osbot_utils.utils.Env import get_env, load_dotenv
+from osbot_utils.utils.Env                                                          import get_env
 from osbot_utils.utils.Misc                                                         import list_set
 from mgraph_ai_service_llms.config                                                  import TEST_DATA__SIMPLE_TEXT
 from mgraph_ai_service_llms.service.llms.LLM__Execute_Request                       import LLM__Execute_Request
