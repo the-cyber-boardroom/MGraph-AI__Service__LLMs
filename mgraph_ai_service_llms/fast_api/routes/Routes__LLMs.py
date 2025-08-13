@@ -54,7 +54,7 @@ class Routes__LLMs(Fast_API_Routes):
                        ) -> Dict[str, Any]:                                 # Extract facts from text content"""
 
         # Execute fact extraction with caching
-        result = self.llm_execute_request.extract_facts(text_content=text_content, model_to_use=model)
+        result = self.llm_execute_request.extract_facts(text_content=text_content, model_to_use=Safe_Str__LLM__Model_Name(model.value))
         return result
 
     def extract_facts_request_hash(self, text_content: str                                   = TEST_DATA__SIMPLE_TEXT,
