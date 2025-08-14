@@ -101,7 +101,6 @@ Pattern: `{stage}.{service-name}.mgraph.ai`
 2. **Configure Behaviors**:
    - Path Pattern: Default (*)
    - Allowed HTTP Methods: GET, HEAD, OPTIONS, PUT, POST, PATCH, DELETE
-   - Cache Policy: Managed-CachingDisabled
    - Origin Request Policy: Managed-AllViewer
 
 3. **Note the CloudFront Domain Name** (e.g., `d1234567890.cloudfront.net`)

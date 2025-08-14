@@ -8,11 +8,11 @@
 [![License](https://img.shields.io/badge/license-Apache%202.0-green)](LICENSE)
 [![CI Pipeline - DEV](https://github.com/the-cyber-boardroom/MGraph-AI__Service__LLMs/actions/workflows/ci-pipeline__dev.yml/badge.svg)](https://github.com/the-cyber-boardroom/MGraph-AI__Service__LLMs/actions)
 
-A production-ready, Type-Safe LLM service that provides a unified interface to multiple LLM platforms, providers, and models. Built on the **Platform → Provider → Model** hierarchy with comprehensive caching, cost tracking, and enterprise-grade monitoring.
+A Type-Safe LLM service that provides a unified interface to multiple LLM platforms, providers, and models. Built on the **Platform → Provider → Model** hierarchy with comprehensive caching, cost tracking, and enterprise-grade monitoring.
 
 ## 🎯 Overview
 
-MGraph-AI__Service__LLMs consolidates access to multiple LLM providers through a single, consistent API. It implements an "Open Router" model where the same model can be accessed through multiple pathways (direct to provider, via platforms, or locally), with automatic fallback and cost optimization.
+MGraph-AI__Service__LLMs consolidates access to multiple LLM providers through a single, consistent API. It implements an "Open Router" model where the same model can be accessed through multiple pathways (direct to provider, via platforms, or locally), with automatic fallback.
 
 ### Key Features
 
@@ -21,7 +21,6 @@ MGraph-AI__Service__LLMs consolidates access to multiple LLM providers through a
 - **💾 Universal Caching**: All LLM requests cached with S3 backend and temporal organization
 - **📊 Dynamic Model Registry**: API-driven model management with cost tracking
 - **🔒 Type-Safe Throughout**: Using OSBot-Utils Type_Safe for runtime validation
-- **💰 Cost Optimization**: Automatic route selection based on pricing and availability
 - **🔄 Multiple I/O Patterns**: Text↔Schema transformations in all combinations
 - **🚀 Production Ready**: Built-in monitoring, error handling, and AWS Lambda support
 
@@ -102,7 +101,7 @@ response = requests.post(
     json={
         "prompt": "What is quantum computing?",
         "model_id": "gpt-5-nano",
-        "platform": "openrouter",  # Optional - uses best route if not specified
+        "platform": "openrouter",  
         "temperature": 0.7
     }
 )
@@ -211,12 +210,6 @@ PATCH /api/registry/models/gpt-5-nano/pricing
 
 ## 💾 Caching Strategy
 
-### Multi-Layer Cache System
-
-1. **Memory Cache**: ~100 most recent entries
-2. **Local File Cache**: ~1000 entries
-3. **S3 Cache**: Unlimited with temporal organization
-
 ### Cache Organization
 
 ```
@@ -228,12 +221,6 @@ s3://mgraph-ai-llm-cache/
 ├── cache-index/
 │   └── cache_index.json
 ```
-
-### Cache Performance
-
-- **Hit Rate**: Typically 30-40% in production
-- **Cost Savings**: $100-500/day depending on usage
-- **Latency**: <50ms for cache hits vs 500-2000ms for API calls
 
 ## 📊 Cost Management
 

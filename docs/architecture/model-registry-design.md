@@ -253,12 +253,6 @@ PATCH /api/registry/models/{model_id}/status
 - Search by context window
 - Find alternatives to deprecated models
 
-### Cost Optimization
-
-- Compare prices across platforms
-- Calculate request costs
-- Suggest cheaper alternatives
-- Track spending by model/platform
 
 ### Capability Matrix
 

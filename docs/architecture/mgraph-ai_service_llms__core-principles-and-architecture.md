@@ -2,7 +2,7 @@
 
 ## 🎯 Vision
 
-MGraph-AI__Service__LLMs is a production-ready, Type-Safe LLM service that provides a unified interface to multiple LLM platforms, providers, and models while maintaining strong typing, comprehensive caching, and enterprise-grade monitoring.
+MGraph-AI__Service__LLMs is a Type-Safe LLM service that provides a unified interface to multiple LLM platforms, providers, and models while maintaining strong typing, comprehensive caching, and enterprise-grade monitoring.
 
 ## 🏗️ Core Principles
 

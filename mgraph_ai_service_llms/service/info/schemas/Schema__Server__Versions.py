@@ -1,4 +1,4 @@
-from osbot_utils.helpers.safe_str.Safe_Str__Version import Safe_Str__Version
+from osbot_utils.type_safe.primitives.safe_str.git.Safe_Str__Version import Safe_Str__Version
 from osbot_utils.type_safe.Type_Safe                import Type_Safe
 from osbot_utils.utils.Version                      import Version as Version__OSBot_Utils
 from osbot_aws.utils.Version                        import Version as Version__OSBot_AWS

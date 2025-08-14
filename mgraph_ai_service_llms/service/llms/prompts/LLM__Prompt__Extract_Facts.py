@@ -1,10 +1,9 @@
-from osbot_utils.helpers.llms.schemas.Safe_Str__LLM__Model_Name import Safe_Str__LLM__Model_Name
-from osbot_utils.helpers.safe_str.Safe_Str__Text                        import Safe_Str__Text
+from osbot_utils.helpers.llms.schemas.Safe_Str__LLM__Model_Name         import Safe_Str__LLM__Model_Name
+from osbot_utils.type_safe.type_safe_core.decorators.type_safe          import type_safe
 from osbot_utils.helpers.llms.builders.LLM_Request__Builder__Open_AI    import LLM_Request__Builder__Open_AI
 from osbot_utils.helpers.llms.schemas.Schema__LLM_Request               import Schema__LLM_Request
 from osbot_utils.helpers.llms.schemas.Schema__LLM_Response              import Schema__LLM_Response
 from osbot_utils.type_safe.Type_Safe                                    import Type_Safe
-from osbot_utils.type_safe.decorators.type_safe                         import type_safe
 from osbot_utils.utils.Json                                             import str_to_json
 
 from mgraph_ai_service_llms.service.llms.prompts.schemas.Schema__Facts import Schema__Facts

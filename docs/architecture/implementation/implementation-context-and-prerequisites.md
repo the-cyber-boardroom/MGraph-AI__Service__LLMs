@@ -2,7 +2,7 @@
 
 ## 🎯 Project Overview
 
-MGraph-AI__Service__LLMs is a production-ready LLM service that consolidates multiple previous implementations into a single, unified platform. This document provides essential context for LLMs implementing this system.
+MGraph-AI__Service__LLMs is a LLM service that consolidates multiple previous implementations into a single, unified platform. This document provides essential context for LLMs implementing this system.
 
 ## 📚 Key Dependencies and Their Roles
 

@@ -120,11 +120,11 @@ Our philosophy prioritizes human factors and practical utility over strict adher
 Imports should be aligned with the longest import path, using spaces between major groups:
 
 ```python
-from unittest                                        import TestCase
-from mgraph_ai.schemas.Schema__MGraph__Node          import Schema__MGraph__Node
-from mgraph_ai.schemas.Schema__MGraph__Node__Config  import Schema__MGraph__Node__Config
-from osbot_utils.helpers.Random_Guid                 import Random_Guid
-from osbot_utils.helpers.Safe_Id                     import Safe_Id
+from unittest                                                           import TestCase
+from mgraph_ai.schemas.Schema__MGraph__Node                             import Schema__MGraph__Node
+from mgraph_ai.schemas.Schema__MGraph__Node__Config                     import Schema__MGraph__Node__Config
+from osbot_utils.type_safe.primitives.safe_str.identifiers.Random_Guid  import Random_Guid
+from osbot_utils.type_safe.primitives.safe_str.identifiers.Safe_Id import Safe_Id
 ```
 
 ## Method Signature Formatting

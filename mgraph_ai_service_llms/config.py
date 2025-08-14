@@ -1,10 +1,10 @@
 from mgraph_ai_service_llms                                                                          import package_name
-from osbot_utils.helpers.safe_str.Safe_Str__File__Path                                               import Safe_Str__File__Path
+from osbot_utils.type_safe.primitives.safe_str.filesystem.Safe_Str__File__Path                                               import Safe_Str__File__Path
 from mgraph_ai_service_llms.service.llms.providers.open_router.Schema__Open_Router__Supported_Models import Schema__Open_Router__Supported_Models
 
 SERVICE_NAME                             = package_name
 FAST_API__TITLE                          = "MGraph-AI LLM Service"
-FAST_API__DESCRIPTION                    = "Production-ready LLM service with multiple providers"
+FAST_API__DESCRIPTION                    = "LLM service with multiple providers"
 
 LOCALSTACK__ENDPOINT_URL                 = 'http://localhost:4566'
 LOCALSTACK__REGION_NAME                  = 'us-east-1'

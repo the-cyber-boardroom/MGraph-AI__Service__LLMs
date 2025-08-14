@@ -57,7 +57,7 @@ Each `.md` file follows consistent formatting:
 
 #### ✅ Technical Deep Dives:
 
-* **Overview**: Purpose and status (e.g., production ready)
+* **Overview**: Purpose and status 
 * **Architecture Diagrams**: Mermaid flowcharts (graph + sequence + class diagrams)
 * **Component Breakdown**: Modular class/function explainers
 * **Data Flow**: SequenceDiagram + key paths

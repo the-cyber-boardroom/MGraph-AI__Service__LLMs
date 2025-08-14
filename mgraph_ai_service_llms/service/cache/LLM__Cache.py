@@ -1,5 +1,5 @@
 from osbot_aws.aws.s3.S3__DB_Base                       import S3__DB_Base
-from osbot_utils.helpers.safe_str.Safe_Str__File__Path  import Safe_Str__File__Path
+from osbot_utils.type_safe.primitives.safe_str.filesystem.Safe_Str__File__Path  import Safe_Str__File__Path
 from osbot_aws.aws.s3.S3__Virtual_Storage               import Virtual_Storage__S3
 from mgraph_ai_service_llms.config                      import LLM__CACHE__DEFAULT__ROOT_FOLDER, LLM__CACHE__BUCKET_NAME__PREFIX, LLM__CACHE__BUCKET_NAME__SUFFIX
 
