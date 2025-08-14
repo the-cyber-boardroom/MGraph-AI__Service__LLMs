@@ -35,7 +35,7 @@ class LLM__Service(Type_Safe):
 
         # Format response
         result = { "model"       : model                           ,
-                   "provider"    : provider.value                  ,
+                   "provider"    : provider                        ,
                    "duration"    : duration__llm_execution.seconds ,
                    "prompt"      : prompt                          ,
                    "response"    : response.get("choices", [{}])[0].get("message", {}).get("content", ""),
