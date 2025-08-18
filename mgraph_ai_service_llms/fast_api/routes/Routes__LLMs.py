@@ -1,12 +1,11 @@
 from typing                                                                                          import Dict, Any
-from osbot_fast_api.api.Fast_API_Routes                                                              import Fast_API_Routes
-from osbot_utils.helpers.llms.schemas.Safe_Str__LLM__Model_Name import Safe_Str__LLM__Model_Name
+from osbot_fast_api.api.routes.Fast_API__Routes                                                      import Fast_API__Routes
+from osbot_utils.helpers.llms.schemas.Safe_Str__LLM__Model_Name                                      import Safe_Str__LLM__Model_Name
 from osbot_utils.utils.Env                                                                           import load_dotenv
 from mgraph_ai_service_llms.config                                                                   import LLM__MODEL_TO_USE__DEFAULT, TEST_DATA__SIMPLE_TEXT
 from mgraph_ai_service_llms.service.llms.LLM__Execute_Request                                        import LLM__Execute_Request
 from mgraph_ai_service_llms.service.llms.LLM__Service                                                import LLM__Service
-from mgraph_ai_service_llms.service.llms.providers.open_router.Schema__Open_Router__Providers import \
-    Schema__Open_Router__Providers
+from mgraph_ai_service_llms.service.llms.providers.open_router.Schema__Open_Router__Providers        import Schema__Open_Router__Providers
 from mgraph_ai_service_llms.service.llms.providers.open_router.Schema__Open_Router__Supported_Models import Schema__Open_Router__Supported_Models
 from mgraph_ai_service_llms.service.schemas.Schema__LLM__Models                                      import Schema__LLM__Models
 
@@ -16,7 +15,7 @@ ROUTES_PATHS__LLMS                = [ f'/{TAG__ROUTES_LLMS}/models'             
                                       f'/{TAG__ROUTES_LLMS}/extract-facts'             ,
                                       f'/{TAG__ROUTES_LLMS}/extract-facts-request-hash']
 
-class Routes__LLMs(Fast_API_Routes):
+class Routes__LLMs(Fast_API__Routes):
     tag                     : str                    = TAG__ROUTES_LLMS
     llm_service             : LLM__Service           = None
     llm_execute_request     : LLM__Execute_Request   = None

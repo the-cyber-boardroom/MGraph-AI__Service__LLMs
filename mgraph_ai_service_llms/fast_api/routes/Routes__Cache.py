@@ -1,4 +1,4 @@
-from osbot_fast_api.api.Fast_API_Routes                  import Fast_API_Routes
+from osbot_fast_api.api.routes.Fast_API__Routes          import Fast_API__Routes
 from mgraph_ai_service_llms.service.cache.Service__Cache import Service__Cache
 
 TAG__ROUTES_CACHE = 'cache'
@@ -7,7 +7,7 @@ ROUTES_PATHS__CACHE = [ f'/{TAG__ROUTES_CACHE}/index'         ,
                         f'/{TAG__ROUTES_CACHE}/entry-by-hash' ,
                         f'/{TAG__ROUTES_CACHE}/stats'         ]
 
-class Routes__Cache(Fast_API_Routes):
+class Routes__Cache(Fast_API__Routes):
     tag           : str            = 'cache'
     service_cache : Service__Cache = None
 

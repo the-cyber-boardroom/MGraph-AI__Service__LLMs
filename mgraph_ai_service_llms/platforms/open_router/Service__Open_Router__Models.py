@@ -1,0 +1,78 @@
+from typing                                                                                         import List, Optional, Dict, Any
+from osbot_utils.type_safe.Type_Safe                                                                import Type_Safe
+from osbot_utils.utils.Http                                                                         import GET_json
+from osbot_utils.decorators.methods.cache_on_self                                                   import cache_on_self
+from osbot_utils.type_safe.primitives.safe_float.Safe_Float                                         import Safe_Float
+from osbot_utils.utils.Misc                                                                         import list_set
+from mgraph_ai_service_llms.platforms.open_router.schemas.Safe_Str__Open_Router__Model_ID           import Safe_Str__Open_Router__Model_ID
+from mgraph_ai_service_llms.platforms.open_router.schemas.Safe_Str__Open_Router__Modality           import Safe_Str__Open_Router__Modality
+from mgraph_ai_service_llms.platforms.open_router.schemas.Schema__Open_Router__Model                import Schema__Open_Router__Model
+from mgraph_ai_service_llms.platforms.open_router.schemas.Schema__Open_Router__Models__Response     import Schema__Open_Router__Models__Response
+from mgraph_ai_service_llms.platforms.open_router.schemas.consts__Open_Router                       import URL__OPEN_ROUTER__API__V1_MODELS
+
+
+class Service__Open_Router__Models(Type_Safe):
+
+    def api_url(self):
+        return URL__OPEN_ROUTER__API__V1_MODELS
+
+    def download_models_from_api(self):                                             # todo: add caching
+        return GET_json(self.api_url())                                             # Fetch data from OpenRouter API
+
+    # rename to just models()
+    def fetch_models(self) -> Schema__Open_Router__Models__Response:                # Fetch current list of available models
+        try:
+            response_data   = self.download_models_from_api()
+            models_response = Schema__Open_Router__Models__Response.from_json(response_data)
+            return models_response
+
+        except Exception as e:
+            raise ValueError(f"Failed to fetch models from OpenRouter: {str(e)}")
+
+    @cache_on_self
+    def get_cached_models(self) -> List[Schema__Open_Router__Model]:                # Get cached list of models
+        response = self.fetch_models()
+        return response.data
+
+    def get_model_by_id(self, model_id : Safe_Str__Open_Router__Model_ID        # Get specific model by ID
+                        ) -> Optional[Schema__Open_Router__Model]:
+        models = self.get_cached_models()
+        for model in models:
+            if model.id == model_id:
+                return model
+        return None
+
+    def get_models_by_modality(self, modality : Safe_Str__Open_Router__Modality # Get models supporting specific modality
+                               ) -> List[Schema__Open_Router__Model]:
+        models = self.get_cached_models()
+        return [m for m in models if m.architecture.modality == modality]
+
+    def get_free_models(self                                                    # Get models that are free to use
+                        ) -> List[Schema__Open_Router__Model]:
+        models      = self.get_cached_models()
+        free_models = []
+        zero_cost   = Safe_Float(0.0)
+
+        for model in models:
+            if float(model.pricing.prompt) == 0 and float(model.pricing.completion) == 0:
+                free_models.append(model)
+        return free_models
+
+    def get_models_summary(self                                                 # Get summary of available models
+                           ) -> Dict[str, Any]:
+        models = self.get_cached_models()
+
+        modalities = {}                                                         # Group by modality
+        for model in models:
+            modality = str(model.architecture.modality)
+            if modality not in modalities:
+                modalities[modality] = []
+            modalities[modality].append(str(model.id))
+
+        free_models = self.get_free_models()                                    # Find free models
+
+        return { "total_models"      : len(models)                             ,
+                 "free_models_count"  : len(free_models)                       ,
+                 "free_models"        : [str(m.id) for m in free_models]       ,
+                 "modalities"         : modalities                             ,
+                 "tokenizers"         : list(set(str(m.architecture.tokenizer) for m in models)) }

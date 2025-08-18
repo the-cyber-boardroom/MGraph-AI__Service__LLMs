@@ -5,3 +5,10 @@ from mgraph_ai_service_llms.platforms.open_router.schemas.Schema__Open_Router__M
 
 class Schema__Open_Router__Models__Response(Type_Safe):
     data : List[Schema__Open_Router__Model]                                     # List of available models
+
+    def json(self):
+        data__json = []
+        for model in self.data:
+            data__json.append(model.json())
+
+        return dict(data=data__json)
