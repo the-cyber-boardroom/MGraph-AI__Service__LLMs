@@ -1,6 +1,6 @@
 [tool.poetry]
 name        = "mgraph_ai_service_llms"
-version     = "v0.6.12"
+version     = "v0.6.13"
 description = "MGraph-AI__Service__LLMs"
 authors     = ["Dinis Cruz <dinis.cruz@owasp.org>"]
 license     = "Apache 2.0"
