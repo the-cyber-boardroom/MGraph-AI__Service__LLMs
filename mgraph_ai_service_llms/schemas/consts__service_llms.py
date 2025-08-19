@@ -4,3 +4,6 @@ ROUTES_PATHS__CONFIG = ['/config/status'        ,                # todo: refacto
                         '/config/openapi.py'    ,
                         '/config/routes/html'   ,
                         '/config/routes/json'   ]
+
+ROUTES_PATHS__SET_COOKIE = [ '/auth/set-auth-cookie' ,
+                            '/auth/set-cookie-form' ]
