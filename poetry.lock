@@ -34,18 +34,18 @@ trio = ["trio (>=0.26.1)"]
 
 [[package]]
 name = "boto3"
-version = "1.40.12"
+version = "1.40.13"
 description = "The AWS SDK for Python"
 optional = false
 python-versions = ">=3.9"
 groups = ["main"]
 files = [
-    {file = "boto3-1.40.12-py3-none-any.whl", hash = "sha256:3c3d6731390b5b11f5e489d5d9daa57f0c3e171efb63ac8f47203df9c71812b3"},
-    {file = "boto3-1.40.12.tar.gz", hash = "sha256:c6b32aee193fbd2eb84696d2b5b2410dcda9fb4a385e1926cff908377d222247"},
+    {file = "boto3-1.40.13-py3-none-any.whl", hash = "sha256:b43110b6ad30e683fab769b4c5659b6b0606afa535627de831f7181306009d5e"},
+    {file = "boto3-1.40.13.tar.gz", hash = "sha256:7ff74221328868c5f7dcd7a9b959e7b882c1ab1b04cc9df868ea70de7d8bd004"},
 ]
 
 [package.dependencies]
-botocore = ">=1.40.12,<1.41.0"
+botocore = ">=1.40.13,<1.41.0"
 jmespath = ">=0.7.1,<2.0.0"
 s3transfer = ">=0.13.0,<0.14.0"
 
@@ -54,14 +54,14 @@ crt = ["botocore[crt] (>=1.21.0,<2.0a0)"]
 
 [[package]]
 name = "botocore"
-version = "1.40.12"
+version = "1.40.13"
 description = "Low-level, data-driven core of boto 3."
 optional = false
 python-versions = ">=3.9"
 groups = ["main"]
 files = [
-    {file = "botocore-1.40.12-py3-none-any.whl", hash = "sha256:84e96004a8b426c5508f6b5600312d6271364269466a3a957dc377ad8effc438"},
-    {file = "botocore-1.40.12.tar.gz", hash = "sha256:c6560578e799b47b762b7e555bd9c5dd5c29c5d23bd778a8a72e98c979b3c727"},
+    {file = "botocore-1.40.13-py3-none-any.whl", hash = "sha256:5bf7334d6a0a87a907d607b115710bede2440376cefa8c33b0d99571fb226d87"},
+    {file = "botocore-1.40.13.tar.gz", hash = "sha256:d7003526a9169e8ab3566db2227cf0b85d9e689e9ff97f2803c629a8e4624fb5"},
 ]
 
 [package.dependencies]
@@ -195,7 +195,7 @@ description = "Cross-platform colored terminal text."
 optional = false
 python-versions = "!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*,!=3.5.*,!=3.6.*,>=2.7"
 groups = ["main"]
-markers = "platform_system == \"Windows\" or sys_platform == \"win32\""
+markers = "platform_system == \"Windows\""
 files = [
     {file = "colorama-0.4.6-py2.py3-none-any.whl", hash = "sha256:4f1d9991f5acc0ca119f9d443620b77f9d6b33703e51011c16baf57afb285fc6"},
     {file = "colorama-0.4.6.tar.gz", hash = "sha256:08695f5cb7ed6e0531a20572697297273c47b8cae5a63ffc6d6ed5c201be6e44"},
@@ -249,18 +249,6 @@ files = [
 
 [package.extras]
 all = ["flake8 (>=7.1.1)", "mypy (>=1.11.2)", "pytest (>=8.3.2)", "ruff (>=0.6.2)"]
-
-[[package]]
-name = "iniconfig"
-version = "2.1.0"
-description = "brain-dead simple config-ini parsing"
-optional = false
-python-versions = ">=3.8"
-groups = ["main"]
-files = [
-    {file = "iniconfig-2.1.0-py3-none-any.whl", hash = "sha256:9deba5723312380e77435581c6bf4935c94cbfab9b1ed33ef8d238ea168eb760"},
-    {file = "iniconfig-2.1.0.tar.gz", hash = "sha256:3abbd2e30b36733fee78f9c7f7308f2d0050e88f0087fd25c2645f63c773e1c7"},
-]
 
 [[package]]
 name = "jmespath"
@@ -343,14 +331,14 @@ osbot-utils = "*"
 
 [[package]]
 name = "osbot-fast-api"
-version = "0.16.0"
+version = "0.17.0"
 description = "OWASP Security Bot - Fast API"
 optional = false
 python-versions = "<4.0,>=3.11"
 groups = ["main"]
 files = [
-    {file = "osbot_fast_api-0.16.0-py3-none-any.whl", hash = "sha256:27f509d24e7d869ac8f0bebcd9fdd9ac9cbc44622b80d22db8e9b4c77323fe37"},
-    {file = "osbot_fast_api-0.16.0.tar.gz", hash = "sha256:acb981aa224c2bba4868b891d7297ecdcb14bc3529b9796172d3dc2d2fb2485f"},
+    {file = "osbot_fast_api-0.17.0-py3-none-any.whl", hash = "sha256:1ccdbcba709b9c7ccd2a92989b27fb69c407175663f1e67f3dade78d948ebeab"},
+    {file = "osbot_fast_api-0.17.0.tar.gz", hash = "sha256:8e83a84e594d2b613c9a37216776ba5a70cf4b8df9899545c3489d3f74dd009f"},
 ]
 
 [package.dependencies]
@@ -362,21 +350,20 @@ uvicorn = "*"
 
 [[package]]
 name = "osbot-fast-api-serverless"
-version = "1.7.0"
+version = "1.9.0"
 description = "OSBot-Fast-API-Serverless"
 optional = false
 python-versions = "<4.0,>=3.12"
 groups = ["main"]
 files = [
-    {file = "osbot_fast_api_serverless-1.7.0-py3-none-any.whl", hash = "sha256:25727726bf4372a652eb8bcd7ce57102376411c14889d2e1f2d0fa52e1da3735"},
-    {file = "osbot_fast_api_serverless-1.7.0.tar.gz", hash = "sha256:c18774e97a4aff02fdcfed3ba8b922caeaf96e0f3812843b89f9f2e4086ff820"},
+    {file = "osbot_fast_api_serverless-1.9.0-py3-none-any.whl", hash = "sha256:8ff371ecf85c68f1f121c42efed5e56d2cc54116c74378e1dbd2589c844b5e6e"},
+    {file = "osbot_fast_api_serverless-1.9.0.tar.gz", hash = "sha256:a6646a5c1d6af7c924969cd276f0e19f0ae85691a5b7da34de1d1fc872994ed9"},
 ]
 
 [package.dependencies]
 mangum = "*"
 osbot-aws = "*"
 osbot-fast-api = "*"
-pytest = ">=8.4.1,<9.0.0"
 
 [[package]]
 name = "osbot-local-stack"
@@ -404,34 +391,6 @@ files = [
     {file = "osbot_utils-2.80.0-py3-none-any.whl", hash = "sha256:42880c96fa240369cda1eb592bfc0dc8d397b235a00e991eec2e7c2bc655d5f4"},
     {file = "osbot_utils-2.80.0.tar.gz", hash = "sha256:0d68151d76b0eef986e31d723ff346b8dc470e106f39b8c6373add4146d06b1c"},
 ]
-
-[[package]]
-name = "packaging"
-version = "25.0"
-description = "Core utilities for Python packages"
-optional = false
-python-versions = ">=3.8"
-groups = ["main"]
-files = [
-    {file = "packaging-25.0-py3-none-any.whl", hash = "sha256:29572ef2b1f17581046b3a2227d5c611fb25ec70ca1ba8554b24b0e69331a484"},
-    {file = "packaging-25.0.tar.gz", hash = "sha256:d443872c98d677bf60f6a1f2f8c1cb748e8fe762d2bf9d3148b5599295b0fc4f"},
-]
-
-[[package]]
-name = "pluggy"
-version = "1.6.0"
-description = "plugin and hook calling mechanisms for python"
-optional = false
-python-versions = ">=3.9"
-groups = ["main"]
-files = [
-    {file = "pluggy-1.6.0-py3-none-any.whl", hash = "sha256:e920276dd6813095e9377c0bc5566d94c932c33b27a3e3945d8389c374dd4746"},
-    {file = "pluggy-1.6.0.tar.gz", hash = "sha256:7dcc130b76258d33b90f61b658791dede3486c3e6bfb003ee5c9bfb396dd22f3"},
-]
-
-[package.extras]
-dev = ["pre-commit", "tox"]
-testing = ["coverage", "pytest", "pytest-benchmark"]
 
 [[package]]
 name = "pydantic"
@@ -581,28 +540,6 @@ files = [
 
 [package.extras]
 windows-terminal = ["colorama (>=0.4.6)"]
-
-[[package]]
-name = "pytest"
-version = "8.4.1"
-description = "pytest: simple powerful testing with Python"
-optional = false
-python-versions = ">=3.9"
-groups = ["main"]
-files = [
-    {file = "pytest-8.4.1-py3-none-any.whl", hash = "sha256:539c70ba6fcead8e78eebbf1115e8b589e7565830d7d006a8723f19ac8a0afb7"},
-    {file = "pytest-8.4.1.tar.gz", hash = "sha256:7c67fd69174877359ed9371ec3af8a3d2b04741818c51e5e99cc1742251fa93c"},
-]
-
-[package.dependencies]
-colorama = {version = ">=0.4", markers = "sys_platform == \"win32\""}
-iniconfig = ">=1"
-packaging = ">=20"
-pluggy = ">=1.5,<2"
-pygments = ">=2.7.2"
-
-[package.extras]
-dev = ["argcomplete", "attrs (>=19.2)", "hypothesis (>=3.56)", "mock", "requests", "setuptools", "xmlschema"]
 
 [[package]]
 name = "python-dateutil"

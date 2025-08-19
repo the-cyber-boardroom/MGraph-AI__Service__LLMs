@@ -14,6 +14,7 @@ from mgraph_ai_service_llms.utils.Version                                       
 
 
 class Service__Fast_API(Serverless__Fast_API):
+    add_admin_ui : bool = True
 
     def fast_api__title(self):                                       # todo: move this to the Fast_API class
         return FAST_API__TITLE
