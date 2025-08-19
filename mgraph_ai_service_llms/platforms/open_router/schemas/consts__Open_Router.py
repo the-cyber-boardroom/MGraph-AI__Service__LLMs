@@ -1,7 +1,8 @@
 from osbot_utils.type_safe.primitives.safe_str.web.Safe_Str__Url import Safe_Str__Url
 
-URL__OPEN_ROUTER__API            : Safe_Str__Url = Safe_Str__Url("https://openrouter.ai/api")       # OpenRouter api
-URL__OPEN_ROUTER__API__V1_MODELS : Safe_Str__Url = URL__OPEN_ROUTER__API + "/v1/models"             # OpenRouter models
+URL__OPEN_ROUTER__API               : Safe_Str__Url = Safe_Str__Url("https://openrouter.ai/api")       # OpenRouter api
+URL__OPEN_ROUTER__API__V1_MODELS    : Safe_Str__Url = URL__OPEN_ROUTER__API + "/v1/models"             # OpenRouter models
+URL__OPEN_ROUTER__API__V1_PROVIDERS : Safe_Str__Url = URL__OPEN_ROUTER__API + "/v1/providers"          # OpenRouter providers
 
 
 # OpenRouter-specific regex patterns for Safe_Str validation

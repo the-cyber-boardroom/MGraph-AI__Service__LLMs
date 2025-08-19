@@ -16,7 +16,7 @@ class test_Schema__Open_Router__Model(TestCase):
     def test__regression__not_all_models_serialise_ok(self):
         skip__if_not__in_github_actions()
         with print_duration(action_name='download data'):                                   # ~ 0.744 seconds
-            raw_data        = Service__Open_Router__Models().download_models_from_api()
+            raw_data        = Service__Open_Router__Models().download__api__models()
             raw_models_data = raw_data.get('data')
             assert len(raw_models_data) > 300
         with print_duration(action_name='convert to model (each one at the time)'):         # ~ 0.156 seconds

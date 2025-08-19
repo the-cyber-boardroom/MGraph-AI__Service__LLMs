@@ -27,8 +27,8 @@ class test_Service__Open_Router__Models(TestCase):
         with self.service as _:
             assert type(_)         is Service__Open_Router__Models
             assert base_classes(_) == [Type_Safe, object]
-            assert type(_.api_url()) is Safe_Str__Url
-            assert str(_.api_url ())  == "https://openrouter.ai/api/v1/models"
+            assert type(_.api__url__models()) is Safe_Str__Url
+            assert str(_.api__url__models ()) == "https://openrouter.ai/api/v1/models"
 
     def test_fetch_models(self):
         # if get_env(ENV_NAME_OPEN_ROUTER__API_KEY) is None:
@@ -57,7 +57,7 @@ class test_Service__Open_Router__Models(TestCase):
     def test_fetch_models__error_handling(self):
         # Test with invalid URL
         service_with_bad_url        = Service__Open_Router__Models()
-        service_with_bad_url.api_url = Safe_Str__Url("https://invalid-url-that-does-not-exist.com/api")
+        service_with_bad_url.api__url__models = Safe_Str__Url("https://invalid-url-that-does-not-exist.com/api")
 
         with pytest.raises(ValueError) as context:
             service_with_bad_url.fetch_models()
@@ -69,14 +69,14 @@ class test_Service__Open_Router__Models(TestCase):
             pytest.skip('This test requires OPEN_ROUTER__API_KEY to be set')
 
         # First call should fetch from API
-        models_1 = self.service.get_cached_models()
+        models_1 = self.service.api__models()
 
         assert type(models_1) is Type_Safe__List
         assert len(models_1 )  > 0
         assert all(type(m) is Schema__Open_Router__Model for m in models_1)
 
         # Second call should return cached version (same object)
-        models_2 = self.service.get_cached_models()
+        models_2 = self.service.api__models()
 
         assert models_2 is models_1                                               # Same object due to caching
 
@@ -85,7 +85,7 @@ class test_Service__Open_Router__Models(TestCase):
             pytest.skip('This test requires OPEN_ROUTER__API_KEY to be set')
 
         # Get models first
-        models = self.service.get_cached_models()
+        models = self.service.api__models()
 
         if len(models) > 0:
             # Test with existing model
@@ -176,7 +176,7 @@ class test_Service__Open_Router__Models(TestCase):
             pytest.skip('This test requires OPEN_ROUTER__API_KEY to be set')
 
         # Get all models and free models
-        all_models  = self.service.get_cached_models()
+        all_models  = self.service.api__models()
         free_models = self.service.get_free_models()
 
         # Manually check which models are free
@@ -236,7 +236,7 @@ class test_Service__Open_Router__Models(TestCase):
             pytest.skip('This test requires OPEN_ROUTER__API_KEY to be set')
 
         summary    = self.service.get_models_summary()
-        all_models = self.service.get_cached_models()
+        all_models = self.service.api__models()
 
         # Total models should match
         assert summary['total_models'] == len(all_models)
@@ -254,7 +254,7 @@ class test_Service__Open_Router__Models(TestCase):
         if get_env(ENV_NAME_OPEN_ROUTER__API_KEY) is None:
             pytest.skip('This test requires OPEN_ROUTER__API_KEY to be set')
 
-        models = self.service.get_cached_models()
+        models = self.service.api__models()
 
         if len(models) > 0:
             # Test that Safe_Float prices can be converted to float
@@ -271,7 +271,7 @@ class test_Service__Open_Router__Models(TestCase):
         if get_env(ENV_NAME_OPEN_ROUTER__API_KEY) is None:
             pytest.skip('This test requires OPEN_ROUTER__API_KEY to be set')
 
-        models = self.service.get_cached_models()
+        models = self.service.api__models()
 
         if len(models) > 0:
             # Check architecture details
@@ -294,26 +294,26 @@ class test_Service__Open_Router__Models(TestCase):
         new_service = Service__Open_Router__Models()
 
         # First call fetches from API
-        models_1 = new_service.get_cached_models()
+        models_1 = new_service.api__models()
 
         # Modify the API URL to simulate network issue
-        original_url     = new_service.api_url
-        new_service.api_url = Safe_Str__Url("https://invalid-url.com")
+        original_url     = new_service.api__url__models
+        new_service.api__url__models = Safe_Str__Url("https://invalid-url.com")
 
         # Second call should still work due to cache
-        models_2 = new_service.get_cached_models()
+        models_2 = new_service.api__models()
 
         assert models_2 is models_1                                               # Same cached object
 
         # Restore URL
-        new_service.api_url = original_url
+        new_service.api__url__models = original_url
 
     def test_empty_models_handling(self):
         # Test methods with empty model list
         service = Service__Open_Router__Models()
 
         # Mock empty cache
-        service.get_cached_models = lambda: []
+        service.api__models = lambda: []
 
         # Test each method handles empty list gracefully
         assert service.get_model_by_id(Safe_Str__Open_Router__Model_ID("test")) is None

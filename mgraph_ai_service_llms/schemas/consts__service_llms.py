@@ -5,5 +5,5 @@ ROUTES_PATHS__CONFIG = ['/config/status'        ,                # todo: refacto
                         '/config/routes/html'   ,
                         '/config/routes/json'   ]
 
-ROUTES_PATHS__SET_COOKIE = [ '/auth/set-auth-cookie' ,
-                            '/auth/set-cookie-form' ]
+ROUTES_PATHS__SET_COOKIE = [ '/auth/set-auth-cookie' ,          # todo: refactor this to OSBot-Fast-API
+                            '/auth/set-cookie-form'  ]

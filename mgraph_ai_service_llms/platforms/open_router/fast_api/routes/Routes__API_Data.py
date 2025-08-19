@@ -7,8 +7,12 @@ class Routes__API_Data(Fast_API__Routes):
     tag        : Safe_Str__Fast_API__Route__Tag = 'api/data'
     open_router: Service__Open_Router__Models
 
-    def v1_models_raw(self):
-        return self.open_router.get_cached_models()
+    def models(self):
+        return self.open_router.api__models()
+
+    def providers(self):
+        return self.open_router.api__providers()
 
     def setup_routes(self):
-        self.add_route_get(self.v1_models_raw)
+        self.add_route_get(self.providers )
+        self.add_route_get(self.models    )
