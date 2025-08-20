@@ -1,6 +1,7 @@
 # for main app
 osbot-fast-api-serverless
 osbot_local_stack
+memory-fs
 
 # for pytest
 pytest
