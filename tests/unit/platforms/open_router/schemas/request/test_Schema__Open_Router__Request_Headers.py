@@ -1,7 +1,7 @@
-from unittest                                                                                         import TestCase
-from osbot_utils.type_safe.Type_Safe                                                                  import Type_Safe
-from osbot_utils.utils.Objects                                                                        import base_classes
-from mgraph_ai_service_llms.platforms.open_router.schemas.models.Schema__Open_Router__Request_Headers import Schema__Open_Router__Request_Headers
+from unittest                                                                                          import TestCase
+from osbot_utils.type_safe.Type_Safe                                                                   import Type_Safe
+from osbot_utils.utils.Objects                                                                         import base_classes
+from mgraph_ai_service_llms.platforms.open_router.schemas.request.Schema__Open_Router__Request_Headers import Schema__Open_Router__Request_Headers
 
 
 class test_Schema__Open_Router__Request_Headers(TestCase):

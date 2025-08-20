@@ -1,9 +1,9 @@
-from mgraph_ai_service_llms.platforms.open_router.schemas.models.Safe_Str__App_Title    import Safe_Str__App_Title
-from mgraph_ai_service_llms.platforms.open_router.schemas.models.Safe_Str__Bearer_Token import Safe_Str__Bearer_Token
-from mgraph_ai_service_llms.platforms.open_router.schemas.models.Safe_Str__Feature_Id   import Safe_Str__Feature_Id
-from mgraph_ai_service_llms.platforms.open_router.schemas.models.Safe_Str__Provider_Id  import Safe_Str__Provider_Id
-from mgraph_ai_service_llms.platforms.open_router.schemas.models.Safe_Str__Request_Id   import Safe_Str__Request_Id
-from mgraph_ai_service_llms.platforms.open_router.schemas.models.Safe_Str__Requirement  import Safe_Str__Requirement
+from mgraph_ai_service_llms.platforms.open_router.schemas.request.Safe_Str__App_Title    import Safe_Str__App_Title
+from mgraph_ai_service_llms.platforms.open_router.schemas.request.Safe_Str__Bearer_Token import Safe_Str__Bearer_Token
+from mgraph_ai_service_llms.platforms.open_router.schemas.request.Safe_Str__Feature_Id   import Safe_Str__Feature_Id
+from mgraph_ai_service_llms.platforms.open_router.schemas.request.Safe_Str__Provider_Id  import Safe_Str__Provider_Id
+from mgraph_ai_service_llms.platforms.open_router.schemas.request.Safe_Str__Request_Id   import Safe_Str__Request_Id
+from mgraph_ai_service_llms.platforms.open_router.schemas.request.Safe_Str__Requirement  import Safe_Str__Requirement
 
 """ Complete OpenRouter request headers configuration
 
@@ -15,18 +15,6 @@ from typing                                                         import Optio
 from osbot_utils.type_safe.Type_Safe                                import Type_Safe
 from osbot_utils.type_safe.primitives.safe_str.Safe_Str             import Safe_Str
 from osbot_utils.type_safe.primitives.safe_str.web.Safe_Str__Url    import Safe_Str__Url
-
-
-# Create domain-specific types for OpenRouter
-
-
-
-
-""" Complete OpenRouter request headers configuration
-
-    Implements all available OpenRouter API headers for request control,
-    provider routing, and response formatting.
-"""
 
 
 class Schema__Open_Router__Request_Headers(Type_Safe):

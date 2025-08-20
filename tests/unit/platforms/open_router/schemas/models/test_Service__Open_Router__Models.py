@@ -5,7 +5,7 @@ from osbot_utils.type_safe.primitives.safe_int                                  
 from osbot_utils.type_safe.primitives.safe_str.web.Safe_Str__Url                                            import Safe_Str__Url
 from osbot_utils.type_safe.type_safe_core.collections.Type_Safe__List                                       import Type_Safe__List
 from osbot_utils.utils.Objects                                                                              import base_classes
-from osbot_utils.utils.Env                                                                                  import get_env
+from osbot_utils.utils.Env                                                                                  import get_env, load_dotenv
 from osbot_utils.utils.Misc                                                                                 import list_set
 from mgraph_ai_service_llms.platforms.open_router.Service__Open_Router__Models                              import Service__Open_Router__Models
 from mgraph_ai_service_llms.platforms.open_router.schemas.Safe_Str__Open_Router__Model_ID                   import Safe_Str__Open_Router__Model_ID
@@ -65,9 +65,6 @@ class test_Service__Open_Router__Models(TestCase):
         assert "Failed to fetch models from OpenRouter" in str(context.value)
 
     def test_get_cached_models(self):
-        if get_env(ENV_NAME_OPEN_ROUTER__API_KEY) is None:
-            pytest.skip('This test requires OPEN_ROUTER__API_KEY to be set')
-
         # First call should fetch from API
         models_1 = self.service.api__models()
 
@@ -81,9 +78,6 @@ class test_Service__Open_Router__Models(TestCase):
         assert models_2 is models_1                                               # Same object due to caching
 
     def test_get_model_by_id(self):
-        if get_env(ENV_NAME_OPEN_ROUTER__API_KEY) is None:
-            pytest.skip('This test requires OPEN_ROUTER__API_KEY to be set')
-
         # Get models first
         models = self.service.api__models()
 
@@ -103,9 +97,6 @@ class test_Service__Open_Router__Models(TestCase):
             assert result is None
 
     def test_get_model_by_id__with_known_model(self):
-        if get_env(ENV_NAME_OPEN_ROUTER__API_KEY) is None:
-            pytest.skip('This test requires OPEN_ROUTER__API_KEY to be set')
-
         # Test with a known free model that should exist
         known_model_id = Safe_Str__Open_Router__Model_ID("mistralai/mistral-small-3.2-24b-instruct:free")
         model          = self.service.get_model_by_id(known_model_id)
@@ -117,9 +108,6 @@ class test_Service__Open_Router__Models(TestCase):
             assert float(model.pricing.prompt) == 0                               # Free model
 
     def test_get_models_by_modality(self):
-        if get_env(ENV_NAME_OPEN_ROUTER__API_KEY) is None:
-            pytest.skip('This test requires OPEN_ROUTER__API_KEY to be set')
-
         # Test with text->text modality (should have many models)
         text_modality = Safe_Str__Open_Router__Modality("text->text")
         text_models   = self.service.get_models_by_modality(text_modality)
@@ -143,9 +131,6 @@ class test_Service__Open_Router__Models(TestCase):
         assert fake_models == []
 
     def test_get_free_models(self):
-        if get_env(ENV_NAME_OPEN_ROUTER__API_KEY) is None:
-            pytest.skip('This test requires OPEN_ROUTER__API_KEY to be set')
-
         free_models = self.service.get_free_models()
 
         assert type(free_models) is list
@@ -172,9 +157,6 @@ class test_Service__Open_Router__Models(TestCase):
             assert found_known_free is True                                       # At least one known free model should exist
 
     def test_get_free_models__verification(self):
-        if get_env(ENV_NAME_OPEN_ROUTER__API_KEY) is None:
-            pytest.skip('This test requires OPEN_ROUTER__API_KEY to be set')
-
         # Get all models and free models
         all_models  = self.service.api__models()
         free_models = self.service.get_free_models()
@@ -194,9 +176,6 @@ class test_Service__Open_Router__Models(TestCase):
         assert free_ids == manual_ids
 
     def test_get_models_summary(self):
-        if get_env(ENV_NAME_OPEN_ROUTER__API_KEY) is None:
-            pytest.skip('This test requires OPEN_ROUTER__API_KEY to be set')
-
         summary = self.service.get_models_summary()
 
         assert type(summary) is dict
@@ -232,9 +211,6 @@ class test_Service__Open_Router__Models(TestCase):
                 assert tokenizer in summary['tokenizers']
 
     def test_get_models_summary__consistency(self):
-        if get_env(ENV_NAME_OPEN_ROUTER__API_KEY) is None:
-            pytest.skip('This test requires OPEN_ROUTER__API_KEY to be set')
-
         summary    = self.service.get_models_summary()
         all_models = self.service.api__models()
 
@@ -251,9 +227,6 @@ class test_Service__Open_Router__Models(TestCase):
         assert len(summary['free_models'])  == len(free_models)
 
     def test_safe_float_pricing_conversion(self):
-        if get_env(ENV_NAME_OPEN_ROUTER__API_KEY) is None:
-            pytest.skip('This test requires OPEN_ROUTER__API_KEY to be set')
-
         models = self.service.api__models()
 
         if len(models) > 0:
@@ -268,9 +241,6 @@ class test_Service__Open_Router__Models(TestCase):
                 assert completion_price >= 0
 
     def test_model_architecture_details(self):
-        if get_env(ENV_NAME_OPEN_ROUTER__API_KEY) is None:
-            pytest.skip('This test requires OPEN_ROUTER__API_KEY to be set')
-
         models = self.service.api__models()
 
         if len(models) > 0:
@@ -287,9 +257,6 @@ class test_Service__Open_Router__Models(TestCase):
                 assert "->" in str(arch.modality) or "+" in str(arch.modality)
 
     def test_caching_behavior(self):
-        if get_env(ENV_NAME_OPEN_ROUTER__API_KEY) is None:
-            pytest.skip('This test requires OPEN_ROUTER__API_KEY to be set')
-
         # Create new instance to ensure clean cache
         new_service = Service__Open_Router__Models()
 
