@@ -6,7 +6,7 @@ from osbot_utils.type_safe.primitives.safe_str.web.Safe_Str__Url                
 from osbot_utils.type_safe.type_safe_core.collections.Type_Safe__List                                       import Type_Safe__List
 from osbot_utils.utils.Objects                                                                              import base_classes
 from osbot_utils.utils.Misc                                                                                 import list_set
-from mgraph_ai_service_llms.platforms.open_router.Service__Open_Router__Models                              import Service__Open_Router__Models
+from mgraph_ai_service_llms.platforms.open_router.service.Service__Open_Router__Models                      import Service__Open_Router__Models
 from mgraph_ai_service_llms.platforms.open_router.schemas.Safe_Str__Open_Router__Model_ID                   import Safe_Str__Open_Router__Model_ID
 from mgraph_ai_service_llms.platforms.open_router.schemas.Safe_Str__Open_Router__Modality                   import Safe_Str__Open_Router__Modality
 from mgraph_ai_service_llms.platforms.open_router.schemas.models.Schema__Open_Router__Model                 import Schema__Open_Router__Model

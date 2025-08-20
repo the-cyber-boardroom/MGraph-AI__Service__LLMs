@@ -3,7 +3,7 @@ from osbot_utils.type_safe.Type_Safe                                            
 from osbot_utils.decorators.methods.cache_on_self                                                    import cache_on_self
 from osbot_utils.type_safe.primitives.safe_float.Safe_Float                                          import Safe_Float
 from mgraph_ai_service_llms.platforms.open_router.schemas.Safe_Str__Open_Router__Model_ID            import Safe_Str__Open_Router__Model_ID
-from mgraph_ai_service_llms.platforms.open_router.Service__Open_Router__Models                       import Service__Open_Router__Models
+from mgraph_ai_service_llms.platforms.open_router.service.Service__Open_Router__Models               import Service__Open_Router__Models
 from mgraph_ai_service_llms.platforms.open_router.schemas.cost.Schema__Open_Router__Cost_Breakdown   import Schema__Open_Router__Cost_Breakdown
 from mgraph_ai_service_llms.platforms.open_router.schemas.models.Schema__Open_Router__Model__Pricing import Schema__Open_Router__Model__Pricing
 
@@ -151,31 +151,17 @@ class Service__Open_Router__Cost(Type_Safe):
 
         return cost
 
-    def estimate_cost(self,
-                     model_id       : Safe_Str__Open_Router__Model_ID,
-                     prompt_tokens  : int,
-                     max_tokens     : int,
-                     include_cache  : bool = False,
-                     cache_hit_rate : float = 0.0
-                    ) -> Schema__Open_Router__Cost_Breakdown:
-        """Estimate cost before making a request
+    def estimate_cost(self, model_id       : Safe_Str__Open_Router__Model_ID,
+                            prompt_tokens  : int,
+                            max_tokens     : int,
+                            include_cache  : bool = False,
+                            cache_hit_rate : float = 0.0
+                       ) -> Schema__Open_Router__Cost_Breakdown:            # Estimate cost before making a request
 
-        Args:
-            model_id: Model to use
-            prompt_tokens: Estimated prompt tokens
-            max_tokens: Maximum completion tokens
-            include_cache: Whether to include cache estimates
-            cache_hit_rate: Expected cache hit rate (0.0 to 1.0)
-
-        Returns:
-            Estimated cost breakdown
-        """
         # Build estimated usage
-        usage = {
-            "prompt_tokens"     : prompt_tokens,
-            "completion_tokens" : max_tokens,
-            "total_tokens"      : prompt_tokens + max_tokens
-        }
+        usage = { "prompt_tokens"     : prompt_tokens              ,
+                  "completion_tokens" : max_tokens                 ,
+                  "total_tokens"      : prompt_tokens + max_tokens }
 
         if include_cache and cache_hit_rate > 0:
             cached_tokens = int(prompt_tokens * cache_hit_rate)
