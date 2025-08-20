@@ -1,19 +1,19 @@
 import pytest
-from unittest                                                                                        import TestCase
-from osbot_utils.type_safe.Type_Safe                                                                 import Type_Safe
-from osbot_utils.type_safe.primitives.safe_int                                                       import Safe_Int
-from osbot_utils.type_safe.primitives.safe_str.web.Safe_Str__Url                                     import Safe_Str__Url
-from osbot_utils.type_safe.type_safe_core.collections.Type_Safe__List                                import Type_Safe__List
-from osbot_utils.utils.Objects                                                                       import base_classes
-from osbot_utils.utils.Env                                                                           import get_env
-from osbot_utils.utils.Misc                                                                          import list_set
-from mgraph_ai_service_llms.platforms.open_router.Service__Open_Router__Models                       import Service__Open_Router__Models
-from mgraph_ai_service_llms.platforms.open_router.schemas.Safe_Str__Open_Router__Model_ID            import Safe_Str__Open_Router__Model_ID
-from mgraph_ai_service_llms.platforms.open_router.schemas.Safe_Str__Open_Router__Modality            import Safe_Str__Open_Router__Modality
-from mgraph_ai_service_llms.platforms.open_router.schemas.Schema__Open_Router__Model                 import Schema__Open_Router__Model
-from mgraph_ai_service_llms.platforms.open_router.schemas.Schema__Open_Router__Model__Pricing__Float import Schema__Open_Router__Model__Pricing__Float
-from mgraph_ai_service_llms.platforms.open_router.schemas.Schema__Open_Router__Models__Response      import Schema__Open_Router__Models__Response
-from mgraph_ai_service_llms.service.llms.providers.open_router.Provider__OpenRouter                  import ENV_NAME_OPEN_ROUTER__API_KEY
+from unittest                                                                                               import TestCase
+from osbot_utils.type_safe.Type_Safe                                                                        import Type_Safe
+from osbot_utils.type_safe.primitives.safe_int                                                              import Safe_Int
+from osbot_utils.type_safe.primitives.safe_str.web.Safe_Str__Url                                            import Safe_Str__Url
+from osbot_utils.type_safe.type_safe_core.collections.Type_Safe__List                                       import Type_Safe__List
+from osbot_utils.utils.Objects                                                                              import base_classes
+from osbot_utils.utils.Env                                                                                  import get_env
+from osbot_utils.utils.Misc                                                                                 import list_set
+from mgraph_ai_service_llms.platforms.open_router.Service__Open_Router__Models                              import Service__Open_Router__Models
+from mgraph_ai_service_llms.platforms.open_router.schemas.Safe_Str__Open_Router__Model_ID                   import Safe_Str__Open_Router__Model_ID
+from mgraph_ai_service_llms.platforms.open_router.schemas.Safe_Str__Open_Router__Modality                   import Safe_Str__Open_Router__Modality
+from mgraph_ai_service_llms.platforms.open_router.schemas.models.Schema__Open_Router__Model                 import Schema__Open_Router__Model
+from mgraph_ai_service_llms.platforms.open_router.schemas.models.Schema__Open_Router__Model__Pricing__Float import Schema__Open_Router__Model__Pricing__Float
+from mgraph_ai_service_llms.platforms.open_router.schemas.models.Schema__Open_Router__Models__Response      import Schema__Open_Router__Models__Response
+from mgraph_ai_service_llms.service.llms.providers.open_router.Provider__OpenRouter                         import ENV_NAME_OPEN_ROUTER__API_KEY
 
 
 class test_Service__Open_Router__Models(TestCase):

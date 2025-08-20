@@ -1,13 +1,13 @@
 from typing                                                                                         import List, Optional, Dict, Any
-from osbot_utils.type_safe.Type_Safe                                                                import Type_Safe
-from osbot_utils.utils.Http                                                                         import GET_json
-from osbot_utils.decorators.methods.cache_on_self                                                   import cache_on_self
-from osbot_utils.type_safe.primitives.safe_float.Safe_Float                                         import Safe_Float
-from mgraph_ai_service_llms.platforms.open_router.schemas.Safe_Str__Open_Router__Model_ID           import Safe_Str__Open_Router__Model_ID
-from mgraph_ai_service_llms.platforms.open_router.schemas.Safe_Str__Open_Router__Modality           import Safe_Str__Open_Router__Modality
-from mgraph_ai_service_llms.platforms.open_router.schemas.Schema__Open_Router__Model                import Schema__Open_Router__Model
-from mgraph_ai_service_llms.platforms.open_router.schemas.Schema__Open_Router__Models__Response     import Schema__Open_Router__Models__Response
-from mgraph_ai_service_llms.platforms.open_router.schemas.consts__Open_Router import URL__OPEN_ROUTER__API__V1_MODELS, \
+from osbot_utils.type_safe.Type_Safe                                                                        import Type_Safe
+from osbot_utils.utils.Http                                                                                 import GET_json
+from osbot_utils.decorators.methods.cache_on_self                                                           import cache_on_self
+from osbot_utils.type_safe.primitives.safe_float.Safe_Float                                                 import Safe_Float
+from mgraph_ai_service_llms.platforms.open_router.schemas.Safe_Str__Open_Router__Model_ID                   import Safe_Str__Open_Router__Model_ID
+from mgraph_ai_service_llms.platforms.open_router.schemas.Safe_Str__Open_Router__Modality                   import Safe_Str__Open_Router__Modality
+from mgraph_ai_service_llms.platforms.open_router.schemas.models.Schema__Open_Router__Model                 import Schema__Open_Router__Model
+from mgraph_ai_service_llms.platforms.open_router.schemas.models.Schema__Open_Router__Models__Response      import Schema__Open_Router__Models__Response
+from mgraph_ai_service_llms.platforms.open_router.schemas.consts__Open_Router                               import URL__OPEN_ROUTER__API__V1_MODELS, \
     URL__OPEN_ROUTER__API__V1_PROVIDERS
 
 

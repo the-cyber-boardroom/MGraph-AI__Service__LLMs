@@ -1,5 +1,5 @@
-from osbot_utils.type_safe.Type_Safe                                                                 import Type_Safe
-from mgraph_ai_service_llms.platforms.open_router.schemas.Schema__Open_Router__Model__Pricing__Float import Schema__Open_Router__Model__Pricing__Float
+from osbot_utils.type_safe.Type_Safe                                                                        import Type_Safe
+from mgraph_ai_service_llms.platforms.open_router.schemas.models.Schema__Open_Router__Model__Pricing__Float import Schema__Open_Router__Model__Pricing__Float
 
 
 # note some models don't have input_cache_read or input_cache_write
