@@ -31,8 +31,8 @@ class Schema__Open_Router__Request_Headers(Type_Safe):
     x_include_provider: bool = True  # Include provider info in response
 
     # Advanced routing
-    order  : Optional[List[Safe_Str__Provider_Id]] = None  # Provider preference order
-    require: Optional[List[Safe_Str__Feature_Id ]] = None  # Required provider features
+    order             : Optional[List[Safe_Str__Provider_Id]] = None  # Provider preference order
+    require           : Optional[List[Safe_Str__Feature_Id ]] = None  # Required provider features
 
     # Request tracking
     x_request_id: Optional[Safe_Str__Request_Id  ] = None  # Custom request ID for tracking

@@ -7,8 +7,7 @@ from mgraph_ai_service_llms.platforms.open_router.schemas.Safe_Str__Open_Router_
 from mgraph_ai_service_llms.platforms.open_router.schemas.Safe_Str__Open_Router__Modality                   import Safe_Str__Open_Router__Modality
 from mgraph_ai_service_llms.platforms.open_router.schemas.models.Schema__Open_Router__Model                 import Schema__Open_Router__Model
 from mgraph_ai_service_llms.platforms.open_router.schemas.models.Schema__Open_Router__Models__Response      import Schema__Open_Router__Models__Response
-from mgraph_ai_service_llms.platforms.open_router.schemas.consts__Open_Router                               import URL__OPEN_ROUTER__API__V1_MODELS, \
-    URL__OPEN_ROUTER__API__V1_PROVIDERS
+from mgraph_ai_service_llms.platforms.open_router.schemas.consts__Open_Router                               import URL__OPEN_ROUTER__API__V1_MODELS, URL__OPEN_ROUTER__API__V1_PROVIDERS
 
 
 class Service__Open_Router__Models(Type_Safe):

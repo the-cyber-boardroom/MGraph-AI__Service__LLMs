@@ -25,7 +25,6 @@ class Schema__Open_Router__Model(Type_Safe):
     top_provider         : Schema__Open_Router__Model__Top_Provider             # Top provider details
     per_request_limits   : Optional[Schema__Open_Router__Model__Per_Request_Limits] = None  # Per-request limits
     supported_parameters : List[Safe_Str__Open_Router__Parameter]               # List of supported parameters
-    supported_parameters : List[str ]
 
 
     def json(self):
