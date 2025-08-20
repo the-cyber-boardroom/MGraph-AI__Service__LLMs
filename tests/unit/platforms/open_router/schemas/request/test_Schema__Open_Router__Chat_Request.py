@@ -1,11 +1,7 @@
-import re
-from typing import Optional, Literal
 from unittest                                                                                               import TestCase
-
-import pytest
 from osbot_utils.type_safe.Type_Safe                                                                        import Type_Safe
-from osbot_utils.type_safe.primitives.safe_float.Safe_Float import Safe_Float
-from osbot_utils.utils.Objects import base_classes, __
+from osbot_utils.type_safe.primitives.safe_float.Safe_Float                                                 import Safe_Float
+from osbot_utils.utils.Objects                                                                              import base_classes, __
 from osbot_utils.utils.Lists                                                                                import list_set
 from mgraph_ai_service_llms.platforms.open_router.schemas.request.Schema__Open_Router__Chat_Request         import Schema__Open_Router__Chat_Request
 from mgraph_ai_service_llms.platforms.open_router.schemas.request.Schema__Open_Router__Message              import  Schema__Open_Router__Message

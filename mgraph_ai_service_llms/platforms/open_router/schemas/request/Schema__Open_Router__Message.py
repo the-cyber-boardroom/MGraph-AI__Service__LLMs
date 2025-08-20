@@ -1,7 +1,6 @@
-from typing import Optional, Literal
-from osbot_utils.type_safe.Type_Safe                    import Type_Safe
-from osbot_utils.type_safe.primitives.safe_str.Safe_Str import Safe_Str
-
+from typing                                                                                 import Optional, Literal
+from osbot_utils.type_safe.Type_Safe                                                        import Type_Safe
+from osbot_utils.type_safe.primitives.safe_str.Safe_Str                                     import Safe_Str
 from mgraph_ai_service_llms.platforms.open_router.schemas.request.Safe_Str__Message_Content import Safe_Str__Message_Content
 
 
