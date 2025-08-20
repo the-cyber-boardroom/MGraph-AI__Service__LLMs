@@ -314,6 +314,21 @@ files = [
 ]
 
 [[package]]
+name = "memory-fs"
+version = "0.14.0"
+description = "Memory-FS"
+optional = false
+python-versions = "<4.0,>=3.12"
+groups = ["main"]
+files = [
+    {file = "memory_fs-0.14.0-py3-none-any.whl", hash = "sha256:dfd9d857dad5b19375347d59bc8d355a9beae2f34748d20bf3bc7696e4a72f2f"},
+    {file = "memory_fs-0.14.0.tar.gz", hash = "sha256:36515583bd0bf4412d075a1b0ae05e54054e78b824d0e2edee89ee6920b9e314"},
+]
+
+[package.dependencies]
+osbot-utils = "*"
+
+[[package]]
 name = "osbot-aws"
 version = "2.39.4"
 description = "OWASP Security Bot - AWS"
@@ -382,14 +397,14 @@ osbot-aws = "*"
 
 [[package]]
 name = "osbot-utils"
-version = "2.81.0"
+version = "2.83.0"
 description = "OWASP Security Bot - Utils"
 optional = false
 python-versions = "<4.0,>=3.7"
 groups = ["main"]
 files = [
-    {file = "osbot_utils-2.81.0-py3-none-any.whl", hash = "sha256:a0129586a9c5a6a2af650a10a46cd986990ea27971d6a233d11d53ae0662db6e"},
-    {file = "osbot_utils-2.81.0.tar.gz", hash = "sha256:6590a43de5c2c9990a1bd3f170dcf841da4ba8a37934e77d9002f4efd7298c11"},
+    {file = "osbot_utils-2.83.0-py3-none-any.whl", hash = "sha256:44fb03a349fd3d9f0c0032f030c3528211031211070743b0ce2cefce21859898"},
+    {file = "osbot_utils-2.83.0.tar.gz", hash = "sha256:163c56e8d6408b6e8beaa38558415140631623f2a8910b4ada963e46e97aa0e0"},
 ]
 
 [[package]]
@@ -755,4 +770,4 @@ standard = ["colorama (>=0.4)", "httptools (>=0.6.3)", "python-dotenv (>=0.13)",
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.12"
-content-hash = "56eb0f692b0c9bdf747f593be75bf5d9d12ed075aba39d45a9d03bae28f17935"
+content-hash = "30a5ffc8740fbc149c91c661a66d9d9ee4c30bc9c5b51e230bbb6a3cadd9a319"

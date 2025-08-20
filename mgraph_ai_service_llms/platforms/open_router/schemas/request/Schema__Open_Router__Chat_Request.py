@@ -5,6 +5,8 @@ from osbot_utils.type_safe.Type_Safe                                            
 from osbot_utils.type_safe.primitives.safe_float.Safe_Float                                                 import Safe_Float
 from osbot_utils.type_safe.primitives.safe_str.Safe_Str                                                     import Safe_Str
 from osbot_utils.type_safe.primitives.safe_int.Safe_Int                                                     import Safe_Int
+
+from mgraph_ai_service_llms.platforms.open_router.schemas.Safe_Str__Open_Router__Model_ID import Safe_Str__Open_Router__Model_ID
 from mgraph_ai_service_llms.platforms.open_router.schemas.Safe_Str__Open_Router__Model_Name                 import Safe_Str__Open_Router__Model_Name
 from mgraph_ai_service_llms.platforms.open_router.schemas.request.Safe_Str__Message_Content                 import Safe_Str__Message_Content
 from mgraph_ai_service_llms.platforms.open_router.schemas.request.Schema__Open_Router__Message              import Schema__Open_Router__Message
@@ -22,7 +24,7 @@ including streaming, tools, response formats, and provider routing.
 class Schema__Open_Router__Chat_Request(Type_Safe):
 
     # Required fields
-    model         : Safe_Str__Open_Router__Model_Name   # Model identifier
+    model         : Safe_Str__Open_Router__Model_ID     # Model identifier
     messages      : List[Schema__Open_Router__Message]  # Conversation messages
 
     # Standard parameters
