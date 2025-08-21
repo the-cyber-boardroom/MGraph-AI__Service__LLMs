@@ -334,12 +334,19 @@ export class LLMRequestViewer extends HTMLElement {
                 <div class="entry-preview">${this.escapeHtml(entry.text)}</div>
                 <div class="entry-actions">
                     <code class="cache-id-mini">${entry.cacheId}</code>
-                    <button onclick="document.querySelector('llm-request-viewer').inspectFromHistory('${entry.cacheId}')">
+                    <button data-cache-id="${entry.cacheId}" class="inspect-history-btn">
                         🔍 Inspect
                     </button>
                 </div>
             </div>
         `).join('');
+
+        // Add event listeners to the inspect buttons
+        container.querySelectorAll('.inspect-history-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                this.inspectFromHistory(btn.dataset.cacheId);
+            });
+        });
     }
 
     inspectFromHistory(cacheId) {

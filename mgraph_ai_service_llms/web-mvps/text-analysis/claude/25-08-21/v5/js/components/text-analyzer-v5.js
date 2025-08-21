@@ -21,6 +21,23 @@ export class TextAnalyzer extends HTMLElement {
         this.render();
         this.setupEventListeners();
         this.setupViewToggle();
+
+
+        this.restoreViewFromHash();                                                     // Check URL hash on load
+
+        window.addEventListener('hashchange', () => this.restoreViewFromHash());        // Listen for hash changes
+    }
+
+    restoreViewFromHash() {
+        const hash = window.location.hash.slice(1); // Remove #
+        if (['chat', 'analysis', 'llm'].includes(hash)) {
+            this.switchView(hash);
+
+            // Update button states
+            this.querySelectorAll('.view-toggle-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.view === hash);
+            });
+        }
     }
 
     render() {
@@ -42,10 +59,11 @@ export class TextAnalyzer extends HTMLElement {
                 <analysis-dashboard></analysis-dashboard>
                 <activity-log></activity-log>
             </div>
-            <div class="text-analyzer-container hidden" id="llmView">
+            <div class="llm-view-container hidden" id="llmView">
                 <llm-request-viewer></llm-request-viewer>
             </div>
         `;
+
 
         this.chatPanel = this.querySelector('chat-panel');
         this.analysisPanel = this.querySelector('analysis-panel');
@@ -70,6 +88,8 @@ export class TextAnalyzer extends HTMLElement {
 
     switchView(view) {
         this.currentView = view;
+
+        window.location.hash = view;            // Update URL hash
         const chatView = this.querySelector('#chatView');
         const analysisView = this.querySelector('#analysisView');
         const llmView = this.querySelector('#llmView');

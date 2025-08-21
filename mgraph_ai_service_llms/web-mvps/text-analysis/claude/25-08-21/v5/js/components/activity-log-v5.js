@@ -100,12 +100,22 @@ export class ActivityLog extends HTMLElement {
     }
 
     inspectCacheId(cacheId) {
-        // Emit event to switch to LLM view and inspect cache
-        window.dispatchEvent(new CustomEvent('inspect-cache-from-log', {
-            detail: { cacheId },
-            bubbles: true
-        }));
-    }
+        // Get the parent text-analyzer element
+        const textAnalyzer = this.closest('text-analyzer');
+        if (textAnalyzer) {
+            textAnalyzer.switchView('llm');
+
+            // Wait for view to switch, then inspect
+            setTimeout(() => {
+                const llmViewer = textAnalyzer.querySelector('llm-request-viewer');
+                if (llmViewer) {
+                    llmViewer.querySelector('#cacheIdInput').value = cacheId;
+                    llmViewer.inspectCacheEntry(cacheId);
+                }
+            }, 100);
+        }
+}
+
 
     getIconForType(type) {
         const icons = {
