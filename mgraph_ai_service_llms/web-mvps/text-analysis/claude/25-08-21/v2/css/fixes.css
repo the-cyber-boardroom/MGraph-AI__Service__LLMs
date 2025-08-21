@@ -1,0 +1,179 @@
+/* Tab Badge Fixes - Move to top-right corner */
+.tab {
+    position: relative;
+    padding: 0.5rem 1rem !important;
+    padding-top: 1.25rem !important;
+    min-width: 100px;
+}
+
+.tab-badge {
+    position: absolute;
+    right: 8px;
+    top: 4px;
+    min-width: 20px;
+    height: 20px;
+    padding: 2px 6px;
+    background: var(--color-warning);
+    color: white;
+    font-size: 0.7rem;
+    font-weight: bold;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.tab.active .tab-badge {
+    background: white;
+    color: var(--color-primary);
+}
+
+/* Summary cards - make clickable */
+.summary-card.clickable {
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.summary-card.clickable:hover {
+    transform: scale(1.05);
+    box-shadow: var(--shadow-md);
+    border-color: var(--color-primary);
+}
+
+/* Question items with generate button */
+.question-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background: var(--bg-secondary);
+    border-radius: 4px;
+    border-left: 3px solid var(--color-primary);
+    margin-bottom: 0.5rem;
+}
+
+.question-text {
+    flex: 1;
+    margin-right: 1rem;
+}
+
+.generate-answer-btn {
+    padding: 0.5rem 1rem;
+    background: var(--color-primary);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.875rem;
+    white-space: nowrap;
+    transition: all 0.2s;
+}
+
+.generate-answer-btn:hover:not(:disabled) {
+    background: var(--color-primary-dark);
+}
+
+.generate-answer-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* Fix Summary Grid Overflow */
+.analysis-content {
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    max-height: calc(100vh - 250px);
+}
+
+.summary-grid {
+    margin-bottom: 1rem;
+}
+
+/* Message Bubble Improvements */
+.message.user .message-bubble {
+    background: rgba(102, 126, 234, 0.9);
+}
+
+.message.system .message-bubble {
+    background: #f0f4f8;
+    border: 1px solid var(--border-color);
+}
+
+/* Chat Input Improvements */
+.chat-input {
+    min-height: 80px;
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+.chat-input:focus {
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+/* Character Counter Improvements */
+.char-count {
+    transition: color 0.2s;
+}
+
+.char-count.warning {
+    color: #f59e0b;
+    font-weight: 500;
+}
+
+.char-count.error {
+    color: #ef4444;
+    font-weight: 600;
+}
+
+/* Cache Indicator Improvements */
+.cache-indicator {
+    font-size: 0.75rem;
+    padding: 0.25rem 0.75rem;
+    border-radius: 12px;
+}
+
+.cache-indicator.cached {
+    background: #10b981;
+}
+
+.cache-indicator.fresh {
+    background: #3b82f6;
+}
+
+.cache-indicator.slow {
+    background: #f59e0b;
+}
+
+/* Loading Spinner Position Fix */
+.loading-spinner {
+    margin: 2rem auto;
+    display: block;
+}
+
+/* Empty State Improvements */
+.empty-state {
+    padding: 3rem 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.empty-state::before {
+    content: "📝";
+    font-size: 3rem;
+    opacity: 0.5;
+}
+
+/* Responsive Improvements */
+@media (max-width: 1024px) {
+    .text-analyzer-container {
+        gap: 0.5rem;
+        padding: 0.5rem;
+    }
+
+    .chat-panel,
+    .analysis-panel {
+        min-height: 400px;
+    }
+}
