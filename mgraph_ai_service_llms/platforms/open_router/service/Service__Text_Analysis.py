@@ -12,21 +12,25 @@ DEFAULT_PROMPT_TEXT = "The company reported Q3 revenue of $5.2 million, a 30% in
 SYSTEM_PROMPT_FACTS = """You are a fact extraction expert. Extract concrete, verifiable facts from the text.
 Return ONLY a JSON array of strings, where each string is a single fact.
 Facts should be specific, clear, and based only on what's stated in the text.
+If the text is a question or contains no extractable facts, return an empty array: []
 Example: ["The meeting is scheduled for 3pm", "John is the project manager", "The budget is $50,000"]"""
 
 SYSTEM_PROMPT_DATA_POINTS = """You are a data extraction specialist. Extract quantifiable data points, metrics, numbers, and measurements from the text.
 Return ONLY a JSON array of strings, where each string describes a specific data point.
 Include numbers, percentages, dates, quantities, measurements, and any quantifiable information.
+If the text contains no data points, return an empty array: []
 Example: ["Revenue increased by 25%", "3 team members assigned", "Deadline: March 15, 2024", "Temperature: 72°F"]"""
 
 SYSTEM_PROMPT_QUESTIONS = """You are a conversation strategist. Based on the text provided, generate insightful follow-up questions to ask the user.
 Return ONLY a JSON array of strings, where each string is a question.
 Questions should seek clarification, explore implications, or gather additional relevant information.
+If no meaningful questions can be generated, return an empty array: []
 Example: ["What is the expected ROI for this project?", "Have you considered the regulatory requirements?", "Who are the key stakeholders?"]"""
 
 SYSTEM_PROMPT_HYPOTHESES = """You are an analytical thinker. Based on the text, generate reasonable hypotheses or educated inferences.
 Return ONLY a JSON array of strings, where each string is a hypothesis.
 Hypotheses should be logical extensions or interpretations based on the information provided.
+If no hypotheses can be reasonably made, return an empty array: []
 Example: ["The delay might be due to resource constraints", "This pattern suggests seasonal demand", "The user may be planning a product launch"]"""
 
 
@@ -41,9 +45,9 @@ class Service__Text_Analysis(Type_Safe):
         super().__init__()
         self.open_router = Service__Open_Router()
 
-    def _extract_json_list(self, text          : str ,                                                   # Helper to extract JSON list from LLM response
-                                 system_prompt : str
-                          ) -> List[str]:
+    def _extract_json_list(self, text          : str ,
+                             system_prompt : str
+                      ) -> List[str]:
 
         user_prompt = f"Analyze the following text:\n\n{text}"
 
@@ -57,7 +61,7 @@ class Service__Text_Analysis(Type_Safe):
             max_cost      = 0.5                        )
 
         response_text = response.get("choices", [{}])[0].get("message", {}).get("content", "")
-
+        cache_id      = response.get("cache_id", None)
         # Try to parse JSON response
         try:
             # Clean up response text - remove markdown code blocks if present
@@ -70,8 +74,8 @@ class Service__Text_Analysis(Type_Safe):
 
             # Ensure it's a list
             if isinstance(result, list):
-                # Ensure all items are strings
-                return [str(item) for item in result]
+                # Filter out empty strings and None values
+                return [str(item) for item in result if item and str(item).strip()], cache_id
             else:
                 return []
 
@@ -93,13 +97,15 @@ class Service__Text_Analysis(Type_Safe):
                     quotes = re.findall(r'"([^"]+)"', line)
                     items.extend(quotes)
 
-            return items if items else [response_text] if response_text else []
+            # Filter out empty items from fallback extraction
+            return [item for item in items if item and item.strip()], cache_id
 
     def extract_facts(self, text: str                                                                    # Extract facts from text
                      ) -> Dict[str, Any]:
-        facts = self._extract_json_list(text, SYSTEM_PROMPT_FACTS)
+        facts, cache_id = self._extract_json_list(text, SYSTEM_PROMPT_FACTS)
 
-        return { "text"        : text                    ,
+        return { "cache_id"    : cache_id,
+                 "text"        : text                    ,
                  "facts"       : facts                   ,
                  "facts_count" : len(facts)              ,
                  "model"       : self.model              ,
@@ -107,9 +113,10 @@ class Service__Text_Analysis(Type_Safe):
 
     def extract_data_points(self, text: str                                                              # Extract data points from text
                            ) -> Dict[str, Any]:
-        data_points = self._extract_json_list(text, SYSTEM_PROMPT_DATA_POINTS)
+        data_points, cache_id = self._extract_json_list(text, SYSTEM_PROMPT_DATA_POINTS)
 
-        return { "text"              : text                      ,
+        return { "cache_id"          : cache_id                  ,
+                 "text"              : text                      ,
                  "data_points"       : data_points               ,
                  "data_points_count" : len(data_points)          ,
                  "model"             : self.model                ,
@@ -117,9 +124,10 @@ class Service__Text_Analysis(Type_Safe):
 
     def generate_questions(self, text: str                                                               # Generate follow-up questions
                           ) -> Dict[str, Any]:
-        questions = self._extract_json_list(text, SYSTEM_PROMPT_QUESTIONS)
+        questions,cache_id = self._extract_json_list(text, SYSTEM_PROMPT_QUESTIONS)
 
-        return { "text"            : text                        ,
+        return { "cache_id"        : cache_id                    ,
+                 "text"            : text                        ,
                  "questions"       : questions                   ,
                  "questions_count" : len(questions)              ,
                  "model"           : self.model                  ,
@@ -127,29 +135,39 @@ class Service__Text_Analysis(Type_Safe):
 
     def generate_hypotheses(self, text: str                                                              # Generate hypotheses from text
                            ) -> Dict[str, Any]:
-        hypotheses = self._extract_json_list(text, SYSTEM_PROMPT_HYPOTHESES)
+        hypotheses,cache_id = self._extract_json_list(text, SYSTEM_PROMPT_HYPOTHESES)
 
-        return { "text"             : text                       ,
+        return { "cache_id"         : cache_id                   ,
+                 "text"             : text                       ,
                  "hypotheses"       : hypotheses                 ,
                  "hypotheses_count" : len(hypotheses)            ,
                  "model"            : self.model                 ,
                  "provider"         : self.provider.value        }
 
-    def analyze_all(self, text: str                                                                      # Run all analysis types
-                   ) -> Dict[str, Any]:
-        facts       = self._extract_json_list(text, SYSTEM_PROMPT_FACTS      )
-        data_points = self._extract_json_list(text, SYSTEM_PROMPT_DATA_POINTS)
-        questions   = self._extract_json_list(text, SYSTEM_PROMPT_QUESTIONS  )
-        hypotheses  = self._extract_json_list(text, SYSTEM_PROMPT_HYPOTHESES )
+    def analyze_all(self, text: str) -> Dict[str, Any]:
+        facts, facts_cache_id             = self._extract_json_list(text, SYSTEM_PROMPT_FACTS)
+        data_points, data_points_cache_id = self._extract_json_list(text, SYSTEM_PROMPT_DATA_POINTS)
+        questions, questions_cache_id     = self._extract_json_list(text, SYSTEM_PROMPT_QUESTIONS)
+        hypotheses, hypotheses_cache_id   = self._extract_json_list(text, SYSTEM_PROMPT_HYPOTHESES)
 
-        return { "text"        : text                    ,
-                 "facts"       : facts                   ,
-                 "data_points" : data_points             ,
-                 "questions"   : questions               ,
-                 "hypotheses"  : hypotheses              ,
-                 "summary"     : { "facts_count"       : len(facts)       ,
-                                  "data_points_count"  : len(data_points) ,
-                                  "questions_count"    : len(questions)   ,
-                                  "hypotheses_count"   : len(hypotheses)  },
-                 "model"       : self.model              ,
-                 "provider"    : self.provider.value     }
+        return {
+            "text"        : text,
+            "facts"       : facts,
+            "data_points" : data_points,
+            "questions"   : questions,
+            "hypotheses"  : hypotheses,
+            "summary"     : {
+                "facts_count"       : len(facts),
+                "data_points_count" : len(data_points),
+                "questions_count"   : len(questions),
+                "hypotheses_count"  : len(hypotheses)
+            },
+            "model"       : self.model,
+            "provider"    : self.provider.value,
+            "cache_ids"   : {  # Add all cache_ids
+                "facts"       : facts_cache_id,
+                "data_points" : data_points_cache_id,
+                "questions"   : questions_cache_id,
+                "hypotheses"  : hypotheses_cache_id
+            }
+        }

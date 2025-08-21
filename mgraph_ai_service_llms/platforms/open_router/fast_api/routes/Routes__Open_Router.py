@@ -17,6 +17,9 @@ class Routes__Open_Router(Fast_API__Routes):
         super().__init__(**kwargs)
         self.open_router = Service__Open_Router()
 
+    def cache_entry__cache_id(self, cache_id: str) -> Dict[str, Any]: # Get cached entry by cache_id"""
+        return self.open_router.get_cached_chat_by_id(cache_id)
+
     def complete(self, prompt       : str                                              ,                # Standard chat completion endpoint
                        model         : Schema__Open_Router__Supported_Models           ,
                        system_prompt : Optional[str  ]                          = None ,
@@ -128,9 +131,10 @@ class Routes__Open_Router(Fast_API__Routes):
                                  for provider in Schema__Open_Router__Providers       ] }
 
     def setup_routes(self):
-        self.add_route_post(self.complete         )
-        self.add_route_post(self.complete_stream  )
-        self.add_route_get (self.models           )
-        self.add_route_get (self.model_info       )
-        self.add_route_post(self.estimate_cost    )
-        self.add_route_get (self.providers        )
+        self.add_route_post(self.complete             )
+        self.add_route_post(self.complete_stream      )
+        self.add_route_get (self.models               )
+        self.add_route_get (self.model_info           )
+        self.add_route_post(self.estimate_cost        )
+        self.add_route_get (self.providers            )
+        self.add_route_get (self.cache_entry__cache_id)

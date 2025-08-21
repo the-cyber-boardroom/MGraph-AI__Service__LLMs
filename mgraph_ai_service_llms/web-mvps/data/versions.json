@@ -1,10 +1,17 @@
 [
   {
+    "name": "Version 5",
+    "path": "./text-analysis/claude/25-08-21/v5/index.html",
+    "description": "Cache ID integration, LLM request viewer, full request traceability & debugging",
+    "badge": "latest",
+    "badgeText": "Latest"
+  },
+  {
     "name": "Version 4",
     "path": "./text-analysis/claude/25-08-21/v4/index.html",
     "description": "Activity log, parallel APIs, smart dedup, analysis dashboard, search functionality",
-    "badge": "latest",
-    "badgeText": "Latest"
+    "badge": "",
+    "badgeText": "Stable"
   },
   {
     "name": "Version 3",

@@ -19,10 +19,10 @@ class Service__LLM__Simple(Type_Safe):
         self.open_router = Service__Open_Router()
 
     def execute_completion(self, user_prompt   : str                                             ,      # Execute LLM completion with provider routing
-                                system_prompt : Optional[str]                            = None ,
-                                model_key     : str                                      = "gpt-oss-120b",
-                                provider_name : Optional[Schema__Open_Router__Providers] = None
-                          ) -> Dict[str, Any]:
+                                 system_prompt : Optional[str]                            = None ,
+                                 model_key     : str                                      = "gpt-oss-120b",
+                                 provider_name : Optional[Schema__Open_Router__Providers] = None
+                           ) -> Dict[str, Any]:
 
         model_id = HIGH_THROUGHPUT_MODELS.get(model_key)
         if not model_id:
@@ -47,8 +47,9 @@ class Service__LLM__Simple(Type_Safe):
         #pprint(response)
         response_text   = response.get("choices", [{}])[0].get("message", {}).get("content", "")
         actual_provider = response.get("provider", provider_value or "auto")
-
-        return { "duration_seconds" : round(duration, 3)   ,
+        cache_id        = response.get("cache_id")
+        return { "cache_id"         : cache_id             ,
+                 "duration_seconds" : round(duration, 3)   ,
                  "model_used"       : model_id             ,
                  "provider_used"    : actual_provider      ,
                  "response_text"    : response_text        }

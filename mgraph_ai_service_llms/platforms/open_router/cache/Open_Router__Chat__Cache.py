@@ -17,6 +17,21 @@ class Open_Router__Chat__Cache(Type_Safe):
             self.cache.setup()
         return self
 
+    def get_cache_entry_by_id(self, cache_id: str) -> dict:             # Retrieve complete cache entry by cache_id
+        file_id = Safe_Id(cache_id)
+        with self.cache.fs__latest_temporal.file__json(file_id) as _:
+            if _.exists():
+                return _.content()
+            return None
+
+    def get_cache_metadata_by_id(self, cache_id: str) -> dict:          # Retrieve just the metadata for a cache entry
+        file_id = Safe_Id(cache_id)
+        with self.cache.fs__latest_temporal.file__json(file_id) as _:
+            if _.exists():
+                metadata = _.metadata()
+                return metadata.data if metadata else {}
+            return None
+
     def generate_cache_id(self, request_data: dict) -> Safe_Str__Hash:                      # Generate deterministic cache ID from request parameters
         cache_key= json_to_str(request_data)                                                # use the entire request as the cache key
         hash_value = bytes_sha256(cache_key.encode())[:SIZE__VALUE_HASH]                    # First 10 chars of hash

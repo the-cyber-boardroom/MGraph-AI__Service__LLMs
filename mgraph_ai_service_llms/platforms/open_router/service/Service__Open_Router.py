@@ -77,9 +77,12 @@ class Service__Open_Router(Type_Safe):                                          
         request = Schema__Open_Router__Chat_Request.create_simple(**kwargs)
 
         request_data = request.json()
+
+        cache_id = self.chat_cache().generate_cache_id(request_data)
         cached_response = self.chat_cache().get_cached_response(request_data)
         if cached_response:
             cached_response['from_cache'] = True
+            cached_response['cache_id'  ] = str(cache_id)  # Add cache_id here
             return cached_response
 
 
@@ -105,6 +108,8 @@ class Service__Open_Router(Type_Safe):                                          
                 pass                                                                                      # Ignore cost calculation errors
 
         self.chat_cache().cache_chat_response(request_data, response_data)
+        response_data['cache_id'] = str(cache_id)
+
         return response_data
 
     # todo :add cache support
@@ -157,6 +162,24 @@ class Service__Open_Router(Type_Safe):                                          
                         yield chunk_data
                     except json.JSONDecodeError:
                         continue                                                                          # Skip invalid JSON
+
+    def get_cached_chat_by_id(self, cache_id: str) -> Dict[str, Any]:       # Retrieve cached chat completion by cache_id
+        cache_entry = self.chat_cache().get_cache_entry_by_id(cache_id)
+
+        if cache_entry:
+            return {
+                'status': 'success',
+                'cache_id': cache_id,
+                'data': cache_entry,
+                'cached_at': cache_entry.get('cached_at'),
+                'ttl_hours': cache_entry.get('ttl_hours')
+            }
+
+        return {
+            'status': 'error',
+            'message': f'Cache entry not found for id: {cache_id}',
+            'cache_id': cache_id
+        }
 
     def list_models(self, include_free : bool = True ,                                                   # Get list of available models with optional filtering
                           include_paid : bool = True
