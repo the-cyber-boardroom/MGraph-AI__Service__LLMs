@@ -1,5 +1,5 @@
-import { ChatPanel as ChatPanelV4 } from '../../../v4/js/components/chat-panel-v4.js';
-import { TextFormatter } from '../../../v1/js/utils/text-formatter.js';
+import { ChatPanel as ChatPanelV4 } from '../../../v0.4/js/components/chat-panel-v4.js';
+import { TextFormatter } from '../../../v0.1/js/utils/text-formatter.js';
 
 export class ChatPanel extends ChatPanelV4 {
 

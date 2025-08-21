@@ -1,5 +1,5 @@
-import { AnalysisPanel as AnalysisPanelV1 } from '../../../v1/js/components/analysis-panel.js';
-import { TextFormatter } from '../../../v1/js/utils/text-formatter.js';
+import { AnalysisPanel as AnalysisPanelV1 } from '../../../v0.1/js/components/analysis-panel.js';
+import { TextFormatter } from '../../../v0.1/js/utils/text-formatter.js';
 
 export class AnalysisPanel extends AnalysisPanelV1 {
     updateCacheIndicator(analysis) {

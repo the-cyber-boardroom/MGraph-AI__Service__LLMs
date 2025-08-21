@@ -1,5 +1,5 @@
 /* Import v2 fixes */
-@import url('../../v2/css/fixes.css');
+@import url('../../v0.2/css/fixes.css');
 
 /* Analysis Message Styling */
 .message.analysis-info {

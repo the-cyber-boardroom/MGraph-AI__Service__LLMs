@@ -1,6 +1,6 @@
-import { ChatPanel as ChatPanelV1 } from '../../../v1/js/components/chat-panel.js';
-import { TextFormatter } from '../../../v1/js/utils/text-formatter.js';
-import { getRandomSample, getRandomWelcome } from '../../../v1/js/utils/sample-texts.js';
+import { ChatPanel as ChatPanelV1 } from '../../../v0.1/js/components/chat-panel.js';
+import { TextFormatter } from '../../../v0.1/js/utils/text-formatter.js';
+import { getRandomSample, getRandomWelcome } from '../../../v0.1/js/utils/sample-texts.js';
 
 export class ChatPanel extends ChatPanelV1 {
 

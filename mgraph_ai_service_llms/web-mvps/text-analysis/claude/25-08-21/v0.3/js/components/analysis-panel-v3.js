@@ -1,5 +1,5 @@
-import { AnalysisPanel as AnalysisPanelV2 } from '../../../v2/js/components/analysis-panel-v2.js';
-import { TextFormatter } from '../../../v1/js/utils/text-formatter.js';
+import { AnalysisPanel as AnalysisPanelV2 } from '../../../v0.2/js/components/analysis-panel-v2.js';
+import { TextFormatter } from '../../../v0.1/js/utils/text-formatter.js';
 
 export class AnalysisPanel extends AnalysisPanelV2 {
     constructor() {

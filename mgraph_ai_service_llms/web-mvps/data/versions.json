@@ -1,35 +1,35 @@
 [
   {
-    "name": "Version 5",
-    "path": "./text-analysis/claude/25-08-21/v5/index.html",
+    "name": "Version 0.5",
+    "path": "./text-analysis/claude/25-08-21/v0.5/index.html",
     "description": "Cache ID integration, LLM request viewer, full request traceability & debugging",
     "badge": "latest",
     "badgeText": "Latest"
   },
   {
-    "name": "Version 4",
-    "path": "./text-analysis/claude/25-08-21/v4/index.html",
+    "name": "Version 0.4",
+    "path": "./text-analysis/claude/25-08-21/v0.4/index.html",
     "description": "Activity log, parallel APIs, smart dedup, analysis dashboard, search functionality",
     "badge": "",
     "badgeText": "Stable"
   },
   {
-    "name": "Version 3",
-    "path": "./text-analysis/claude/25-08-21/v3/index.html",
+    "name": "Version 0.3",
+    "path": "./text-analysis/claude/25-08-21/v0.3/index.html",
     "description": "Global/local analysis tracking, clickable analysis summaries, cumulative insights",
     "badge": "",
     "badgeText": "Stable"
   },
   {
-    "name": "Version 2",
-    "path": "./text-analysis/claude/25-08-21/v2/index.html",
+    "name": "Version 0.2",
+    "path": "./text-analysis/claude/25-08-21/v0.2/index.html",
     "description": "UI fixes: tab badges, overflow, input area improvements",
     "badge": "",
     "badgeText": "Stable"
   },
   {
-    "name": "Version 1",
-    "path": "./text-analysis/claude/25-08-21/v1/index.html",
+    "name": "Version 0.1",
+    "path": "./text-analysis/claude/25-08-21/v0.1/index.html",
     "description": "Original implementation with core functionality",
     "badge": "original",
     "badgeText": "Original"
