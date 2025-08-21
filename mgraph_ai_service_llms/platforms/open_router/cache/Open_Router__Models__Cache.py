@@ -16,7 +16,7 @@ class Open_Router__Models__Cache(Type_Safe):
         return self
 
     def cache_models_response(self, models_response: Schema__Open_Router__Models__Response  # Cache complete models response
-                              ) -> File_FS:
+                               ) -> File_FS:
 
         models_data = models_response.json()                        # get models_response json data
         cache_metadata = {}                                         # create cache metadata  # todo: improve this metadata section

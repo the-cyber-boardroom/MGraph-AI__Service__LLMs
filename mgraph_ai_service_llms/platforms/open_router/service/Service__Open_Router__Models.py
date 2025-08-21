@@ -3,6 +3,8 @@ from osbot_utils.type_safe.Type_Safe                                            
 from osbot_utils.utils.Http                                                                                 import GET_json
 from osbot_utils.decorators.methods.cache_on_self                                                           import cache_on_self
 from osbot_utils.type_safe.primitives.safe_float.Safe_Float                                                 import Safe_Float
+
+from mgraph_ai_service_llms.platforms.open_router.cache.Open_Router__Models__Cache import Open_Router__Models__Cache
 from mgraph_ai_service_llms.platforms.open_router.schemas.Safe_Str__Open_Router__Model_ID                   import Safe_Str__Open_Router__Model_ID
 from mgraph_ai_service_llms.platforms.open_router.schemas.Safe_Str__Open_Router__Modality                   import Safe_Str__Open_Router__Modality
 from mgraph_ai_service_llms.platforms.open_router.schemas.models.Schema__Open_Router__Model                 import Schema__Open_Router__Model
@@ -11,6 +13,10 @@ from mgraph_ai_service_llms.platforms.open_router.schemas.consts__Open_Router   
 
 
 class Service__Open_Router__Models(Type_Safe):
+
+    @cache_on_self
+    def open_router__models_cache(self):
+        return Open_Router__Models__Cache().setup()
 
     def api__url__models(self):
         return URL__OPEN_ROUTER__API__V1_MODELS
@@ -30,8 +36,14 @@ class Service__Open_Router__Models(Type_Safe):
     # rename to just models()
     def fetch_models(self) -> Schema__Open_Router__Models__Response:                # Fetch current list of available models
         try:
+            cached_response = self.open_router__models_cache().get_cached_models()
+            if cached_response and cached_response.data:
+                return cached_response
+
             response_data   = self.download__api__models()
             models_response = Schema__Open_Router__Models__Response.from_json(response_data)
+
+            self.open_router__models_cache().cache_models_response(models_response)
             return models_response
 
         except Exception as e:
