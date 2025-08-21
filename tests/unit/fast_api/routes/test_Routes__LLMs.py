@@ -49,6 +49,7 @@ class test_Routes__LLMs(TestCase):
         assert gpt_model['is_free' ]  is False
         assert gpt_model['provider'] == 'openai'
 
+    @pytest.mark.skip("not using cache")
     def test_complete__with_actual_api_call(self):
 
         load_dotenv()

@@ -5,7 +5,6 @@ from typing                                                                     
 
 from osbot_utils.decorators.methods.cache_on_self import cache_on_self
 from osbot_utils.type_safe.Type_Safe                                                                    import Type_Safe
-from osbot_utils.utils.Dev import pprint
 from osbot_utils.utils.Env                                                                              import get_env
 
 from mgraph_ai_service_llms.platforms.open_router.cache.Open_Router__Chat__Cache import Open_Router__Chat__Cache
@@ -93,8 +92,6 @@ class Service__Open_Router(Type_Safe):                                          
         response = requests.post(url     = self.chat_completion_url()     ,
                                  headers = headers.to_headers_dict()       ,
                                  json    = request.to_api_dict()           )
-        if response.status_code == 400:
-            pprint(response.json())
         response.raise_for_status()                                                                      # Raise exception for HTTP errors
         response_data = response.json()
 

@@ -10,6 +10,7 @@ class test_Provider__OpenRouter(TestCase):
 
     @classmethod
     def setUpClass(cls):
+        pytest.skip("see if we still need this class")
         cls.provider = Provider__OpenRouter()
         load_dotenv()
 

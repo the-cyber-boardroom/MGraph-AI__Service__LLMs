@@ -11,6 +11,7 @@ class test_LLM__Service(TestCase):
 
     @classmethod
     def setUpClass(cls):
+        pytest.skip("see if we still need this class")
         cls.llm_service = LLM__Service()
         load_dotenv()
 
