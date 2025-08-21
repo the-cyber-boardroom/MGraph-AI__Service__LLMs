@@ -1,0 +1,181 @@
+/* Import v2 fixes */
+@import url('../../v2/css/fixes.css');
+
+/* Analysis Message Styling */
+.message.analysis-info {
+    align-self: center;
+    max-width: 85%;
+    margin: 1rem 0;
+}
+
+.analysis-bubble {
+    background: linear-gradient(135deg, #fef3c7, #fde68a);
+    border: 1px solid #f59e0b;
+    color: #92400e;
+    padding: 0.75rem 1rem;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 2px 4px rgba(245, 158, 11, 0.1);
+}
+
+.analysis-bubble:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(245, 158, 11, 0.2);
+    background: linear-gradient(135deg, #fde68a, #fbbf24);
+}
+
+.analysis-bubble.clicked {
+    transform: scale(0.98);
+}
+
+.analysis-icon {
+    font-size: 1.25rem;
+    flex-shrink: 0;
+}
+
+.analysis-text {
+    flex: 1;
+    font-weight: 500;
+}
+
+.analysis-click-hint {
+    font-size: 0.75rem;
+    opacity: 0.7;
+    white-space: nowrap;
+}
+
+/* View Toggle Styling */
+.analysis-header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.view-toggle {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.875rem;
+}
+
+.view-btn {
+    padding: 0.25rem 0.75rem;
+    background: var(--color-primary);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.875rem;
+    transition: all 0.2s;
+}
+
+.view-btn:hover {
+    background: var(--color-primary-dark);
+}
+
+.view-separator {
+    color: var(--text-secondary);
+}
+
+#localViewInfo {
+    color: var(--text-secondary);
+}
+
+/* Global Summary Styling */
+.global-summary-header {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.global-summary-header h4 {
+    color: var(--text-primary);
+    font-size: 1.125rem;
+    font-weight: 600;
+}
+
+.summary-card.clickable .summary-label {
+    font-size: 0.75rem;
+}
+
+/* Text Preview in Local Analysis */
+.text-preview {
+    background: var(--bg-secondary);
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+}
+
+.text-preview h5 {
+    margin: 0 0 0.5rem 0;
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+    font-weight: 600;
+}
+
+.text-preview p {
+    margin: 0;
+    color: var(--text-primary);
+    line-height: 1.5;
+    font-size: 0.9rem;
+}
+
+/* Different message bubble colors for clarity */
+.message.system .message-bubble {
+    background: #e5e7eb;
+    color: #374151;
+    border: 1px solid #d1d5db;
+}
+
+.message.user .message-bubble {
+    background: rgba(102, 126, 234, 0.95);
+    color: white;
+}
+
+/* Helper text updates */
+.helper-text {
+    background: var(--bg-secondary);
+    padding: 0.5rem 0.75rem;
+    border-radius: 4px;
+    border-left: 3px solid var(--color-info);
+    margin-bottom: 1rem;
+}
+
+/* Badge improvements for global view */
+.tab-badge {
+    background: var(--color-warning);
+    color: white;
+    font-size: 0.7rem;
+    font-weight: bold;
+    border-radius: 10px;
+    padding: 2px 6px;
+    min-width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    right: 8px;
+    top: 4px;
+}
+
+/* Responsive improvements */
+@media (max-width: 768px) {
+    .analysis-header-content {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .view-toggle {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .message.analysis-info {
+        max-width: 95%;
+    }
+}
