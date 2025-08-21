@@ -1,6 +1,6 @@
 # MGraph-AI Service LLMs
 
-[![Current Release](https://img.shields.io/badge/release-v0.6.27-blue)](https://github.com/the-cyber-boardroom/MGraph-AI__Service__LLMs/releases)
+[![Current Release](https://img.shields.io/badge/release-v0.6.28-blue)](https://github.com/the-cyber-boardroom/MGraph-AI__Service__LLMs/releases)
 [![Python](https://img.shields.io/badge/python-3.12-blue)](https://www.python.org/downloads/)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.116.1-009688)](https://fastapi.tiangolo.com/)
 [![Type-Safe](https://img.shields.io/badge/Type--Safe-✓-brightgreen)](https://github.com/owasp-sbot/OSBot-Utils)
