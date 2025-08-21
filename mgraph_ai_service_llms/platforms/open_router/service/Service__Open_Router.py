@@ -5,11 +5,13 @@ from typing                                                                     
 
 from osbot_utils.decorators.methods.cache_on_self import cache_on_self
 from osbot_utils.type_safe.Type_Safe                                                                    import Type_Safe
+from osbot_utils.utils.Dev import pprint
 from osbot_utils.utils.Env                                                                              import get_env
 
 from mgraph_ai_service_llms.platforms.open_router.cache.Open_Router__Chat__Cache import Open_Router__Chat__Cache
 from mgraph_ai_service_llms.platforms.open_router.schemas.Safe_Str__Open_Router__Model_ID               import Safe_Str__Open_Router__Model_ID
 from mgraph_ai_service_llms.platforms.open_router.schemas.request.Schema__Open_Router__Chat_Request     import Schema__Open_Router__Chat_Request
+from mgraph_ai_service_llms.platforms.open_router.schemas.request.Schema__Open_Router__Provider_Preferences import Schema__Open_Router__Provider_Preferences
 from mgraph_ai_service_llms.platforms.open_router.schemas.request.Schema__Open_Router__Request_Headers  import Schema__Open_Router__Request_Headers
 from mgraph_ai_service_llms.platforms.open_router.schemas.request.Safe_Str__Message_Content             import Safe_Str__Message_Content
 from mgraph_ai_service_llms.platforms.open_router.service.Service__Open_Router__Models                  import Service__Open_Router__Models
@@ -63,18 +65,19 @@ class Service__Open_Router(Type_Safe):                                          
                               model         : str                                        ,
                               system_prompt : Optional[str  ]                    = None ,
                               temperature   : float                               = 0.7  ,
-                              max_tokens    : int                                = 1000 ,
+                              max_tokens    : int                                = 5000 ,
                               provider      : Optional[str  ]                    = None ,
                               max_cost      : Optional[float]                    = None
                         ) -> Dict[str, Any]:
+        kwargs = dict(model         = Safe_Str__Open_Router__Model_ID(model)      ,
+                      prompt        = Safe_Str__Message_Content(prompt)           ,
+                      system_prompt = Safe_Str__Message_Content(system_prompt) if system_prompt else None,
+                      temperature   = temperature                                  ,
+                      max_tokens    = max_tokens)
+        if provider:
+            kwargs['provider'] = Schema__Open_Router__Provider_Preferences(order=[provider], allow_fallbacks=False)
 
-        request = Schema__Open_Router__Chat_Request.create_simple(
-            model         = Safe_Str__Open_Router__Model_ID(model)      ,
-            prompt        = Safe_Str__Message_Content(prompt)           ,
-            system_prompt = Safe_Str__Message_Content(system_prompt) if system_prompt else None,
-            temperature   = temperature                                  ,
-            max_tokens    = max_tokens
-        )
+        request = Schema__Open_Router__Chat_Request.create_simple(**kwargs)
 
         request_data = request.json()
         cached_response = self.chat_cache().get_cached_response(request_data)
@@ -88,9 +91,10 @@ class Service__Open_Router(Type_Safe):                                          
                                       include_provider = True    )
 
         response = requests.post(url     = self.chat_completion_url()     ,
-                                headers = headers.to_headers_dict()       ,
-                                json    = request.to_api_dict()           )
-
+                                 headers = headers.to_headers_dict()       ,
+                                 json    = request.to_api_dict()           )
+        if response.status_code == 400:
+            pprint(response.json())
         response.raise_for_status()                                                                      # Raise exception for HTTP errors
         response_data = response.json()
 

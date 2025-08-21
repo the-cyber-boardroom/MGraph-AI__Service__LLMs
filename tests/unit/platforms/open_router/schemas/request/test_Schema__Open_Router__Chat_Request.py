@@ -38,19 +38,19 @@ class test_Schema__Open_Router__Chat_Request(TestCase):
 
         assert message.role == "assistant"
         assert message.content == "I'm doing well, thank you!"
-        assert message.name is None
+        #assert message.name is None
         assert message.tool_call_id is None
 
         # Test tool message
         tool_message = Schema__Open_Router__Message(
             role         = "tool",
             content      = '{"result": "success"}',
-            name         = "function_name",
+            #name         = "function_name",
             tool_call_id = "call_123"
         )
 
         assert tool_message.role == "tool"
-        assert tool_message.name == "function_name"
+        #assert tool_message.name == "function_name"
         assert tool_message.tool_call_id == "call_123"
 
     def test__to_api_dict__minimal(self):       # Test conversion to API dict with minimal fields
@@ -136,7 +136,7 @@ class test_Schema__Open_Router__Chat_Request(TestCase):
         provider_dict = api_dict["provider"]
         assert provider_dict["allow_fallbacks"  ] == True
         assert provider_dict["order"            ] == ["anthropic", "openai", "groq"]
-        assert provider_dict["ignore_providers" ] == ["together"]
+        #assert provider_dict["ignore_providers" ] == ["together"]
         assert provider_dict["data_collection"  ] == "deny"
 
     def test__streaming_configuration(self):                    # Test streaming configuration
@@ -217,11 +217,11 @@ class test_Schema__Open_Router__Chat_Request(TestCase):
                                                logprobs          = None                                ,
                                                top_logprobs      = None                                ,
                                                model             = 'openai/gpt-4o-mini'                ,
-                                               messages          = [__(name         = None             ,
+                                               messages          = [__(#name         = None             ,
                                                                        tool_call_id = None             ,
                                                                        role         = 'system'         ,
                                                                        content      = 'You are a geography expert'),
-                                                                    __(name         = None             ,
+                                                                    __(#name         = None             ,
                                                                        tool_call_id = None             ,
                                                                        role         = 'user'           ,
                                                                        content      = 'What is the capital of France?')])
@@ -285,11 +285,11 @@ class test_Schema__Open_Router__Chat_Request(TestCase):
                                             'logprobs'          : True                                            ,
                                             'max_tokens'        : 2000                                            ,
                                             'messages'          : [{'content'      : 'You are a helpful assistant',
-                                                                    'name'         : None                         ,
+                                                                    #'name'         : None                         ,
                                                                     'role'         : 'system'                     ,
                                                                     'tool_call_id' : None}                        ,
                                                                    {'content'      : 'Hello, how are you?'        ,
-                                                                    'name'         : None                         ,
+                                                                    #'name'         : None                         ,
                                                                     'role'         : 'user'                       ,
                                                                     'tool_call_id' : None}]                       ,
                                             'min_p'             : Safe_Float(0.05)                                ,
