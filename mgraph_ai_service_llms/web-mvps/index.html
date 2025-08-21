@@ -9,37 +9,43 @@
 <body>
   <div class="container">
     <h1>Text Analysis</h1>
-
     <h2>Claude – 25-08-21</h2>
-    <ul>
-      <li>
-        <a href="./text-analysis/claude/25-08-21/v3/index.html" class="version-link">
-          <div class="version-info">
-            <div class="version-name">Version 3</div>
-            <div class="version-desc">Global/local analysis tracking, clickable analysis summaries, cumulative insights</div>
-          </div>
-          <span class="version-badge latest">Latest</span>
-        </a>
-      </li>
-      <li>
-        <a href="./text-analysis/claude/25-08-21/v2/index.html" class="version-link">
-          <div class="version-info">
-            <div class="version-name">Version 2</div>
-            <div class="version-desc">UI fixes: tab badges, overflow, input area improvements</div>
-          </div>
-          <span class="version-badge">Stable</span>
-        </a>
-      </li>
-      <li>
-        <a href="./text-analysis/claude/25-08-21/v1/index.html" class="version-link">
-          <div class="version-info">
-            <div class="version-name">Version 1</div>
-            <div class="version-desc">Original implementation with core functionality</div>
-          </div>
-          <span class="version-badge original">Original</span>
-        </a>
-      </li>
+    <ul id="versionsList">
+      <li style="text-align: center; color: var(--text-secondary);">Loading versions...</li>
     </ul>
   </div>
+
+  <script>
+    async function loadVersions() {
+      const versionsList = document.getElementById('versionsList');
+
+      try {
+        const response = await fetch('./data/versions.json');
+        const versions = await response.json();
+
+        versionsList.innerHTML = '';
+
+        versions.forEach(version => {
+          const li = document.createElement('li');
+          li.innerHTML = `
+            <a href="${version.path}" class="version-link">
+              <div class="version-info">
+                <div class="version-name">${version.name}</div>
+                <div class="version-desc">${version.description}</div>
+              </div>
+              <span class="version-badge ${version.badge}">${version.badgeText}</span>
+            </a>
+          `;
+          versionsList.appendChild(li);
+        });
+      } catch (error) {
+        versionsList.innerHTML = '<li style="text-align: center; color: var(--color-warning);">Failed to load versions</li>';
+        console.error('Error loading versions:', error);
+      }
+    }
+
+    // Load versions on page load
+    loadVersions();
+  </script>
 </body>
 </html>

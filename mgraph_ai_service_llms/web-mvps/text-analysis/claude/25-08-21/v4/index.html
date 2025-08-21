@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Analyzer v4</title>
+    <link rel="stylesheet" href="../v1/css/text-analyzer.css">
+    <link rel="stylesheet" href="../v1/css/chat-panel.css">
+    <link rel="stylesheet" href="../v1/css/analysis-panel.css">
+    <link rel="stylesheet" href="./css/styles.css">
+</head>
+<body>
+    <text-analyzer></text-analyzer>
+
+    <script type="module">
+        import { TextAnalyzer } from './js/components/text-analyzer-v4.js';
+        import { ChatPanel } from './js/components/chat-panel-v4.js';
+        import { AnalysisPanel } from './js/components/analysis-panel-v4.js';
+        import { ActivityLog } from './js/components/activity-log.js';
+        import { AnalysisDashboard } from './js/components/analysis-dashboard.js';
+
+        // Register custom elements
+        customElements.define('text-analyzer', TextAnalyzer);
+        customElements.define('chat-panel', ChatPanel);
+        customElements.define('analysis-panel', AnalysisPanel);
+        customElements.define('activity-log', ActivityLog);
+        customElements.define('analysis-dashboard', AnalysisDashboard);
+    </script>
+</body>
+</html>
