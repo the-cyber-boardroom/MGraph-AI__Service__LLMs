@@ -45,8 +45,6 @@ class Open_Router__Chat__Cache(Type_Safe):
                 cached_at = cache_entry.get('cached_at', 0)                 # Check TTL
                 current_time = Timestamp_Now()
                 age_hours    = (current_time - cached_at) / 3_600_000
-                print('------')
-                print(age_hours)
 
                 if age_hours < self.cache_ttl_hours:
                     return cache_entry.get('response')

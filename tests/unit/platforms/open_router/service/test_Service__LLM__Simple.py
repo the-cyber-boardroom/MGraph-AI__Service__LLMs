@@ -93,40 +93,40 @@ class test_Service__LLM__Simple(TestCase):
         assert "Invalid model key: invalid-model" in str(exc_info.value)
         assert "Valid options:" in str(exc_info.value)
 
-    def test_execute_completion_with_preferences(self):                                                      # Test with provider preferences
-        preferences = Schema__Open_Router__Provider_Preferences(
-            order           = [Safe_Str("groq"), Safe_Str("cerebras")] ,
-            allow_fallbacks = True                                     ,
-            data_collection = "deny"                                   )
+    # def test_execute_completion_with_preferences(self):                                                      # Test with provider preferences
+    #     preferences = Schema__Open_Router__Provider_Preferences(
+    #         order           = [Safe_Str("groq"), Safe_Str("cerebras")] ,
+    #         allow_fallbacks = True                                     ,
+    #         data_collection = "deny"                                   )
+    #
+    #     result = self.service.execute_completion_with_preferences(
+    #         user_prompt          = "What is Python?"                   ,
+    #         system_prompt        = "Give a one-sentence definition"    ,
+    #         model_key            = "gpt-oss-20b"                       ,
+    #         provider_preferences = preferences                         )
+    #
+    #     assert result["duration_seconds"]     > 0
+    #     assert result["model_used"]           == "openai/gpt-oss-20b"
+    #     assert result["provider_requested"]   == "groq"                                                      # First in order
+    #     assert "provider_used" in result
+    #     assert "provider_preferences" in result
+    #     assert result["provider_preferences"]["order"]           == ["groq", "cerebras"]
+    #     assert result["provider_preferences"]["allow_fallbacks"] == True
+    #     assert len(result["response_text"])   > 0
+    #     assert "python" in result["response_text"].lower() or "programming" in result["response_text"].lower()
 
-        result = self.service.execute_completion_with_preferences(
-            user_prompt          = "What is Python?"                   ,
-            system_prompt        = "Give a one-sentence definition"    ,
-            model_key            = "gpt-oss-20b"                       ,
-            provider_preferences = preferences                         )
-
-        assert result["duration_seconds"]     > 0
-        assert result["model_used"]           == "openai/gpt-oss-20b"
-        assert result["provider_requested"]   == "groq"                                                      # First in order
-        assert "provider_used" in result
-        assert "provider_preferences" in result
-        assert result["provider_preferences"]["order"]           == ["groq", "cerebras"]
-        assert result["provider_preferences"]["allow_fallbacks"] == True
-        assert len(result["response_text"])   > 0
-        assert "python" in result["response_text"].lower() or "programming" in result["response_text"].lower()
-
-    def test_execute_completion_with_preferences_no_order(self):                                             # Test preferences without order
-        preferences = Schema__Open_Router__Provider_Preferences(
-            allow_fallbacks     = False                                      ,
-            ignore_providers    = [Safe_Str("openai"), Safe_Str("anthropic")])
-
-        result = self.service.execute_completion_with_preferences(
-            user_prompt          = "Say 'ok'"      ,
-            provider_preferences = preferences     )
-
-        assert result["provider_requested"]  is None                                                         # No order specified
-        assert result["model_used"]          == "openai/gpt-oss-120b"
-        assert len(result["response_text"])  > 0
+    # def test_execute_completion_with_preferences_no_order(self):                                             # Test preferences without order
+    #     preferences = Schema__Open_Router__Provider_Preferences(
+    #         allow_fallbacks     = False                                      ,
+    #         ignore_providers    = [Safe_Str("openai"), Safe_Str("anthropic")])
+    #
+    #     result = self.service.execute_completion_with_preferences(
+    #         user_prompt          = "Say 'ok'"      ,
+    #         provider_preferences = preferences     )
+    #
+    #     assert result["provider_requested"]  is None                                                         # No order specified
+    #     assert result["model_used"]          == "openai/gpt-oss-120b"
+    #     assert len(result["response_text"])  > 0
 
     def test_execute_completion_timing_precision(self):                                                      # Test timing precision
         result = self.service.execute_completion(user_prompt = "Reply quickly with 'done'")

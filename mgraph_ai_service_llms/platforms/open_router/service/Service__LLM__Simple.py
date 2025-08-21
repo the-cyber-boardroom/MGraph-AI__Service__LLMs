@@ -56,40 +56,40 @@ class Service__LLM__Simple(Type_Safe):
                  "provider_used"    : actual_provider      ,
                  "response_text"    : response_text        }
 
-    def execute_completion_with_preferences(self, user_prompt          : str                                             ,      # Execute with full provider preferences
-                                                  system_prompt        : Optional[str]                            = None ,
-                                                  model_key            : str                                      = "gpt-oss-120b",
-                                                  provider_preferences : Optional[Schema__Open_Router__Provider_Preferences] = None
-                                           ) -> Dict[str, Any]:
-
-        model_id = HIGH_THROUGHPUT_MODELS.get(model_key)
-        if not model_id:
-            raise ValueError(f"Invalid model key: {model_key}. Valid options: {list(HIGH_THROUGHPUT_MODELS.keys())}")
-
-        start_time = time.perf_counter()
-
-        # Extract provider from preferences if provided
-        provider_value = None
-        if provider_preferences and provider_preferences.order:
-            provider_value = str(provider_preferences.order[0])
-
-        response = self.open_router.chat_completion(
-            prompt        = user_prompt    ,
-            model         = model_id       ,
-            system_prompt = system_prompt  ,
-            temperature   = 0.7            ,
-            max_tokens    = 500            ,
-            provider      = provider_value ,
-            max_cost      = 0.5            )
-
-        duration = time.perf_counter() - start_time
-
-        response_text   = response.get("choices", [{}])[0].get("message", {}).get("content", "")
-        actual_provider = response.get("provider", provider_value or "auto")
-
-        return { "duration_seconds"     : round(duration, 3)                                                ,
-                 "model_used"           : model_id                                                         ,
-                 "provider_requested"   : provider_value                                                   ,
-                 "provider_used"        : actual_provider                                                  ,
-                 "provider_preferences" : provider_preferences.json() if provider_preferences else None    ,
-                 "response_text"        : response_text                                                    }
+    # def execute_completion_with_preferences(self, user_prompt          : str                                             ,      # Execute with full provider preferences
+    #                                               system_prompt        : Optional[str]                            = None ,
+    #                                               model_key            : str                                      = "gpt-oss-120b",
+    #                                               provider_preferences : Optional[Schema__Open_Router__Provider_Preferences] = None
+    #                                        ) -> Dict[str, Any]:
+    #
+    #     model_id = HIGH_THROUGHPUT_MODELS.get(model_key)
+    #     if not model_id:
+    #         raise ValueError(f"Invalid model key: {model_key}. Valid options: {list(HIGH_THROUGHPUT_MODELS.keys())}")
+    #
+    #     start_time = time.perf_counter()
+    #
+    #     # Extract provider from preferences if provided
+    #     provider_value = None
+    #     if provider_preferences and provider_preferences.order:
+    #         provider_value = str(provider_preferences.order[0])
+    #
+    #     response = self.open_router.chat_completion(
+    #         prompt        = user_prompt    ,
+    #         model         = model_id       ,
+    #         system_prompt = system_prompt  ,
+    #         temperature   = 0.7            ,
+    #         max_tokens    = 500            ,
+    #         provider      = provider_value ,
+    #         max_cost      = 0.5            )
+    #
+    #     duration = time.perf_counter() - start_time
+    #
+    #     response_text   = response.get("choices", [{}])[0].get("message", {}).get("content", "")
+    #     actual_provider = response.get("provider", provider_value or "auto")
+    #
+    #     return { "duration_seconds"     : round(duration, 3)                                                ,
+    #              "model_used"           : model_id                                                         ,
+    #              "provider_requested"   : provider_value                                                   ,
+    #              "provider_used"        : actual_provider                                                  ,
+    #              "provider_preferences" : provider_preferences.json() if provider_preferences else None    ,
+    #              "response_text"        : response_text                                                    }
