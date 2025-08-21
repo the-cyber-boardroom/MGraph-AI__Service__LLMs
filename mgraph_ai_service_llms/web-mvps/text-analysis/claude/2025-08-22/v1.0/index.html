@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Analyzer v1.0</title>
+
+    <!-- Global Styles -->
+    <link rel="stylesheet" href="./css/main.css">
+    <link rel="stylesheet" href="./css/variables.css">
+    <!-- Component Styles -->
+    <link rel="stylesheet" href="./components/text-analyzer/text-analyzer.css">
+    <link rel="stylesheet" href="./components/chat-panel/chat-panel.css">
+    <link rel="stylesheet" href="./components/analysis-panel/analysis-panel.css">
+    <link rel="stylesheet" href="./components/activity-log/activity-log.css">
+    <link rel="stylesheet" href="./components/analysis-dashboard/analysis-dashboard.css">
+    <link rel="stylesheet" href="./components/llm-request-viewer/llm-request-viewer.css">
+</head>
+<body>
+    <!-- Main App Container -->
+    <text-analyzer></text-analyzer>
+
+    <!-- Module Scripts -->
+    <script type="module">
+        // Import components
+        import { TextAnalyzer } from './components/text-analyzer/text-analyzer.js';
+        import { ChatPanel } from './components/chat-panel/chat-panel.js';
+        import { AnalysisPanel } from './components/analysis-panel/analysis-panel.js';
+        import { ActivityLog } from './components/activity-log/activity-log.js';
+        import { AnalysisDashboard } from './components/analysis-dashboard/analysis-dashboard.js';
+        import { LLMRequestViewer } from './components/llm-request-viewer/llm-request-viewer.js';
+
+        // Register custom elements
+        customElements.define('text-analyzer', TextAnalyzer);
+        customElements.define('chat-panel', ChatPanel);
+        customElements.define('analysis-panel', AnalysisPanel);
+        customElements.define('activity-log', ActivityLog);
+        customElements.define('analysis-dashboard', AnalysisDashboard);
+        customElements.define('llm-request-viewer', LLMRequestViewer);
+
+        // Global keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            // Ctrl+Shift+C to open LLM Request Viewer
+            if (e.ctrlKey && e.shiftKey && e.key === 'C') {
+                const analyzer = document.querySelector('text-analyzer');
+                if (analyzer) {
+                    analyzer.switchView('llm');
+                }
+            }
+        });
+
+        // App initialization
+        window.addEventListener('DOMContentLoaded', () => {
+            console.log('Text Analyzer v1.0 loaded successfully');
+
+            // Check for API connectivity
+            fetch('/info/health')
+                .then(response => {
+                    if (!response.ok) {
+                        console.warn('API health check failed, some features may not work');
+                    }
+                })
+                .catch(error => {
+                    console.warn('API not available, running in demo mode');
+                });
+        });
+    </script>
+</body>
+</html>

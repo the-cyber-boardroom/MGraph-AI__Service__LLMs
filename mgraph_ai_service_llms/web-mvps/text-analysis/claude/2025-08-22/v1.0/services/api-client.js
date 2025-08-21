@@ -125,8 +125,6 @@ export class APIClient {
             };
         } catch (error) {
             console.error('API Error:', error);
-            // Return mock data for demo purposes
-            return this.getMockData(text);
         }
     }
 
@@ -300,45 +298,5 @@ ${globalData.hypotheses.slice(0, 5).join('\n')}`;
         }
 
         return { summary_text: data.response_text, cache_id: data.cache_id };
-    }
-
-    // Mock data for testing/demo purposes
-    getMockData(text) {
-        const sentences = text.split('.').filter(s => s.trim().length > 0);
-        const facts = sentences.slice(0, Math.min(4, sentences.length));
-
-        return {
-            text: text,
-            facts: facts.map(f => f.trim() + '.'),
-            data_points: [
-                "Q3 revenue: $5.2 million",
-                "30% year-over-year increase",
-                "50 new employees by December",
-                "Focus on engineering and sales"
-            ],
-            questions: [
-                "What factors contributed to this growth?",
-                "How does this compare to industry standards?",
-                "What are the long-term projections?",
-                "What challenges might arise?",
-                "How will resources be allocated?"
-            ],
-            hypotheses: [
-                "The organization is experiencing rapid expansion",
-                "Market conditions are favorable for growth",
-                "Strategic investments are paying off",
-                "Competitive advantage is being established"
-            ],
-            summary: {
-                facts_count: facts.length,
-                data_points_count: 4,
-                questions_count: 5,
-                hypotheses_count: 4
-            },
-            responseTime: 250,
-            fromCache: false,
-            model: "mock-model",
-            provider: "mock"
-        };
     }
 }

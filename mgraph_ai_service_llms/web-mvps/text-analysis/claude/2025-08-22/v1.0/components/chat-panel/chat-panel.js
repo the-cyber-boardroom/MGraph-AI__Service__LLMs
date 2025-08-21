@@ -1,751 +1,464 @@
-// mgraph_ai_service_llms/web-mvps/text-analysis/v1.0/components/analysis-panel/analysis-panel.js
+// mgraph_ai_service_llms/web-mvps/text-analysis/v1.0/components/chat-panel/chat-panel.js
 
 import { TextFormatter } from '../../utils/text-formatter.js';
+import { getRandomSample, getRandomWelcome } from '../../utils/sample-texts.js';
 
-export class AnalysisPanel extends HTMLElement {
+export class ChatPanel extends HTMLElement {
     constructor() {
         super();
-        this.currentAnalysis = null;
-        this.activeTab = 'summary';
-        this.isGlobalView = true;
-        this.currentAnalysisId = null;
-        this.currentCacheIds = {};
+        this.messages = [];
+        this.isFirstLoad = true;
     }
 
     connectedCallback() {
         this.render();
         this.setupEventListeners();
+        this.initialize();
     }
 
     render() {
-        this.className = 'analysis-panel';
+        this.className = 'chat-panel';
         this.innerHTML = `
-            <div class="analysis-header">
-                <div class="analysis-header-content">
-                    <h3 id="analysis-title">Analysis Results</h3>
-                    <div class="view-toggle" id="viewToggle" style="display: none;">
-                        <button class="view-btn" id="globalViewBtn">Global View</button>
-                        <span class="view-separator">|</span>
-                        <span id="localViewInfo">Analysis #1</span>
+            <div class="chat-header">
+                <h2>Text Analysis Chat</h2>
+                <button class="btn btn-secondary" id="clearChat">Clear</button>
+            </div>
+            <div class="chat-messages" id="chatMessages"></div>
+            <div class="chat-input-area">
+                <div class="chat-input-wrapper">
+                    <textarea 
+                        class="chat-input" 
+                        id="chatInput" 
+                        placeholder="Enter text to analyze..."
+                    ></textarea>
+                    <div class="chat-actions">
+                        <button class="btn btn-primary" id="sendBtn">Analyze</button>
+                        <button class="btn btn-secondary" id="sampleBtn">Sample</button>
                     </div>
                 </div>
-                <span class="cache-indicator" id="cacheIndicator" style="display: none;"></span>
-            </div>
-            <div class="analysis-tabs">
-                <div class="tab active" data-tab="summary">
-                    Summary
-                </div>
-                <div class="tab" data-tab="facts">
-                    Facts <span class="tab-badge">0</span>
-                </div>
-                <div class="tab" data-tab="data-points">
-                    Data Points <span class="tab-badge">0</span>
-                </div>
-                <div class="tab" data-tab="questions">
-                    Questions <span class="tab-badge">0</span>
-                </div>
-                <div class="tab" data-tab="hypotheses">
-                    Hypotheses <span class="tab-badge">0</span>
-                </div>
-            </div>
-            <div class="analysis-content">
-                <div class="analysis-section active" id="summary-section">
-                    <div class="empty-state">
-                        <p>No analysis yet. Enter some text to get started!</p>
-                    </div>
-                </div>
-                <div class="analysis-section" id="facts-section"></div>
-                <div class="analysis-section" id="data-points-section"></div>
-                <div class="analysis-section" id="questions-section"></div>
-                <div class="analysis-section" id="hypotheses-section"></div>
+                <div class="char-count" id="charCount">0 / 8000 characters</div>
             </div>
         `;
 
-        this.cacheIndicator = this.querySelector('#cacheIndicator');
-        this.tabs = this.querySelectorAll('.tab');
-        this.sections = this.querySelectorAll('.analysis-section');
-        this.viewToggle = this.querySelector('#viewToggle');
-        this.globalViewBtn = this.querySelector('#globalViewBtn');
-        this.localViewInfo = this.querySelector('#localViewInfo');
-        this.analysisTitle = this.querySelector('#analysis-title');
-
-        // Add event listener for global view button
-        this.globalViewBtn?.addEventListener('click', () => {
-            this.dispatchEvent(new CustomEvent('view-change', {
-                detail: { view: 'global' },
-                bubbles: true
-            }));
-        });
+        // Store references to elements
+        this.chatInput = this.querySelector('#chatInput');
+        this.sendBtn = this.querySelector('#sendBtn');
+        this.sampleBtn = this.querySelector('#sampleBtn');
+        this.clearBtn = this.querySelector('#clearChat');
+        this.chatMessages = this.querySelector('#chatMessages');
+        this.charCount = this.querySelector('#charCount');
     }
 
     setupEventListeners() {
-        // Tab switching
-        this.tabs.forEach(tab => {
-            tab.addEventListener('click', () => this.switchTab(tab.dataset.tab));
-        });
+        // Input handling
+        this.chatInput.addEventListener('input', () => this.handleInput());
+        this.chatInput.addEventListener('keydown', (e) => this.handleKeydown(e));
+
+        // Button clicks
+        this.sendBtn.addEventListener('click', () => this.handleSend());
+        this.sampleBtn.addEventListener('click', () => this.loadSampleText());
+        this.clearBtn.addEventListener('click', () => this.clearChat());
     }
 
-    switchTab(tabName) {
-        this.activeTab = tabName;
+    initialize() {
+        // Add welcome message
+        this.addMessage(getRandomWelcome(), 'system');
 
-        // Update tab states
-        this.tabs.forEach(tab => {
-            if (tab.dataset.tab === tabName) {
-                tab.classList.add('active');
-            } else {
-                tab.classList.remove('active');
-            }
-        });
-
-        // Update section visibility
-        this.sections.forEach(section => {
-            if (section.id === `${tabName}-section`) {
-                section.classList.add('active');
-            } else {
-                section.classList.remove('active');
-            }
-        });
-    }
-
-    updateAnalysis(analysis) {
-        if (!analysis) {
-            this.clearAnalysis();
-            return;
+        // Load sample text on first load
+        if (this.isFirstLoad) {
+            this.loadSampleText();
+            this.isFirstLoad = false;
         }
-
-        this.currentAnalysis = analysis;
-
-        // Update cache indicator
-        this.updateCacheIndicator(analysis);
-
-        // Update each section
-        this.updateSummary(analysis);
-        this.updateFacts(analysis.facts || []);
-        this.updateDataPoints(analysis.data_points || []);
-        this.updateQuestions(analysis.questions || []);
-        this.updateHypotheses(analysis.hypotheses || []);
-
-        // Update badges
-        this.updateBadges(analysis.summary || {});
-
-        // Hide loading
-        this.hideLoading();
     }
 
-    updateCacheIndicator(analysis) {
-        if (analysis.responseTime !== undefined) {
-            this.cacheIndicator.style.display = 'inline-block';
+    handleInput() {
+        const length = this.chatInput.value.length;
+        const validation = TextFormatter.validateTextLength(this.chatInput.value, 10, 8000);
 
-            // Fixed logic: <500ms = cached, 500-2000ms = fresh, >2000ms = slow
-            let className, text;
-            if (analysis.responseTime < 500) {
-                className = 'cache-indicator cached';
-                text = 'Cached';
-            } else if (analysis.responseTime < 2000) {
-                className = 'cache-indicator fresh';
-                text = 'Fresh';
-            } else {
-                className = 'cache-indicator slow';
-                text = 'Processing';
-            }
+        // Update character count
+        this.charCount.textContent = `${length} / 8000 characters`;
 
-            this.cacheIndicator.className = className;
-            this.cacheIndicator.textContent =
-                `${text} • ${TextFormatter.formatResponseTime(analysis.responseTime)}`;
+        // Update styles based on validation
+        if (length > 8000) {
+            this.charCount.className = 'char-count error';
+            this.sendBtn.disabled = true;
+        } else if (length < 10) {
+            this.charCount.className = 'char-count';
+            this.sendBtn.disabled = true;
         } else {
-            this.cacheIndicator.style.display = 'none';
+            this.charCount.className = 'char-count';
+            this.sendBtn.disabled = false;
         }
     }
 
-    updateSummary(analysis) {
-        const section = this.querySelector('#summary-section');
-        const summary = analysis.summary || {};
-
-        section.innerHTML = `
-            <div class="summary-grid">
-                <div class="summary-card clickable" data-target="facts">
-                    <div class="summary-number">${summary.facts_count || 0}</div>
-                    <div class="summary-label">FACTS</div>
-                </div>
-                <div class="summary-card clickable" data-target="data-points">
-                    <div class="summary-number">${summary.data_points_count || 0}</div>
-                    <div class="summary-label">DATA POINTS</div>
-                </div>
-                <div class="summary-card clickable" data-target="questions">
-                    <div class="summary-number">${summary.questions_count || 0}</div>
-                    <div class="summary-label">QUESTIONS</div>
-                </div>
-                <div class="summary-card clickable" data-target="hypotheses">
-                    <div class="summary-number">${summary.hypotheses_count || 0}</div>
-                    <div class="summary-label">HYPOTHESES</div>
-                </div>
-            </div>
-            ${analysis.model ? `<p style="margin-top: 1rem; color: var(--text-secondary); font-size: 0.875rem;">
-                Model: ${analysis.model} • Provider: ${analysis.provider || 'default'}
-            </p>` : ''}
-        `;
-
-        // Add click handlers to summary cards
-        section.querySelectorAll('.summary-card.clickable').forEach(card => {
-            card.addEventListener('click', () => {
-                const target = card.dataset.target;
-                this.switchTab(target);
-            });
-        });
+    handleKeydown(e) {
+        if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            this.handleSend();
+        }
     }
 
-    updateFacts(facts) {
-        const section = this.querySelector('#facts-section');
+    async handleSend() {
+        const text = this.chatInput.value.trim();
+        const validation = TextFormatter.validateTextLength(text, 10, 8000);
 
-        if (facts.length === 0) {
-            section.innerHTML = '<div class="empty-state">No facts extracted</div>';
+        if (!validation.isValid) {
+            this.showError(validation.message);
             return;
         }
 
-        section.innerHTML = `
-            <button class="copy-btn" data-section="facts">Copy All</button>
-            <h4>Extracted Facts</h4>
-            <ul class="analysis-list">
-                ${facts.map(fact => `
-                    <li class="analysis-item">${TextFormatter.escapeHtml(fact)}</li>
-                `).join('')}
-            </ul>
-        `;
+        // Add user message
+        this.addMessage(text, 'user');
 
-        // Add copy handler
-        section.querySelector('.copy-btn').addEventListener('click', () => {
-            this.copySection('facts', facts);
-        });
+        // Clear input
+        this.chatInput.value = '';
+        this.handleInput();
+
+        // Show loading
+        this.setLoading(true);
+
+        // Emit event for parent to handle
+        this.dispatchEvent(new CustomEvent('message-sent', {
+            detail: { text },
+            bubbles: true
+        }));
+
+        // Remove loading state after a delay (parent will handle actual response)
+        setTimeout(() => this.setLoading(false), 100);
     }
 
-    updateDataPoints(dataPoints) {
-        const section = this.querySelector('#data-points-section');
+    // Enhanced addMessage method with cache ID support and question handling
+    addMessage(text, sender = 'user', cacheId = null) {
+        const messageDiv = document.createElement('div');
+        messageDiv.className = `message ${sender}`;
 
-        if (dataPoints.length === 0) {
-            section.innerHTML = '<div class="empty-state">No data points extracted</div>';
-            return;
-        }
+        const bubble = document.createElement('div');
+        bubble.className = 'message-bubble';
 
-        section.innerHTML = `
-            <button class="copy-btn" data-section="data-points">Copy All</button>
-            <h4>Data Points</h4>
-            <div>
-                ${dataPoints.map(point => `
-                    <div class="data-point">
-                        ${TextFormatter.highlightNumbers(TextFormatter.escapeHtml(point))}
+        // Check if this is a question from the user
+        const isQuestion = sender === 'user' && text.endsWith('?');
+
+        if (sender === 'system') {
+            bubble.innerHTML = `<span class="message-text">${text}</span>`;
+
+            // Add cache link if available
+            if (cacheId) {
+                bubble.innerHTML += `
+                    <div class="message-cache-info">
+                        <span class="cache-indicator">🔗</span>
+                        <a href="#" class="cache-link-inline" data-cache-id="${cacheId}">
+                            Cache: ${cacheId.substring(0, 8)}...
+                        </a>
                     </div>
-                `).join('')}
-            </div>
-        `;
-
-        // Add copy handler
-        section.querySelector('.copy-btn').addEventListener('click', () => {
-            this.copySection('data-points', dataPoints);
-        });
-    }
-
-    updateQuestions(questions) {
-        const section = this.querySelector('#questions-section');
-
-        if (questions.length === 0) {
-            section.innerHTML = '<div class="empty-state">No questions generated</div>';
-            return;
+                `;
+            }
+        } else if (isQuestion) {
+            // Add generate answer option for questions
+            bubble.innerHTML = `
+                <span class="message-text">${text}</span>
+                <button class="inline-generate-btn" data-question="${text}">Generate Answer</button>
+            `;
+        } else {
+            bubble.textContent = text;
         }
 
-        // For local view, add both "Add Question" and "Generate Answer" buttons
-        if (!this.isGlobalView) {
-            const cacheInfo = this.currentCacheIds.questions
-                ? `<div style="margin-bottom: 1rem; padding: 0.5rem; background: var(--bg-secondary); border-radius: 4px; font-size: 0.75rem;">
-                    <span style="color: var(--text-secondary);">Cache ID:</span> 
-                    <code style="cursor: pointer; color: var(--color-primary);" onclick="document.querySelector('analysis-panel').inspectCacheId('${this.currentCacheIds.questions}')">
-                        ${this.currentCacheIds.questions}
-                    </code>
-                </div>`
-                : '';
+        const time = document.createElement('div');
+        time.className = 'message-time';
+        time.textContent = TextFormatter.formatTimestamp(new Date());
 
-            section.innerHTML = `
-                <button class="copy-btn" data-section="questions">Copy All</button>
-                <h4>Generated Questions</h4>
-                ${cacheInfo}
-                <p class="helper-text">💡 Click "Add" to use the question, or "Generate" for an answer</p>
-                <ul class="analysis-list">
-                    ${questions.map((question, index) => `
-                        <li class="analysis-item question-item" data-question="${index}">
-                            <div class="question-text">${TextFormatter.escapeHtml(question)}</div>
-                            <div class="question-actions">
-                                <button class="add-question-btn" data-question-index="${index}">Add Question</button>
-                                <button class="generate-answer-btn" data-question-index="${index}">Generate Answer</button>
-                            </div>
-                        </li>
-                    `).join('')}
-                </ul>
-            `;
+        messageDiv.appendChild(bubble);
+        messageDiv.appendChild(time);
 
-            // Add copy handler
-            section.querySelector('.copy-btn').addEventListener('click', () => {
-                this.copySection('questions', questions);
+        this.chatMessages.appendChild(messageDiv);
+        this.scrollToBottom();
+
+        // Store message with cache info
+        this.messages.push({
+            text,
+            sender,
+            cacheId,
+            time: new Date()
+        });
+
+        // Add handler for cache link
+        const cacheLink = bubble.querySelector('.cache-link-inline');
+        if (cacheLink) {
+            cacheLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                const cacheId = cacheLink.dataset.cacheId;
+
+                this.dispatchEvent(new CustomEvent('inspect-cache', {
+                    detail: { cacheId: cacheId },
+                    bubbles: true
+                }));
             });
+        }
 
-            // Add click handlers for add question buttons
-            section.querySelectorAll('.add-question-btn').forEach((btn) => {
-                btn.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    const index = parseInt(btn.dataset.questionIndex);
-                    const question = questions[index];
+        // Add handler for generate answer button if present
+        if (isQuestion) {
+            const generateBtn = bubble.querySelector('.inline-generate-btn');
+            generateBtn?.addEventListener('click', async () => {
+                generateBtn.disabled = true;
+                generateBtn.textContent = 'Generating...';
 
-                    // Visual feedback
-                    btn.textContent = 'Added!';
-                    btn.disabled = true;
+                // Get conversation history
+                const contextMessages = this.messages.slice(-5).map(msg =>
+                    `${msg.sender === 'user' ? 'User' : 'Assistant'}: ${msg.text}`
+                ).join('\n');
 
-                    // Emit event to add question to chat input
-                    this.dispatchEvent(new CustomEvent('question-added', {
-                        detail: { question: question },
-                        bubbles: true
-                    }));
-
-                    setTimeout(() => {
-                        btn.textContent = 'Add Question';
-                        btn.disabled = false;
-                    }, 1500);
-                });
-            });
-
-            // Add click handlers for generate answer buttons
-            section.querySelectorAll('.generate-answer-btn').forEach((btn) => {
-                btn.addEventListener('click', async (e) => {
-                    e.stopPropagation();
-                    const index = parseInt(btn.dataset.questionIndex);
-                    const question = questions[index];
-
-                    // Disable button and show loading
-                    btn.disabled = true;
-                    btn.textContent = 'Generating...';
-
-                    // Get conversation history from parent
-                    const textAnalyzer = this.closest('text-analyzer');
-                    const chatPanel = textAnalyzer.querySelector('chat-panel');
-                    const messages = chatPanel.getMessages();
-
-                    // Build context from recent messages
-                    const contextMessages = messages.slice(-5).map(msg =>
-                        `${msg.sender === 'user' ? 'User' : 'Assistant'}: ${msg.text}`
-                    ).join('\n');
-
-                    const systemPrompt = `You are analyzing text and answering follow-up questions. Here is the recent conversation context:
+                const systemPrompt = `You are analyzing text and answering follow-up questions. Here is the recent conversation context:
 
 ${contextMessages}
 
 Now answer the following question in one concise paragraph (2-3 sentences maximum). Be specific and directly address the question based on the context provided.`;
 
-                    try {
-                        // Call the LLM API with new schema
-                        const response = await fetch('/platform/open-router/llm-simple/complete', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'Accept': 'application/json'
-                            },
-                            body: JSON.stringify({
-                                user_prompt: question,
-                                system_prompt: systemPrompt,
-                                model: 'gpt-oss-120b',
-                                provider: 'groq'
-                            })
-                        });
+                try {
+                    const response = await fetch('/platform/open-router/llm-simple/complete', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            user_prompt: text,
+                            system_prompt: systemPrompt,
+                            model: 'gpt-oss-120b',
+                            provider: 'groq'
+                        })
+                    });
 
-                        if (response.ok) {
-                            const data = await response.json();
+                    if (response.ok) {
+                        const data = await response.json();
 
-                            // Dispatch event with question, answer, and cache ID
-                            this.dispatchEvent(new CustomEvent('answer-generated', {
-                                detail: {
-                                    question: question,
-                                    answer: data.response_text,
-                                    cacheId: data.cache_id
-                                },
-                                bubbles: true
-                            }));
-                        } else {
-                            throw new Error(`API responded with status ${response.status}`);
-                        }
-                    } catch (error) {
-                        console.error('Failed to generate answer:', error);
-                        // Show error feedback
-                        btn.textContent = 'Error - Try Again';
-                        setTimeout(() => {
-                            btn.textContent = 'Generate Answer';
-                            btn.disabled = false;
-                        }, 2000);
-                        return;
+                        // Add response with cache ID if available
+                        this.addMessage(data.response_text, 'system', data.cache_id);
+
+                        // Trigger analysis of the answer
+                        this.dispatchEvent(new CustomEvent('message-sent', {
+                            detail: { text: data.response_text },
+                            bubbles: true
+                        }));
                     }
-
-                    // Reset button
-                    btn.textContent = 'Generate Answer';
-                    btn.disabled = false;
-                });
+                } catch (error) {
+                    console.error('Failed to generate answer:', error);
+                } finally {
+                    generateBtn.remove(); // Remove button after use
+                }
             });
-        } else {
-            // Global view - just list questions
-            this.updateGlobalQuestions(questions);
         }
     }
 
-    updateGlobalQuestions(questions) {
-        const section = this.querySelector('#questions-section');
+    // Add analysis message with cache IDs display
+    addAnalysisMessage(text, analysisId, analysisNumber, cacheIds = {}) {
+        const messageDiv = document.createElement('div');
+        messageDiv.className = 'message analysis-info';
+        messageDiv.dataset.analysisId = analysisId;
+        messageDiv.dataset.cacheIds = JSON.stringify(cacheIds);
 
-        if (questions.length === 0) {
-            section.innerHTML = '<div class="empty-state">No questions generated</div>';
-            return;
-        }
+        const bubble = document.createElement('div');
+        bubble.className = 'message-bubble analysis-bubble clickable';
 
-        // For global view, questions are just listed without generate button
-        section.innerHTML = `
-            <button class="copy-btn" data-section="questions">Copy All</button>
-            <h4>All Generated Questions</h4>
-            <p class="helper-text">📚 Questions collected from all analyses</p>
-            <ul class="analysis-list">
-                ${questions.map((question) => `
-                    <li class="analysis-item">
-                        ${TextFormatter.escapeHtml(question)}
-                    </li>
-                `).join('')}
-            </ul>
-        `;
+        // Build cache links HTML with better formatting
+        const cacheLinksHtml = this.buildCacheLinks(cacheIds);
 
-        // Add copy handler
-        section.querySelector('.copy-btn').addEventListener('click', () => {
-            this.copySection('questions', questions);
-        });
-    }
-
-    updateHypotheses(hypotheses) {
-        const section = this.querySelector('#hypotheses-section');
-
-        if (hypotheses.length === 0) {
-            section.innerHTML = '<div class="empty-state">No hypotheses generated</div>';
-            return;
-        }
-
-        section.innerHTML = `
-            <button class="copy-btn" data-section="hypotheses">Copy All</button>
-            <h4>Hypotheses</h4>
-            <div>
-                ${hypotheses.map(hypothesis => `
-                    <div class="hypothesis-card">
-                        ${TextFormatter.escapeHtml(hypothesis)}
-                    </div>
-                `).join('')}
+        bubble.innerHTML = `
+            <div class="analysis-main-content">
+                <span class="analysis-icon">📊</span>
+                <span class="analysis-text">Analysis #${analysisNumber}: ${text}</span>
+                <span class="analysis-click-hint">Click to view details →</span>
             </div>
+            ${cacheLinksHtml ? `<div class="cache-links-section">${cacheLinksHtml}</div>` : ''}
         `;
 
-        // Add copy handler
-        section.querySelector('.copy-btn').addEventListener('click', () => {
-            this.copySection('hypotheses', hypotheses);
+        const time = document.createElement('div');
+        time.className = 'message-time';
+        time.textContent = TextFormatter.formatTimestamp(new Date());
+
+        messageDiv.appendChild(bubble);
+        messageDiv.appendChild(time);
+
+        this.chatMessages.appendChild(messageDiv);
+        this.scrollToBottom();
+
+        // Store message with type and cache info
+        this.messages.push({
+            text,
+            sender: 'analysis',
+            analysisId: analysisId,
+            analysisNumber: analysisNumber,
+            cacheIds: cacheIds,
+            time: new Date()
         });
-    }
 
-    updateBadges(summary) {
-        const badges = {
-            'facts': summary.facts_count || 0,
-            'data-points': summary.data_points_count || 0,
-            'questions': summary.questions_count || 0,
-            'hypotheses': summary.hypotheses_count || 0
-        };
-
-        Object.entries(badges).forEach(([tab, count]) => {
-            const tabElement = this.querySelector(`[data-tab="${tab}"] .tab-badge`);
-            if (tabElement) {
-                tabElement.textContent = count;
+        // Add click handler for main bubble
+        bubble.addEventListener('click', (e) => {
+            // Don't trigger if clicking on cache links
+            if (e.target.closest('.cache-link')) {
+                return;
             }
+
+            // Visual feedback
+            bubble.classList.add('clicked');
+            setTimeout(() => bubble.classList.remove('clicked'), 200);
+
+            // Emit event to show this analysis
+            this.dispatchEvent(new CustomEvent('analysis-clicked', {
+                detail: { analysisId: analysisId },
+                bubbles: true
+            }));
         });
-    }
 
-    showGlobalAnalysis(globalData) {
-        this.isGlobalView = true;
-        this.currentAnalysisId = null;
+        // Add handlers for cache links
+        bubble.querySelectorAll('.cache-link').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.stopPropagation();
+                e.preventDefault();
+                const cacheId = link.dataset.cacheId;
 
-        // Update title and hide view toggle
-        this.analysisTitle.textContent = `Global Analysis (${globalData.totalAnalyses} analyses)`;
-        this.viewToggle.style.display = 'none';
-        this.cacheIndicator.style.display = 'none';
-
-        // Update all sections with global data
-        this.updateGlobalSummary(globalData);
-        this.updateFacts(globalData.facts || []);
-        this.updateDataPoints(globalData.data_points || []);
-        this.updateGlobalQuestions(globalData.questions || []);
-        this.updateHypotheses(globalData.hypotheses || []);
-
-        // Update badges
-        this.updateBadges(globalData.summary || {});
-
-        // Switch to summary tab
-        this.switchTab('summary');
-
-        // Add cache ID summary if available
-        if (globalData.allCacheIds && globalData.allCacheIds.length > 0) {
-            const summarySection = this.querySelector('#summary-section');
-            const cachesSummary = document.createElement('div');
-            cachesSummary.innerHTML = `
-                <div style="margin-top: 1rem; padding: 1rem; background: var(--bg-secondary); border-radius: 8px;">
-                    <h5 style="margin: 0 0 0.5rem 0; color: var(--text-primary); font-size: 0.875rem;">
-                        📊 Cache Summary
-                    </h5>
-                    <p style="font-size: 0.75rem; color: var(--text-secondary); margin: 0;">
-                        Total cached requests: ${globalData.allCacheIds.length * 4} 
-                        (${globalData.allCacheIds.length} analyses × 4 types)
-                    </p>
-                    <button 
-                        onclick="document.querySelector('text-analyzer').switchView('llm')"
-                        style="
-                            margin-top: 0.5rem;
-                            padding: 0.375rem 0.75rem;
-                            background: var(--color-primary);
-                            color: white;
-                            border: none;
-                            border-radius: 4px;
-                            cursor: pointer;
-                            font-size: 0.75rem;
-                        ">
-                        View All Cache Entries →
-                    </button>
-                </div>
-            `;
-            summarySection.appendChild(cachesSummary);
-        }
-    }
-
-    showLocalAnalysis(analysisData, totalAnalyses) {
-        this.isGlobalView = false;
-        this.currentAnalysisId = analysisData.id;
-        this.currentCacheIds = analysisData.cacheIds || {};
-
-        // Update title and show view toggle
-        this.analysisTitle.textContent = `Analysis #${analysisData.number}`;
-        this.viewToggle.style.display = 'flex';
-        this.localViewInfo.textContent = `Analysis #${analysisData.number} of ${totalAnalyses}`;
-
-        // Show the regular analysis with cache IDs
-        this.updateAnalysis(analysisData.analysis);
-
-        // Add text preview to summary
-        this.addTextPreviewToSummary(analysisData.text);
-
-        // Add cache ID display
-        this.addCacheIdDisplay();
-    }
-
-    updateGlobalSummary(globalData) {
-        const section = this.querySelector('#summary-section');
-        const summary = globalData.summary || {};
-
-        section.innerHTML = `
-            <div class="global-summary-header">
-                <h4>📊 Combined Analysis from ${globalData.totalAnalyses} text${globalData.totalAnalyses !== 1 ? 's' : ''}</h4>
-            </div>
-            <div class="summary-grid">
-                <div class="summary-card clickable" data-target="facts">
-                    <div class="summary-number">${summary.facts_count || 0}</div>
-                    <div class="summary-label">TOTAL FACTS</div>
-                </div>
-                <div class="summary-card clickable" data-target="data-points">
-                    <div class="summary-number">${summary.data_points_count || 0}</div>
-                    <div class="summary-label">TOTAL DATA POINTS</div>
-                </div>
-                <div class="summary-card clickable" data-target="questions">
-                    <div class="summary-number">${summary.questions_count || 0}</div>
-                    <div class="summary-label">TOTAL QUESTIONS</div>
-                </div>
-                <div class="summary-card clickable" data-target="hypotheses">
-                    <div class="summary-number">${summary.hypotheses_count || 0}</div>
-                    <div class="summary-label">TOTAL HYPOTHESES</div>
-                </div>
-            </div>
-            <p style="margin-top: 1rem; color: var(--text-secondary); font-size: 0.875rem; text-align: center;">
-                Unique items collected across all analyses (duplicates removed)
-            </p>
-        `;
-
-        // Add click handlers to summary cards
-        section.querySelectorAll('.summary-card.clickable').forEach(card => {
-            card.addEventListener('click', () => {
-                const target = card.dataset.target;
-                this.switchTab(target);
+                this.dispatchEvent(new CustomEvent('inspect-cache', {
+                    detail: { cacheId: cacheId },
+                    bubbles: true
+                }));
             });
         });
     }
 
-    addTextPreviewToSummary(text) {
-        const summarySection = this.querySelector('#summary-section');
-        const existingContent = summarySection.innerHTML;
+    buildCacheLinks(cacheIds) {
+        if (!cacheIds || Object.keys(cacheIds).length === 0) {
+            return '';
+        }
 
-        // Add text preview at the top of summary
-        const textPreview = `
-            <div class="text-preview">
-                <h5>Analyzed Text:</h5>
-                <p>${TextFormatter.truncate(TextFormatter.escapeHtml(text), 200)}</p>
-            </div>
-            <hr style="margin: 1rem 0; border: none; border-top: 1px solid var(--border-color);">
-        `;
+        const links = [];
 
-        // Insert preview before the summary grid
-        const tempDiv = document.createElement('div');
-        tempDiv.innerHTML = textPreview + existingContent;
-        summarySection.innerHTML = tempDiv.innerHTML;
+        if (cacheIds.facts) {
+            links.push(`
+                <a href="#" class="cache-link" data-cache-id="${cacheIds.facts}" title="Facts Cache">
+                    <span class="cache-icon">📝</span>
+                    <span class="cache-id-text">${cacheIds.facts.substring(0, 6)}...</span>
+                </a>
+            `);
+        }
+        if (cacheIds.dataPoints) {
+            links.push(`
+                <a href="#" class="cache-link" data-cache-id="${cacheIds.dataPoints}" title="Data Points Cache">
+                    <span class="cache-icon">📊</span>
+                    <span class="cache-id-text">${cacheIds.dataPoints.substring(0, 6)}...</span>
+                </a>
+            `);
+        }
+        if (cacheIds.questions) {
+            links.push(`
+                <a href="#" class="cache-link" data-cache-id="${cacheIds.questions}" title="Questions Cache">
+                    <span class="cache-icon">❓</span>
+                    <span class="cache-id-text">${cacheIds.questions.substring(0, 6)}...</span>
+                </a>
+            `);
+        }
+        if (cacheIds.hypotheses) {
+            links.push(`
+                <a href="#" class="cache-link" data-cache-id="${cacheIds.hypotheses}" title="Hypotheses Cache">
+                    <span class="cache-icon">💡</span>
+                    <span class="cache-id-text">${cacheIds.hypotheses.substring(0, 6)}...</span>
+                </a>
+            `);
+        }
 
-        // Re-attach click handlers for summary cards
-        summarySection.querySelectorAll('.summary-card.clickable').forEach(card => {
-            card.addEventListener('click', () => {
-                const target = card.dataset.target;
-                this.switchTab(target);
-            });
-        });
+        return links.length > 0 ? `
+            <div class="cache-links-header">Cache IDs:</div>
+            <div class="cache-links-grid">${links.join('')}</div>
+        ` : '';
     }
 
-    addCacheIdDisplay() {
-        const summarySection = this.querySelector('#summary-section');
-
-        if (Object.keys(this.currentCacheIds).length > 0) {
-            const cacheSection = document.createElement('div');
-            cacheSection.className = 'cache-ids-section';
-            cacheSection.innerHTML = `
-                <h5 style="margin: 1rem 0 0.5rem 0; color: var(--text-secondary); font-size: 0.875rem;">
-                    🔗 Cache IDs for this Analysis:
-                </h5>
-                <div class="cache-ids-grid" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.5rem;">
-                    ${this.buildCacheIdCards()}
-                </div>
-            `;
-
-            summarySection.appendChild(cacheSection);
-
-            // Add click handlers for cache cards
-            cacheSection.querySelectorAll('.cache-id-card').forEach(card => {
-                card.addEventListener('click', () => {
-                    const cacheId = card.dataset.cacheId;
-                    this.inspectCacheId(cacheId);
-                });
-            });
-        }
+    scrollToBottom() {
+        setTimeout(() => {
+            this.chatMessages.scrollTop = this.chatMessages.scrollHeight;
+        }, 50);
     }
 
-    buildCacheIdCards() {
-        const cards = [];
-
-        if (this.currentCacheIds.facts) {
-            cards.push(this.createCacheCard('Facts', this.currentCacheIds.facts, '📝'));
-        }
-        if (this.currentCacheIds.dataPoints) {
-            cards.push(this.createCacheCard('Data Points', this.currentCacheIds.dataPoints, '📊'));
-        }
-        if (this.currentCacheIds.questions) {
-            cards.push(this.createCacheCard('Questions', this.currentCacheIds.questions, '❓'));
-        }
-        if (this.currentCacheIds.hypotheses) {
-            cards.push(this.createCacheCard('Hypotheses', this.currentCacheIds.hypotheses, '💡'));
-        }
-
-        return cards.join('');
+    loadSampleText() {
+        const sample = getRandomSample();
+        this.chatInput.value = sample;
+        this.handleInput();
+        this.chatInput.focus();
     }
 
-    createCacheCard(type, cacheId, icon) {
-        return `
-            <div class="cache-id-card" 
-                 data-cache-id="${cacheId}"
-                 style="
-                     padding: 0.5rem;
-                     background: var(--bg-secondary);
-                     border: 1px solid var(--border-color);
-                     border-radius: 4px;
-                     cursor: pointer;
-                     transition: all 0.2s;
-                     display: flex;
-                     align-items: center;
-                     gap: 0.5rem;
-                 "
-                 onmouseover="this.style.borderColor='var(--color-primary)'; this.style.transform='translateY(-2px)'"
-                 onmouseout="this.style.borderColor='var(--border-color)'; this.style.transform='translateY(0)'">
-                <span style="font-size: 1.25rem;">${icon}</span>
-                <div style="flex: 1;">
-                    <div style="font-size: 0.75rem; color: var(--text-secondary);">${type}</div>
-                    <code style="font-size: 0.75rem; font-family: 'Courier New', monospace;">
-                        ${cacheId.substring(0, 8)}...
-                    </code>
-                </div>
-                <span style="color: var(--color-primary); font-size: 0.875rem;">🔍</span>
-            </div>
-        `;
-    }
+    clearChat() {
+        this.messages = [];
+        this.chatMessages.innerHTML = '';
+        this.addMessage(getRandomWelcome(), 'system');
 
-    inspectCacheId(cacheId) {
-        // Emit event to inspect cache ID
-        this.dispatchEvent(new CustomEvent('inspect-cache', {
-            detail: { cacheId },
+        // Emit clear event
+        this.dispatchEvent(new CustomEvent('chat-cleared', {
             bubbles: true
         }));
     }
 
-    copySection(sectionName, items) {
-        const content = items.join('\n');
-
-        navigator.clipboard.writeText(content).then(() => {
-            const btn = this.querySelector(`#${sectionName}-section .copy-btn`);
-            if (btn) {
-                const originalText = btn.textContent;
-                btn.textContent = 'Copied!';
-                btn.classList.add('copied');
-
-                setTimeout(() => {
-                    btn.textContent = originalText;
-                    btn.classList.remove('copied');
-                }, 2000);
-            }
-        }).catch(err => {
-            console.error('Failed to copy:', err);
-        });
-    }
-
-    showLoading() {
-        // Show loading in active section
-        const activeSection = this.querySelector('.analysis-section.active');
-        if (activeSection && activeSection.id !== 'summary-section') {
-            activeSection.innerHTML = '<div class="loading-spinner"></div>';
+    setLoading(loading) {
+        if (loading) {
+            this.sendBtn.disabled = true;
+            this.sendBtn.innerHTML = '<span class="loading-spinner"></span>';
+        } else {
+            this.sendBtn.disabled = false;
+            this.sendBtn.innerHTML = 'Analyze';
+            this.handleInput(); // Recheck if button should be enabled
         }
     }
 
-    hideLoading() {
-        // Loading will be replaced by content update
+    showError(message) {
+        // Temporarily show error in button
+        const originalText = this.sendBtn.textContent;
+        this.sendBtn.textContent = message;
+        this.sendBtn.disabled = true;
+
+        setTimeout(() => {
+            this.sendBtn.textContent = originalText;
+            this.handleInput();
+        }, 2000);
     }
 
-    clearAnalysis() {
-        this.currentAnalysis = null;
+    // Public method to set input text (for question clicks)
+    setInputText(text) {
+        this.chatInput.value = text;
+        this.handleInput();
+        this.chatInput.focus();
 
-        // Reset summary
-        this.querySelector('#summary-section').innerHTML = `
-            <div class="empty-state">
-                <p>No analysis yet. Enter some text to get started!</p>
-            </div>
-        `;
-
-        // Clear other sections
-        ['facts', 'data-points', 'questions', 'hypotheses'].forEach(section => {
-            this.querySelector(`#${section}-section`).innerHTML = '';
-        });
-
-        // Reset badges
-        this.querySelectorAll('.tab-badge').forEach(badge => {
-            badge.textContent = '0';
-        });
-
-        // Hide cache indicator
-        this.cacheIndicator.style.display = 'none';
-
-        // Reset to summary tab
-        this.switchTab('summary');
+        // Scroll to input
+        this.chatInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
 
-    // Public method to get current analysis
-    getCurrentAnalysis() {
-        return this.currentAnalysis;
+    // Public method to get message history
+    getMessages() {
+        return this.messages;
+    }
+
+    // Method to get all cache IDs from current conversation
+    getAllCacheIds() {
+        const cacheIds = [];
+
+        this.messages.forEach(msg => {
+            if (msg.cacheId) {
+                cacheIds.push({
+                    type: 'message',
+                    cacheId: msg.cacheId,
+                    text: msg.text.substring(0, 50) + '...',
+                    timestamp: msg.time
+                });
+            }
+
+            if (msg.cacheIds) {
+                Object.entries(msg.cacheIds).forEach(([type, id]) => {
+                    if (id) {
+                        cacheIds.push({
+                            type: type,
+                            cacheId: id,
+                            text: `Analysis ${msg.analysisNumber} - ${type}`,
+                            timestamp: msg.time
+                        });
+                    }
+                });
+            }
+        });
+
+        return cacheIds;
     }
 }

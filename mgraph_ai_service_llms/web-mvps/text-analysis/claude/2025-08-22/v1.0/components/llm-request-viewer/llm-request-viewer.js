@@ -311,7 +311,7 @@ export class LLMRequestViewer extends HTMLElement {
         }
 
         // Add notification badge
-        this.showNotification(`New cache entry: ${entry.type}`);
+        //this.showNotification(`New cache entry: ${entry.type}`);           // didn't look good
     }
 
     updateHistoryDisplay() {
