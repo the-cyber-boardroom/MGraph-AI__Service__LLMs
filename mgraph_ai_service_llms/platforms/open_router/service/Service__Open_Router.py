@@ -2,8 +2,12 @@
 import json
 import requests
 from typing                                                                                             import Dict, Any, Optional, Iterator
+
+from osbot_utils.decorators.methods.cache_on_self import cache_on_self
 from osbot_utils.type_safe.Type_Safe                                                                    import Type_Safe
 from osbot_utils.utils.Env                                                                              import get_env
+
+from mgraph_ai_service_llms.platforms.open_router.cache.Open_Router__Chat__Cache import Open_Router__Chat__Cache
 from mgraph_ai_service_llms.platforms.open_router.schemas.Safe_Str__Open_Router__Model_ID               import Safe_Str__Open_Router__Model_ID
 from mgraph_ai_service_llms.platforms.open_router.schemas.request.Schema__Open_Router__Chat_Request     import Schema__Open_Router__Chat_Request
 from mgraph_ai_service_llms.platforms.open_router.schemas.request.Schema__Open_Router__Request_Headers  import Schema__Open_Router__Request_Headers
@@ -31,6 +35,10 @@ class Service__Open_Router(Type_Safe):                                          
         if not api_key:
             raise ValueError(f"API key not found in environment variable: {ENV_NAME_OPEN_ROUTER__API_KEY}")
         return api_key
+
+    @cache_on_self
+    def chat_cache(self):
+        return Open_Router__Chat__Cache().setup()
 
     def chat_completion_url(self) -> str:                                                                # Get chat completion endpoint URL
         return f"{self.api_base_url}/v1/chat/completions"
@@ -68,6 +76,13 @@ class Service__Open_Router(Type_Safe):                                          
             max_tokens    = max_tokens
         )
 
+        request_data = request.json()
+        cached_response = self.chat_cache().get_cached_response(request_data)
+        if cached_response:
+            cached_response['from_cache'] = True
+            return cached_response
+
+
         headers = self.create_headers(max_cost        = max_cost ,
                                       provider        = provider ,
                                       include_provider = True    )
@@ -90,8 +105,10 @@ class Service__Open_Router(Type_Safe):                                          
             except Exception:
                 pass                                                                                      # Ignore cost calculation errors
 
+        self.chat_cache().cache_chat_response(request_data, response_data)
         return response_data
 
+    # todo :add cache support
     def chat_completion_stream(self, prompt       : str                         ,                        # Execute streaming chat completion request
                                      model         : str                         ,
                                      system_prompt : Optional[str  ]     = None ,

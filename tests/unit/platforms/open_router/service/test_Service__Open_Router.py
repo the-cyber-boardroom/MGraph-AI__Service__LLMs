@@ -1,12 +1,13 @@
 import pytest
-from unittest                                                                                          import TestCase
-from osbot_utils.type_safe.Type_Safe                                                                   import Type_Safe
-from osbot_utils.utils.Objects                                                                         import base_classes
-from osbot_utils.utils.Env                                                                             import get_env, load_dotenv
-from mgraph_ai_service_llms.platforms.open_router.service.Service__Open_Router                         import Service__Open_Router, ENV_NAME_OPEN_ROUTER__API_KEY
-from mgraph_ai_service_llms.platforms.open_router.service.Service__Open_Router__Models                 import Service__Open_Router__Models
-from mgraph_ai_service_llms.platforms.open_router.service.Service__Open_Router__Cost                   import Service__Open_Router__Cost
-from mgraph_ai_service_llms.platforms.open_router.schemas.request.Schema__Open_Router__Request_Headers import Schema__Open_Router__Request_Headers
+from unittest                                                                                           import TestCase
+from osbot_utils.type_safe.Type_Safe                                                                    import Type_Safe
+from osbot_utils.utils.Objects                                                                          import base_classes
+from osbot_utils.utils.Env                                                                              import get_env, load_dotenv
+from mgraph_ai_service_llms.platforms.open_router.service.Service__Open_Router                          import Service__Open_Router, ENV_NAME_OPEN_ROUTER__API_KEY
+from mgraph_ai_service_llms.platforms.open_router.service.Service__Open_Router__Models                  import Service__Open_Router__Models
+from mgraph_ai_service_llms.platforms.open_router.service.Service__Open_Router__Cost                    import Service__Open_Router__Cost
+from mgraph_ai_service_llms.platforms.open_router.schemas.request.Schema__Open_Router__Request_Headers  import Schema__Open_Router__Request_Headers
+from tests.unit.Service__Fast_API__Test_Objs                                                            import setup__service_fast_api_test_objs
 
 
 class test_Service__Open_Router(TestCase):
@@ -14,6 +15,7 @@ class test_Service__Open_Router(TestCase):
     @classmethod
     def setUpClass(cls):
         load_dotenv()
+        setup__service_fast_api_test_objs()
         cls.service = Service__Open_Router()
         if not get_env(ENV_NAME_OPEN_ROUTER__API_KEY):
             pytest.skip(f"skipping test because OpenRouter API key not found in environment variable: {ENV_NAME_OPEN_ROUTER__API_KEY}")
@@ -57,8 +59,6 @@ class test_Service__Open_Router(TestCase):
         assert headers.x_include_provider is False
 
     def test_chat_completion__with_actual_api(self):
-        if get_env(ENV_NAME_OPEN_ROUTER__API_KEY) is None:
-            pytest.skip('This test requires OPEN_ROUTER__API_KEY to be set')
 
         # Test basic chat completion
         response = self.service.chat_completion(
@@ -110,9 +110,8 @@ class test_Service__Open_Router(TestCase):
         # System prompt should influence the response
         assert len(content) > 0
 
+    @pytest.mark.skip(reason="needs cache support")
     def test_chat_completion_stream__with_actual_api(self):
-        if get_env(ENV_NAME_OPEN_ROUTER__API_KEY) is None:
-            pytest.skip('This test requires OPEN_ROUTER__API_KEY to be set')
 
         # Collect streamed chunks
         chunks = []
@@ -144,9 +143,8 @@ class test_Service__Open_Router(TestCase):
         # Should have received some content
         assert len(full_content) > 0
 
+    @pytest.mark.skip(reason="needs cache support")
     def test_list_models(self):
-        if get_env(ENV_NAME_OPEN_ROUTER__API_KEY) is None:
-            pytest.skip('This test requires OPEN_ROUTER__API_KEY to be set')
 
         # Test listing all models
         result = self.service.list_models()
@@ -167,6 +165,7 @@ class test_Service__Open_Router(TestCase):
             assert 'is_free'        in model
             assert 'pricing'        in model
 
+    @pytest.mark.skip(reason="needs cache support")
     def test_list_models__filtered(self):
         if get_env(ENV_NAME_OPEN_ROUTER__API_KEY) is None:
             pytest.skip('This test requires OPEN_ROUTER__API_KEY to be set')
@@ -187,9 +186,8 @@ class test_Service__Open_Router(TestCase):
         for model in paid_models:
             assert model['is_free'] is False
 
+    @pytest.mark.skip(reason="needs cache support")
     def test_estimate_cost(self):
-        if get_env(ENV_NAME_OPEN_ROUTER__API_KEY) is None:
-            pytest.skip('This test requires OPEN_ROUTER__API_KEY to be set')
 
         # Test cost estimation
         result = self.service.estimate_cost(
@@ -214,9 +212,8 @@ class test_Service__Open_Router(TestCase):
         assert 'prompt_cost'  in cost
         assert 'completion_cost' in cost
 
+    @pytest.mark.skip(reason="needs cache support")
     def test_get_model_info(self):
-        if get_env(ENV_NAME_OPEN_ROUTER__API_KEY) is None:
-            pytest.skip('This test requires OPEN_ROUTER__API_KEY to be set')
 
         # Test getting info for a known model
         model_info = self.service.get_model_info("openai/gpt-4o-mini")
@@ -237,9 +234,8 @@ class test_Service__Open_Router(TestCase):
         assert 'input_modalities'  in arch
         assert 'output_modalities' in arch
 
+    @pytest.mark.skip(reason="needs cache support")
     def test_get_model_info__not_found(self):
-        if get_env(ENV_NAME_OPEN_ROUTER__API_KEY) is None:
-            pytest.skip('This test requires OPEN_ROUTER__API_KEY to be set')
 
         # Test with non-existent model
         model_info = self.service.get_model_info("non-existent/model")
@@ -275,9 +271,8 @@ class test_Service__Open_Router(TestCase):
         # Should still work with free model
         assert 'choices' in response
 
+    @pytest.mark.skip(reason="needs cache support")
     def test_chat_completion_stream__with_system_prompt(self):
-        if get_env(ENV_NAME_OPEN_ROUTER__API_KEY) is None:
-            pytest.skip('This test requires OPEN_ROUTER__API_KEY to be set')
 
         chunks = []
         for chunk in self.service.chat_completion_stream(

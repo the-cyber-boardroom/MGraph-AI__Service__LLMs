@@ -315,14 +315,14 @@ files = [
 
 [[package]]
 name = "memory-fs"
-version = "0.16.0"
+version = "0.17.0"
 description = "Memory-FS"
 optional = false
 python-versions = "<4.0,>=3.12"
 groups = ["main"]
 files = [
-    {file = "memory_fs-0.16.0-py3-none-any.whl", hash = "sha256:44f82e930a75908984021a7afdc671c2c6930774ae2038e3aef6b83f21db6252"},
-    {file = "memory_fs-0.16.0.tar.gz", hash = "sha256:f852eb7f1690adab0741a9c6cf7c828805b7fcd9f75094a3a5d3391e80ababe8"},
+    {file = "memory_fs-0.17.0-py3-none-any.whl", hash = "sha256:dc497ce818fa7f23ce09217f0242315004bd3c477734e8bd9b90a29334f2eba3"},
+    {file = "memory_fs-0.17.0.tar.gz", hash = "sha256:389848c179966bb08b942d5d3c3bcbc22c76c71a9296804ed20d0eb5f4090071"},
 ]
 
 [package.dependencies]
