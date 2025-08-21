@@ -26,7 +26,7 @@ class test_Deploy__Service__base():     # Base class for deployment tests - over
 
     def test_2__upload_dependencies(self):
         upload_results = self.deploy_fast_api.upload_lambda_dependencies_to_s3()
-        assert list_set(upload_results) == LAMBDA_DEPENDENCIES__FAST_API_SERVERLESS
+        assert list_set(upload_results) == sorted(LAMBDA_DEPENDENCIES__FAST_API_SERVERLESS)
 
     def test_3__create(self):
         assert self.deploy_fast_api.create() is True
