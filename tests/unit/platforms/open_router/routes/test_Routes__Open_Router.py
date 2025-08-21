@@ -3,7 +3,7 @@ import json
 from unittest                                                                                        import TestCase
 from fastapi                                                                                         import HTTPException
 from fastapi.responses                                                                               import StreamingResponse
-from osbot_utils.type_safe.Type_Safe import Type_Safe
+from osbot_utils.type_safe.Type_Safe                                                                 import Type_Safe
 from osbot_utils.utils.Env                                                                           import get_env, load_dotenv
 from osbot_utils.utils.Objects                                                                       import base_classes
 from osbot_fast_api.api.routes.Fast_API__Routes                                                      import Fast_API__Routes
@@ -11,7 +11,7 @@ from mgraph_ai_service_llms.platforms.open_router.fast_api.routes.Routes__Open_R
 from mgraph_ai_service_llms.platforms.open_router.service.Service__Open_Router                       import Service__Open_Router, ENV_NAME_OPEN_ROUTER__API_KEY
 from mgraph_ai_service_llms.service.llms.providers.open_router.Schema__Open_Router__Providers        import Schema__Open_Router__Providers
 from mgraph_ai_service_llms.service.llms.providers.open_router.Schema__Open_Router__Supported_Models import Schema__Open_Router__Supported_Models
-from tests.unit.Service__Fast_API__Test_Objs import setup__service_fast_api_test_objs
+from tests.unit.Service__Fast_API__Test_Objs                                                         import setup__service_fast_api_test_objs
 
 
 class test_Routes__Open_Router(TestCase):

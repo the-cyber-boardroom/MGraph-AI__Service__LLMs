@@ -3,6 +3,10 @@ import logging
 from osbot_fast_api.api.routes.Routes__Config                                    import Routes__Config
 from osbot_fast_api.api.routes.Routes__Set_Cookie                                import Routes__Set_Cookie
 from osbot_fast_api_serverless.fast_api.Serverless__Fast_API                     import Serverless__Fast_API
+from osbot_utils.utils.Files import path_combine
+from starlette.staticfiles import StaticFiles
+
+import mgraph_ai_service_llms
 from mgraph_ai_service_llms.config                                               import FAST_API__TITLE
 from mgraph_ai_service_llms.fast_api.routes.Routes__Cache                        import Routes__Cache
 from mgraph_ai_service_llms.fast_api.routes.Routes__Info                         import Routes__Info
@@ -37,6 +41,18 @@ class Service__Fast_API(Serverless__Fast_API):
                 logger = logging.getLogger("uvicorn")       # todo: add this logging support to Fast_API
                 logger.warning('LocalStack enabled')
                 _.setup()
+
+    def path_static_folder(self):
+        return path_combine(mgraph_ai_service_llms.path, 'web-mvps')
+
+    def setup_static_routes(self):
+        path_static_folder = self.path_static_folder()
+        if path_static_folder:
+            path_name   = "web-mvps"
+            path_static = f"/{path_name}"
+            self.app().mount(path_static                                         ,
+                             StaticFiles(directory=path_static_folder, html=True),
+                             name=path_name                                      )
 
     def setup_routes(self):
         self.add_routes    (Routes__Info         )

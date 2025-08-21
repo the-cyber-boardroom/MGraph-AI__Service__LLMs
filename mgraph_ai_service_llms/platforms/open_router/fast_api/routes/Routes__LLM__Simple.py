@@ -1,7 +1,7 @@
-from typing                                                                                          import Optional, Dict, Any
-from osbot_fast_api.api.routes.Fast_API__Routes                                                      import Fast_API__Routes
+from typing                                                                                      import Optional, Dict, Any
+from osbot_fast_api.api.routes.Fast_API__Routes                                                  import Fast_API__Routes
 from osbot_fast_api.schemas.Safe_Str__Fast_API__Route__Tag                                       import Safe_Str__Fast_API__Route__Tag
-from mgraph_ai_service_llms.platforms.open_router.service.Service__LLM__Simple import Service__LLM__Simple, HIGH_THROUGHPUT_MODELS
+from mgraph_ai_service_llms.platforms.open_router.service.Service__LLM__Simple                   import Service__LLM__Simple, HIGH_THROUGHPUT_MODELS
 from mgraph_ai_service_llms.service.llms.providers.open_router.Schema__Open_Router__Providers    import Schema__Open_Router__Providers
 
 TAG__ROUTES_LLM_SIMPLE   = 'llm-simple'

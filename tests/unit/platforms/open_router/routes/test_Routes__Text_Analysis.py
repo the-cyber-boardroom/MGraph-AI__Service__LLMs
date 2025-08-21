@@ -1,14 +1,11 @@
 import pytest
-from unittest                                                                                         import TestCase
-from fastapi.testclient                                                                              import TestClient
-from osbot_fast_api.schemas.consts__Fast_API import ENV_VAR__FAST_API__AUTH__API_KEY__NAME, ENV_VAR__FAST_API__AUTH__API_KEY__VALUE
-from osbot_utils.utils.Dev import pprint
-from osbot_utils.utils.Env                                                                           import get_env, load_dotenv
-from mgraph_ai_service_llms.fast_api.Service__Fast_API                                               import Service__Fast_API
-from mgraph_ai_service_llms.platforms.open_router.fast_api.routes.Routes__Text_Analysis import TAG__ROUTES_TEXT_ANALYSIS, ROUTES_PATHS__TEXT_ANALYSIS
-from mgraph_ai_service_llms.platforms.open_router.service.Service__Open_Router                       import ENV_NAME_OPEN_ROUTER__API_KEY
-from mgraph_ai_service_llms.platforms.open_router.service.Service__Text_Analysis import DEFAULT_PROMPT_TEXT
-from tests.unit.Service__Fast_API__Test_Objs                                                         import setup__service_fast_api_test_objs
+from unittest                                                                            import TestCase
+from osbot_fast_api.schemas.consts__Fast_API                                             import ENV_VAR__FAST_API__AUTH__API_KEY__NAME, ENV_VAR__FAST_API__AUTH__API_KEY__VALUE
+from osbot_utils.utils.Env                                                               import get_env, load_dotenv
+from mgraph_ai_service_llms.platforms.open_router.fast_api.routes.Routes__Text_Analysis  import TAG__ROUTES_TEXT_ANALYSIS, ROUTES_PATHS__TEXT_ANALYSIS
+from mgraph_ai_service_llms.platforms.open_router.service.Service__Open_Router           import ENV_NAME_OPEN_ROUTER__API_KEY
+from mgraph_ai_service_llms.platforms.open_router.service.Service__Text_Analysis         import DEFAULT_PROMPT_TEXT
+from tests.unit.Service__Fast_API__Test_Objs                                             import setup__service_fast_api_test_objs
 
 
 class test_Routes__Text_Analysis(TestCase):
@@ -21,10 +18,6 @@ class test_Routes__Text_Analysis(TestCase):
         if not get_env(ENV_NAME_OPEN_ROUTER__API_KEY):
             pytest.skip(f"Skipping test: OpenRouter API key not found in environment variable: {ENV_NAME_OPEN_ROUTER__API_KEY}")
 
-        # Use the main Service__Fast_API which already has routes configured
-        #cls.service_fast_api = Service__Fast_API()
-        #cls.service_fast_api.setup()
-        #cls.app    = cls.service_fast_api.app()
         cls.app     = cls.test_objs.fast_api__app
         cls.client  = cls.test_objs.fast_api__client # TestClient(cls.app)
         cls.auth_key_name       = get_env(ENV_VAR__FAST_API__AUTH__API_KEY__NAME )

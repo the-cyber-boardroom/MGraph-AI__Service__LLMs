@@ -1,12 +1,9 @@
-# mgraph_ai_service_llms/platforms/open_router/schemas/Schema__Open_Router__Chat_Request.py
-
 from typing                                                                                                 import Optional, List, Dict, Any, Literal
 from osbot_utils.type_safe.Type_Safe                                                                        import Type_Safe
 from osbot_utils.type_safe.primitives.safe_float.Safe_Float                                                 import Safe_Float
 from osbot_utils.type_safe.primitives.safe_str.Safe_Str                                                     import Safe_Str
 from osbot_utils.type_safe.primitives.safe_int.Safe_Int                                                     import Safe_Int
-
-from mgraph_ai_service_llms.platforms.open_router.schemas.Safe_Str__Open_Router__Model_ID import Safe_Str__Open_Router__Model_ID
+from mgraph_ai_service_llms.platforms.open_router.schemas.Safe_Str__Open_Router__Model_ID                   import Safe_Str__Open_Router__Model_ID
 from mgraph_ai_service_llms.platforms.open_router.schemas.Safe_Str__Open_Router__Model_Name                 import Safe_Str__Open_Router__Model_Name
 from mgraph_ai_service_llms.platforms.open_router.schemas.request.Safe_Str__Message_Content                 import Safe_Str__Message_Content
 from mgraph_ai_service_llms.platforms.open_router.schemas.request.Schema__Open_Router__Message              import Schema__Open_Router__Message

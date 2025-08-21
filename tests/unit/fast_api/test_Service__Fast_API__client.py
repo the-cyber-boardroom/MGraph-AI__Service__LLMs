@@ -56,4 +56,5 @@ class test_Service__Fast_API__client(TestCase):
                                                       ROUTES_PATHS__CONFIG     +
                                                       ROUTES_PATHS__SET_COOKIE +
                                                       ROUTES_PATHS__LLMS       +
-                                                      ROUTES_PATHS__CACHE      )
+                                                      ROUTES_PATHS__CACHE      +
+                                                      ['/web-mvps']            )

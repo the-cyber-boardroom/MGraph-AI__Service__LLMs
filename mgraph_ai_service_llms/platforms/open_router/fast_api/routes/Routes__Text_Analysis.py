@@ -1,8 +1,7 @@
 from typing                                                                      import Dict, Any
 from osbot_fast_api.api.routes.Fast_API__Routes                                  import Fast_API__Routes
 from osbot_fast_api.schemas.Safe_Str__Fast_API__Route__Tag                       import Safe_Str__Fast_API__Route__Tag
-from osbot_utils.type_safe.Type_Safe import Type_Safe
-
+from osbot_utils.type_safe.Type_Safe                                             import Type_Safe
 from mgraph_ai_service_llms.platforms.open_router.service.Service__Text_Analysis import Service__Text_Analysis, DEFAULT_PROMPT_TEXT
 
 TAG__ROUTES_TEXT_ANALYSIS   = 'text-analysis'

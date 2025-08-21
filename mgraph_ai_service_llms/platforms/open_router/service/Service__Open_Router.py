@@ -1,21 +1,19 @@
 # mgraph_ai_service_llms/platforms/open_router/service/Service__Open_Router.py
 import json
 import requests
-from typing                                                                                             import Dict, Any, Optional, Iterator
-
-from osbot_utils.decorators.methods.cache_on_self import cache_on_self
-from osbot_utils.type_safe.Type_Safe                                                                    import Type_Safe
-from osbot_utils.utils.Env                                                                              import get_env
-
-from mgraph_ai_service_llms.platforms.open_router.cache.Open_Router__Chat__Cache import Open_Router__Chat__Cache
-from mgraph_ai_service_llms.platforms.open_router.schemas.Safe_Str__Open_Router__Model_ID               import Safe_Str__Open_Router__Model_ID
-from mgraph_ai_service_llms.platforms.open_router.schemas.request.Schema__Open_Router__Chat_Request     import Schema__Open_Router__Chat_Request
+from typing                                                                                                 import Dict, Any, Optional, Iterator
+from osbot_utils.decorators.methods.cache_on_self                                                           import cache_on_self
+from osbot_utils.type_safe.Type_Safe                                                                        import Type_Safe
+from osbot_utils.utils.Env                                                                                  import get_env
+from mgraph_ai_service_llms.platforms.open_router.cache.Open_Router__Chat__Cache                            import Open_Router__Chat__Cache
+from mgraph_ai_service_llms.platforms.open_router.schemas.Safe_Str__Open_Router__Model_ID                   import Safe_Str__Open_Router__Model_ID
+from mgraph_ai_service_llms.platforms.open_router.schemas.request.Schema__Open_Router__Chat_Request         import Schema__Open_Router__Chat_Request
 from mgraph_ai_service_llms.platforms.open_router.schemas.request.Schema__Open_Router__Provider_Preferences import Schema__Open_Router__Provider_Preferences
-from mgraph_ai_service_llms.platforms.open_router.schemas.request.Schema__Open_Router__Request_Headers  import Schema__Open_Router__Request_Headers
-from mgraph_ai_service_llms.platforms.open_router.schemas.request.Safe_Str__Message_Content             import Safe_Str__Message_Content
-from mgraph_ai_service_llms.platforms.open_router.service.Service__Open_Router__Models                  import Service__Open_Router__Models
-from mgraph_ai_service_llms.platforms.open_router.service.Service__Open_Router__Cost                    import Service__Open_Router__Cost
-from mgraph_ai_service_llms.platforms.open_router.schemas.request.Schema__Open_Router__Message          import Schema__Open_Router__Message
+from mgraph_ai_service_llms.platforms.open_router.schemas.request.Schema__Open_Router__Request_Headers      import Schema__Open_Router__Request_Headers
+from mgraph_ai_service_llms.platforms.open_router.schemas.request.Safe_Str__Message_Content                 import Safe_Str__Message_Content
+from mgraph_ai_service_llms.platforms.open_router.service.Service__Open_Router__Models                      import Service__Open_Router__Models
+from mgraph_ai_service_llms.platforms.open_router.service.Service__Open_Router__Cost                        import Service__Open_Router__Cost
+from mgraph_ai_service_llms.platforms.open_router.schemas.request.Schema__Open_Router__Message              import Schema__Open_Router__Message
 
 ENV_NAME_OPEN_ROUTER__API_KEY = "OPEN_ROUTER__API_KEY"
 
