@@ -60,7 +60,6 @@ class test_Service__LLM__Simple(TestCase):
         assert "provider_used"              in result
         assert len(result["response_text"]) > 0
         assert result["provider_used"]      == "Groq"
-        pprint(result)
 
     def test_execute_completion_with_cerebras_provider(self):                                                # Test with Cerebras provider
         result = self.service.execute_completion(user_prompt   = "Count to 3"                               ,
