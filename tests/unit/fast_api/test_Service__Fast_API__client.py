@@ -1,14 +1,15 @@
-from unittest                                                         import TestCase
-from fastapi                                                          import FastAPI
-from osbot_fast_api.api.Fast_API                                      import ENV_VAR__FAST_API__AUTH__API_KEY__NAME, ENV_VAR__FAST_API__AUTH__API_KEY__VALUE
-from osbot_local_stack.local_stack.Local_Stack                        import Local_Stack
-from osbot_utils.utils.Env                                            import get_env
-from starlette.testclient                                             import TestClient
-from osbot_fast_api_serverless.utils.testing.skip_tests               import skip__if_not__in_github_actions
-from mgraph_ai_service_llms.fast_api.Service__Fast_API                import Service__Fast_API
-from mgraph_ai_service_llms.fast_api.routes.Routes__Info              import ROUTES_PATHS__INFO, ROUTES_INFO__HEALTH__RETURN_VALUE
-from mgraph_ai_service_llms.fast_api.routes.Routes__LLMs              import ROUTES_PATHS__LLMS
-from tests.unit.Service__Fast_API__Test_Objs                          import setup__service_fast_api_test_objs, Service__Fast_API__Test_Objs, TEST_API_KEY__NAME
+from unittest                                              import TestCase
+from fastapi                                               import FastAPI
+from osbot_fast_api.api.Fast_API                           import ENV_VAR__FAST_API__AUTH__API_KEY__NAME, ENV_VAR__FAST_API__AUTH__API_KEY__VALUE
+from osbot_utils.utils.Env                                 import get_env
+from starlette.testclient                                  import TestClient
+from mgraph_ai_service_llms.fast_api.Service__Fast_API     import Service__Fast_API
+from mgraph_ai_service_llms.fast_api.routes.Routes__Cache  import ROUTES_PATHS__CACHE
+from mgraph_ai_service_llms.fast_api.routes.Routes__Info   import ROUTES_PATHS__INFO, ROUTES_INFO__HEALTH__RETURN_VALUE
+from mgraph_ai_service_llms.fast_api.routes.Routes__LLMs   import ROUTES_PATHS__LLMS
+from mgraph_ai_service_llms.schemas.consts__service_llms   import ROUTES_PATHS__CONFIG, ROUTES_PATHS__SET_COOKIE
+from mgraph_ai_service_llms.utils.LocalStack__Setup        import LocalStack__Setup
+from tests.unit.Service__Fast_API__Test_Objs               import setup__service_fast_api_test_objs, Service__Fast_API__Test_Objs, TEST_API_KEY__NAME
 
 
 class test_Service__Fast_API__client(TestCase):
@@ -27,7 +28,7 @@ class test_Service__Fast_API__client(TestCase):
             assert type(_.fast_api        ) is Service__Fast_API
             assert type(_.fast_api__app   ) is FastAPI
             assert type(_.fast_api__client) is TestClient
-            assert type(_.local_stack     ) is Local_Stack
+            assert type(_.localstack_setup) is LocalStack__Setup
             assert self.fast_api            == _.fast_api
             assert self.client              == _.fast_api__client
 
@@ -50,11 +51,10 @@ class test_Service__Fast_API__client(TestCase):
         assert auth_key_value                is not None
         assert response__with_auth.json()    == ROUTES_INFO__HEALTH__RETURN_VALUE
 
-    def test__check_if_local_stack_is_setup(self):
-        skip__if_not__in_github_actions()
-        with self.service_fast_api_test_objs.local_stack as _:
-            assert _.is_local_stack_configured_and_available() is True
-
     def test__config_fast_api_routes(self):
-        assert self.fast_api.routes_paths() == sorted(ROUTES_PATHS__INFO +
-                                                      ROUTES_PATHS__LLMS)
+        assert self.fast_api.routes_paths() == sorted(ROUTES_PATHS__INFO       +
+                                                      ROUTES_PATHS__CONFIG     +
+                                                      ROUTES_PATHS__SET_COOKIE +
+                                                      ROUTES_PATHS__LLMS       +
+                                                      ROUTES_PATHS__CACHE      +
+                                                      ['/web-mvps']            )

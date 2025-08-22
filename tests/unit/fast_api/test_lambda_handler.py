@@ -3,14 +3,14 @@ import types
 import pytest
 from unittest                                            import TestCase
 from osbot_utils.utils.Json                              import str_to_json
-from tests.unit.Service__Fast_API__Test_Objs             import setup_local_stack
-from mgraph_ai_service_llms.fast_api.lambda_handler      import run
+from tests.unit.Service__Fast_API__Test_Objs             import setup__service_fast_api_test_objs
 
 
 class test_lambda_handler(TestCase):
     @classmethod
     def setUpClass(cls):
-        setup_local_stack()
+        setup__service_fast_api_test_objs()
+        from mgraph_ai_service_llms.fast_api.lambda_handler import run      # can only import here after we configured localstack support
         cls.handler = staticmethod(run)
 
     def test__setUpClass(self):

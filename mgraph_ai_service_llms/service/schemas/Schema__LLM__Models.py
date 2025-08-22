@@ -1,5 +1,6 @@
 from enum import Enum
 
+# refactor with Schema__Open_Router__Supported_Models
 
 class Schema__LLM__Models(Enum):
     """Supported LLM models with their identifiers and metadata"""
@@ -14,6 +15,8 @@ class Schema__LLM__Models(Enum):
     GEMINI_2_FLASH     = "google/gemini-2.0-flash-lite-001"
     GPT_4O_MINI        = "openai/gpt-4o-mini"
     GPT_4_1_MINI       = "openai/gpt-4.1-mini"
+    GPT_OSS_120B       = "openai/gpt-oss-120b"
+    GPT_OSS_20B        = "openai/gpt-oss-20b"
 
     @property
     def is_free(self) -> bool:

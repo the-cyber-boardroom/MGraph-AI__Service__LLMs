@@ -1,11 +1,9 @@
 import pytest
-from unittest                                                           import TestCase
-
-from osbot_utils.utils.Dev import pprint
-from osbot_utils.utils.Env                                              import get_env, load_dotenv
-from mgraph_ai_service_llms.service.llms.providers.Provider__OpenRouter import ENV_NAME_OPEN_ROUTER__API_KEY
-from mgraph_ai_service_llms.service.schemas.Schema__LLM__Models         import Schema__LLM__Models
-from tests.unit.Service__Fast_API__Test_Objs                            import setup__service_fast_api_test_objs, TEST_API_KEY__NAME, TEST_API_KEY__VALUE
+from unittest                                                                       import TestCase
+from osbot_utils.utils.Env                                                          import get_env
+from mgraph_ai_service_llms.service.llms.providers.open_router.Provider__OpenRouter import ENV_NAME_OPEN_ROUTER__API_KEY
+from mgraph_ai_service_llms.service.schemas.Schema__LLM__Models                     import Schema__LLM__Models
+from tests.unit.Service__Fast_API__Test_Objs                                        import setup__service_fast_api_test_objs, TEST_API_KEY__NAME, TEST_API_KEY__VALUE
 
 
 class test_Routes__LLMs__client(TestCase):
@@ -25,7 +23,7 @@ class test_Routes__LLMs__client(TestCase):
 
         # Verify we have all expected models
         assert len(models) == len(Schema__LLM__Models)
-        assert len(models) == 7
+        assert len(models) == 9
 
         # Check structure of first model
         first_model = models[0]
@@ -74,3 +72,11 @@ class test_Routes__LLMs__client(TestCase):
         #
         # assert result['prompt'] == "Reply with just 'OK'"
         # assert len(result['response']) > 0
+
+    def test__regression__llms__request_hash_is_always_different(self):
+        response = self.client.post('/llms/extract-facts-request-hash', json={})
+        assert response.json() == { 'model'       : 'openai/gpt-5-nano'                 ,
+                                    'result'      : '67cbd5df21'                        ,
+                                    'text_content': 'This is a text about GenAI and MCP'}        # these should always be the same (given the same input)
+
+

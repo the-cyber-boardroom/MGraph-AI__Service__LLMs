@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Text Analysis</title>
+  <link rel="stylesheet" href="./text-analysis/claude/2025-08-21/v0.1/css/text-analyzer.css">
+  <link rel="stylesheet" href="./css/index.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Text Analysis</h1>
+    <h2>Claude – 2025-08-21</h2>
+    <ul id="versionsList">
+      <li style="text-align: center; color: var(--text-secondary);">Loading versions...</li>
+    </ul>
+  </div>
+
+  <script>
+    async function loadVersions() {
+      const versionsList = document.getElementById('versionsList');
+
+      try {
+        const response = await fetch('./data/versions.json');
+        const versions = await response.json();
+
+        versionsList.innerHTML = '';
+
+        versions.forEach(version => {
+          const li = document.createElement('li');
+          li.innerHTML = `
+            <a href="${version.path}" class="version-link">
+              <div class="version-info">
+                <div class="version-name">${version.name}</div>
+                <div class="version-desc">${version.description}</div>
+              </div>
+              <span class="version-badge ${version.badge}">${version.badgeText}</span>
+            </a>
+          `;
+          versionsList.appendChild(li);
+        });
+      } catch (error) {
+        versionsList.innerHTML = '<li style="text-align: center; color: var(--color-warning);">Failed to load versions</li>';
+        console.error('Error loading versions:', error);
+      }
+    }
+
+    // Load versions on page load
+    loadVersions();
+  </script>
+</body>
+</html>

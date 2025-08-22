@@ -1,0 +1,3 @@
+[submodule "modules/Memory-FS"]
+	path = modules/Memory-FS
+	url = git@github.com:owasp-sbot/Memory-FS.git
