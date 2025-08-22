@@ -6,14 +6,14 @@ Welcome to the documentation for the Iterative Flow Development methodology - a 
 
 ## Documentation Overview
 
-| Document | Purpose | Read Time |
-|----------|---------|-----------|
-| [1. IFD Methodology](./1_ifd_iterative-flow-development_methodology.md) | Core philosophy, principles, and flow state approach | 15 min |
-| [2. Architecture Guide](./2_tech-architecture-guide.md) | Web components, zero dependencies, API patterns | 20 min |
-| [3. Version Evolution](./3_version-evolution-playbook.md) | How to progress from v0.1 MVP to v1.0 production | 15 min |
-| [4. Development Workflow](./4_development-workflow-guide.md) | Practical day-to-day development process | 20 min |
-| [5. LLM Templates](./5_llm-workflow-templates.md) | Ready-to-use prompts for AI collaboration | 10 min |
-| [6. Case Study](./6_case_study_text_analysis_web_application_one_day_of_flow.md) | Real-world proof: 13,345 lines in one day | 15 min |
+| Document                                                                          | Purpose | Read Time |
+|-----------------------------------------------------------------------------------|---------|-----------|
+| [1. IFD Methodology](./1__ifd__iterative-flow-development_methodology.md)          | Core philosophy, principles, and flow state approach | 15 min |
+| [2. Architecture Guide](./2__tech-architecture-guide.md)                          | Web components, zero dependencies, API patterns | 20 min |
+| [3. Version Evolution](./3__version-evolution-playbook.md)                        | How to progress from v0.1 MVP to v1.0 production | 15 min |
+| [4. Development Workflow](./4__development-workflow-guide.md)                     | Practical day-to-day development process | 20 min |
+| [5. LLM Templates](./5__llm-workflow-templates.md)                                | Ready-to-use prompts for AI collaboration | 10 min |
+| [6. Case Study](./6__case_study__text_analysis_web_application__one_day_of_flow.md) | Real-world proof: 13,345 lines in one day | 15 min |
 
 ## What is IFD?
 
@@ -37,12 +37,12 @@ In our case study, a single developer created a complete text analysis applicati
 ## Documentation Structure
 
 ### Reading Order
-1. **[1_ifd_iterative-flow-development_methodology.md](./1_ifd_iterative-flow-development_methodology.md)** - Philosophy, principles, and the flow state approach
-2. **[2_tech-architecture-guide.md](./2_tech-architecture-guide.md)** - Technical patterns and implementation details
-3. **[3_version-evolution-playbook.md](./3_version-evolution-playbook.md)** - How to progress from v0.1 to production v1.0
-4. **[4_development-workflow-guide.md](./4_development-workflow-guide.md)** - Day-to-day development workflow and practices
-5. **[5_llm-workflow-templates.md](./5_llm-workflow-templates.md)** - Templates for effective AI collaboration
-6. **[6_case_study_text_analysis_web_application_one_day_of_flow.md](./6_case_study_text_analysis_web_application_one_day_of_flow.md)** - Detailed analysis of building a complete application in one day
+1. **[ifd__iterative-flow-development_methodology.md](./1__ifd__iterative-flow-development_methodology.md)** - Philosophy, principles, and the flow state approach
+2. **[tech-architecture-guide.md](./2__tech-architecture-guide.md)** - Technical patterns and implementation details
+3. **[version-evolution-playbook.md](./3__version-evolution-playbook.md)** - How to progress from v0.1 to production v1.0
+4. **[development-workflow-guide.md](./4__development-workflow-guide.md)** - Day-to-day development workflow and practices
+5. **[llm-workflow-templates.md](./5__llm-workflow-templates.md)** - Templates for effective AI collaboration
+6. **[case_study_text_analysis_web_application_one_day_of_flow.md](./6__case_study__text_analysis_web_application__one_day_of_flow.md)** - Detailed analysis of building a complete application in one day
 
 ## Quick Start
 
@@ -90,64 +90,6 @@ In our case study, a single developer created a complete text analysis applicati
    - Merge best implementations
    - Clean up redundancy
    - Production ready (2 hours)
-
-## Quick Financial Analysis
-
-### Traditional Web Application Development
-
-**Timeline**: 3-4 weeks  
-**Team Required**:
-- 1 Senior Developer ($150/hr)
-- 1 Junior Developer ($75/hr)  
-- 1 Project Manager ($100/hr, 25% allocation)
-- 1 QA Tester ($80/hr, 50% allocation)
-- 1 UI/UX Designer ($100/hr, 25% allocation)
-
-**Cost Breakdown**:
-```
-Senior Developer:    $150 × 160 hours = $24,000
-Junior Developer:    $75 × 160 hours  = $12,000
-Project Manager:     $100 × 40 hours  = $4,000
-QA Tester:          $80 × 80 hours   = $6,400
-UI/UX Designer:     $100 × 40 hours  = $4,000
-Infrastructure:                        = $500
-Total:                                = $50,900
-```
-
-### IFD Methodology Development
-
-**Timeline**: 1 day  
-**Team Required**: 1 Developer + AI Assistant
-
-**Cost Breakdown**:
-```
-Developer:          $150 × 10 hours  = $1,500
-AI API Costs:       ~2M tokens       = $50
-Infrastructure:     (existing)       = $0
-Total:                               = $1,550
-```
-
-### Comparison Metrics
-- **Cost Reduction**: 97% ($49,350 saved)
-- **Time Reduction**: 95% (19 days saved)
-- **Team Reduction**: 80% (4 people eliminated)
-- **Meeting Overhead**: 100% eliminated
-- **Communication Delay**: 100% eliminated
-
-### ROI for First Project
-```
-Investment:         $1,550
-Value Delivered:    $50,900 (equivalent work)
-ROI:               3,184%
-Payback Period:    2 hours of development
-```
-
-### Scaling Analysis
-For a team adopting IFD methodology:
-- **Training Investment**: 2 days × $150/hr = $2,400 per developer
-- **Break-even Point**: First project completion
-- **Annual Savings** (10 projects): ~$493,500 per developer
-- **Productivity Multiplier**: 20-40x sustained
 
 ## Key Principles
 
@@ -303,8 +245,8 @@ This methodology documentation is released under Creative Commons CC-BY-4.0. You
 
 ## Next Steps
 
-1. **Read the Methodology**: Start with [1_ifd_iterative-flow-development_methodology.md](./1_ifd_iterative-flow-development_methodology.md)
-2. **Study the Case**: Review [6_case_study_text_analysis_web_application_one_day_of_flow.md](./6_case_study_text_analysis_web_application_one_day_of_flow.md)
+1. **Read the Methodology**: Start with [ifd_iterative-flow-development_methodology.md](./1__ifd__iterative-flow-development_methodology.md)
+2. **Study the Case**: Review [case_study_text_analysis_web_application_one_day_of_flow.md](./6__case_study__text_analysis_web_application__one_day_of_flow.md)
 3. **Try a Small Project**: Build something simple using the methodology
 4. **Share Your Results**: Let us know how it works for you
 
