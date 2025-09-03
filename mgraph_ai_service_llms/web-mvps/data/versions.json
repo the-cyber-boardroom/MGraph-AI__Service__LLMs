@@ -1,17 +1,24 @@
 [
   {
+    "name": "Version 1.2",
+    "path": "./text-analysis/claude/2025-09-03/v1.2/index.html",
+    "description": "Improved workflows",
+    "badge": "latest",
+    "badgeText": "Latest"
+  },
+  {
     "name": "Version 1.1",
     "path": "./text-analysis/claude/2025-09-03/v1.1/index.html",
     "description": "Multiple bug fixes",
-    "badge": "latest",
-    "badgeText": "Latest (dev)"
+    "badge": "",
+    "badgeText": "Dev"
   },
   {
     "name": "Version 1.0",
     "path": "./text-analysis/claude/2025-08-22/v1.0/index.html",
     "description": "Consolidated production version - all features integrated, self-contained, no external dependencies",
-    "badge": "latest",
-    "badgeText": "Latest (stable)"
+    "badge": "",
+    "badgeText": "Dev"
   },
   {
     "name": "Version 0.5",

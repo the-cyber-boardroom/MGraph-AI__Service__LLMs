@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Analyzer v1.2</title>
+
+    <!-- Link to v1.0 Global Styles -->
+    <link rel="stylesheet" href="../../2025-08-22/v1.0/css/main.css">
+    <link rel="stylesheet" href="../../2025-08-22/v1.0/css/variables.css">
+
+    <!-- Link to v1.0 Component Styles -->
+    <link rel="stylesheet" href="../../2025-08-22/v1.0/components/text-analyzer/text-analyzer.css">
+    <link rel="stylesheet" href="../../2025-08-22/v1.0/components/chat-panel/chat-panel.css">
+    <link rel="stylesheet" href="../../2025-08-22/v1.0/components/analysis-panel/analysis-panel.css">
+    <link rel="stylesheet" href="../../2025-08-22/v1.0/components/activity-log/activity-log.css">
+    <link rel="stylesheet" href="../../2025-08-22/v1.0/components/analysis-dashboard/analysis-dashboard.css">
+    <link rel="stylesheet" href="../../2025-08-22/v1.0/components/llm-request-viewer/llm-request-viewer.css">
+    <link rel="stylesheet" href="../v1.1/components/chat-panel/markdown.css">
+</head>
+<body>
+    <!-- Main App Container -->
+    <text-analyzer></text-analyzer>
+
+    <!-- Module Scripts -->
+    <script type="module">
+        // Import v1.0 components (unchanged)
+        import { ActivityLog } from '../../2025-08-22/v1.0/components/activity-log/activity-log.js';
+        import { LLMRequestViewer } from '../../2025-08-22/v1.0/components/llm-request-viewer/llm-request-viewer.js';
+
+
+        // Import v1.2 component (context-aware analysis)
+        import { TextAnalyzer } from './components/text-analyzer/text-analyzer.js';
+        import { ChatPanel } from './components/chat-panel/chat-panel.js';
+        import { AnalysisPanel } from './components/analysis-panel/analysis-panel.js';
+        import { AnalysisDashboard } from './components/analysis-dashboard/analysis-dashboard.js';
+
+        // Register custom elements
+        customElements.define('text-analyzer', TextAnalyzer);
+        customElements.define('chat-panel', ChatPanel);
+        customElements.define('analysis-panel', AnalysisPanel);
+        customElements.define('activity-log', ActivityLog);
+        customElements.define('analysis-dashboard', AnalysisDashboard);
+        customElements.define('llm-request-viewer', LLMRequestViewer);
+
+        // Global keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            if (e.ctrlKey && e.shiftKey && e.key === 'C') {
+                const analyzer = document.querySelector('text-analyzer');
+                if (analyzer) {
+                    analyzer.switchView('llm');
+                }
+            }
+        });
+
+        // App initialization
+        window.addEventListener('DOMContentLoaded', () => {
+            console.log('Text Analyzer v1.2 loaded successfully');
+
+            fetch('/info/health')
+                .then(response => {
+                    if (!response.ok) {
+                        console.warn('API health check failed, some features may not work');
+                    }
+                })
+                .catch(error => {
+                    console.warn('API not available, running in demo mode');
+                });
+        });
+    </script>
+</body>
+</html>
