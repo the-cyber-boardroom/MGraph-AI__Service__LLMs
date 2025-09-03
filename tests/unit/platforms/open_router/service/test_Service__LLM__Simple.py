@@ -16,6 +16,7 @@ class test_Service__LLM__Simple(TestCase):
 
     @classmethod
     def setUpClass(cls):                                                                                     # Setup for all tests
+        pytest.skip("Started to fail on GH actions")  # with 429 Client Error: Too Many Requests for url: https://openrouter.ai/api/v1/chat/completions
         load_dotenv()
         setup__service_fast_api_test_objs()
 
