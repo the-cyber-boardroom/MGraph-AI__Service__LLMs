@@ -12,8 +12,8 @@ from memory_fs.helpers.Memory_FS__Latest_Temporal                               
 from osbot_aws.testing.Temp__Random__AWS_Credentials                                 import OSBOT_AWS__LOCAL_STACK__AWS_ACCOUNT_ID, OSBOT_AWS__LOCAL_STACK__AWS_DEFAULT_REGION
 from osbot_aws.utils.AWS_Sanitization                                                import str_to_valid_s3_bucket_name
 from osbot_utils.type_safe.Type_Safe                                                 import Type_Safe
-from osbot_utils.type_safe.primitives.safe_str.filesystem.Safe_Str__File__Path       import Safe_Str__File__Path
-from osbot_utils.type_safe.primitives.safe_str.identifiers.Safe_Id                   import Safe_Id
+from osbot_utils.type_safe.primitives.domains.files.safe_str.Safe_Str__File__Path       import Safe_Str__File__Path
+from osbot_utils.type_safe.primitives.domains.identifiers.Safe_Id                   import Safe_Id
 from osbot_utils.utils.Misc                                                          import random_string_short
 from osbot_utils.utils.Objects                                                       import base_classes, __
 from osbot_aws.AWS_Config                                                            import aws_config
@@ -99,14 +99,14 @@ class test_Open_Router__Cache(TestCase):                                        
         with file_fs as _:
             assert type(_)                         is File_FS
             assert type(_.file__config.file_type)  is Memory_FS__File__Type__Json
-            assert _.obj()            == __(file__config = __(exists_strategy = 'FIRST'   ,
+            assert _.obj()            == __(file__config = __(exists_strategy = 'first'   ,
                                                               file_id         = file_id   ,
                                                               file_paths      = ['latest'],
                                                               file_type       = __( name           = 'json',
-                                                                                    content_type   = 'JSON',
+                                                                                    content_type   = 'application/json; charset=utf-8',
                                                                                     file_extension = 'json',
-                                                                                    encoding       = 'UTF_8',
-                                                                                    serialization  ='JSON'  )),
+                                                                                    encoding       = 'utf-8',
+                                                                                    serialization  = 'json'  )),
                                             storage_fs   = __(s3_prefix = self.test_prefix,
                                                               s3        = __( tmp_file_folder = 's3_temp_files',
                                                                               use_threads     = True,
@@ -133,14 +133,14 @@ class test_Open_Router__Cache(TestCase):                                        
         file_fs   = self.cache.file_for_latest_temporal(file_id="test-image", file_type=file_type)
         with file_fs as _:
             assert type(_) is File_FS
-            assert _.file__config.obj() == __( exists_strategy = 'FIRST',
+            assert _.file__config.obj() == __( exists_strategy = 'first',
                                                file_id         = 'test-image',
                                                file_paths      = ['latest', path_now],
-                                               file_type       = __( name           = 'png'  ,
-                                                                     content_type   = 'PNG'   ,
-                                                                     file_extension = 'png'   ,
-                                                                     encoding       = 'BINARY' ,
-                                                                     serialization  = 'BINARY'))
+                                               file_type       = __( name           = 'png'      ,
+                                                                     content_type   = 'image/png',
+                                                                     file_extension = 'png'      ,
+                                                                     encoding       =  None      ,
+                                                                     serialization  = 'binary'   ))
 
     def test_file_for_temporal(self):                                                   # Test temporal file creation
         path_now  = self.cache.fs__temporal.handler__temporal.path_now()
@@ -148,14 +148,14 @@ class test_Open_Router__Cache(TestCase):                                        
         file_fs   = self.cache.file_for_temporal(file_id="test-file", file_type=file_type)
         with file_fs as _:
             assert type(_) is File_FS
-            assert _.file__config.obj() == __( exists_strategy = 'FIRST',
+            assert _.file__config.obj() == __( exists_strategy = 'first',
                                                file_id         = 'test-file',
                                                file_paths      = [path_now],
                                                file_type       = __( name           = 'text'  ,
-                                                                     content_type   = 'TXT'   ,
+                                                                     content_type   = 'text/plain; charset=utf-8'   ,
                                                                      file_extension = 'txt'   ,
-                                                                     encoding       = 'UTF_8' ,
-                                                                     serialization  = 'STRING'))
+                                                                     encoding       = 'utf-8' ,
+                                                                     serialization  = 'string'))
 
 
 

@@ -1,6 +1,6 @@
 from decimal import Decimal
 
-from osbot_utils.type_safe.primitives.safe_float.Safe_Float import Safe_Float
+from osbot_utils.type_safe.primitives.core.Safe_Float import Safe_Float
 
 
 class Schema__Open_Router__Model__Pricing__Float(Safe_Float):

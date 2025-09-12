@@ -20,6 +20,9 @@ class Routes__Open_Router(Fast_API__Routes):
     def cache_entry__cache_id(self, cache_id: str) -> Dict[str, Any]: # Get cached entry by cache_id"""
         return self.open_router.get_cached_chat_by_id(cache_id)
 
+    # def cache_entry__cache_id(self, cache_id : str) -> Dict[str, Any]:
+    #     return self.open_router.get_cached_chat_by_id(cache_id)
+
     def complete(self, prompt       : str                                              ,                # Standard chat completion endpoint
                        model         : Schema__Open_Router__Supported_Models           ,
                        system_prompt : Optional[str  ]                          = None ,
@@ -41,7 +44,8 @@ class Routes__Open_Router(Fast_API__Routes):
                 max_cost      = max_cost
             )
 
-            return { "status"   : "success"                                            ,
+            return { "cache_id" : response.get("cache_id")                             ,
+                     "status"   : "success"                                            ,
                      "model"    : model.value                                          ,
                      "provider" : response.get("provider", provider_str or "auto")     ,
                      "response" : response.get("choices", [{}])[0].get("message", {}).get("content", ""),
@@ -129,6 +133,8 @@ class Routes__Open_Router(Fast_API__Routes):
                                    "name"        : provider.name                        ,
                                    "header_value": provider.header_value()              }
                                  for provider in Schema__Open_Router__Providers       ] }
+
+
 
     def setup_routes(self):
         self.add_route_post(self.complete             )

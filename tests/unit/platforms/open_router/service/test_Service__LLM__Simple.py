@@ -1,7 +1,7 @@
 import pytest
 from unittest                                                                                                import TestCase
 from osbot_utils.type_safe.Type_Safe                                                                         import Type_Safe
-from osbot_utils.type_safe.primitives.safe_str.Safe_Str                                                      import Safe_Str
+from osbot_utils.type_safe.primitives.core.Safe_Str                                                      import Safe_Str
 from osbot_utils.utils.Dev import pprint
 from osbot_utils.utils.Objects                                                                               import base_classes
 from osbot_utils.utils.Env                                                                                   import get_env, load_dotenv

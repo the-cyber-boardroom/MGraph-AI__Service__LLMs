@@ -1,7 +1,7 @@
 from osbot_utils.type_safe.Type_Safe                                                import Type_Safe
-from osbot_utils.type_safe.primitives.safe_int.Timestamp_Now                        import Timestamp_Now
-from osbot_utils.type_safe.primitives.safe_str.cryptography.hashes.Safe_Str__Hash   import Safe_Str__Hash, SIZE__VALUE_HASH
-from osbot_utils.type_safe.primitives.safe_str.identifiers.Safe_Id                  import Safe_Id
+from osbot_utils.type_safe.primitives.domains.cryptography.safe_str.Safe_Str__Hash  import Safe_Str__Hash, SIZE__VALUE_HASH
+from osbot_utils.type_safe.primitives.domains.identifiers.Safe_Id                   import Safe_Id
+from osbot_utils.type_safe.primitives.domains.identifiers.Timestamp_Now             import Timestamp_Now
 from osbot_utils.utils.Json                                                         import json_to_str
 from osbot_utils.utils.Misc                                                         import bytes_sha256
 from mgraph_ai_service_llms.platforms.open_router.cache.Open_Router__Cache          import Open_Router__Cache

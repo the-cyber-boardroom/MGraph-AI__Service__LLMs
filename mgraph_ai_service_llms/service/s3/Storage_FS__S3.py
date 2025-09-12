@@ -1,5 +1,5 @@
 from typing                                                                     import List, Optional
-from osbot_utils.type_safe.primitives.safe_str.filesystem.Safe_Str__File__Path  import Safe_Str__File__Path
+from osbot_utils.type_safe.primitives.domains.files.safe_str.Safe_Str__File__Path  import Safe_Str__File__Path
 from osbot_utils.type_safe.type_safe_core.decorators.type_safe                  import type_safe
 from osbot_utils.utils.Json                                                     import bytes_to_json, json_to_bytes
 from osbot_aws.aws.s3.S3                                                        import S3

@@ -1,6 +1,6 @@
 from typing                                             import Optional, List, Literal
 from osbot_utils.type_safe.Type_Safe                    import Type_Safe
-from osbot_utils.type_safe.primitives.safe_str.Safe_Str import Safe_Str
+from osbot_utils.type_safe.primitives.core.Safe_Str import Safe_Str
 
 
 class Schema__Open_Router__Provider_Preferences(Type_Safe):                 # Provider-specific preferences and settings"""

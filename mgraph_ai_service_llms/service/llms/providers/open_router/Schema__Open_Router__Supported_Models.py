@@ -11,8 +11,9 @@ class Schema__Open_Router__Supported_Models(Enum):
     Open_AI__GPT_4o_Mini           : str = "openai/gpt-4o-mini"                             # Created Jul 18, 2024   128,000 context $0.15 /M input tokens  $0.60/M output tokens
     Open_AI__GPT_4_1_Mini          : str = "openai/gpt-4.1-mini"                            # Created Apr 14, 2025 1,047,576 context $0.40 /M input tokens  $1.60/M output tokens
     Open_AI__GPT_5__Nano           : str = "openai/gpt-5-nano"                              # Created Aug 7, 2025    400,000 context $0.05 /M input tokens  $0.40/M output tokens
-    Open_AI__GPT_5__Mini           : str = "openai/gpt-5-mini"                              # Created Aug 7, 2025    400,000 contex  $0.25 /M input tokens  $2   /M output tokens
-
-
+    Open_AI__GPT_5__Mini           : str = "openai/gpt-5-mini"                              # Created Aug 7, 2025    400,000 context $0.25 /M input tokens  $2   /M output tokens
     Open_AI__GPT_OSS_120b          : str = "openai/gpt-oss-120b"                            # Created Aug  5, 2025   131,072 context $0.10 /M input tokens  $0.50/M output tokens   https://openrouter.ai/openai/gpt-oss-120b
     Open_AI__GPT_OSS_20b           : str = "openai/gpt-oss-20b"                             # Created Aug  5, 2025   131,072 context $0.05 /M input tokens  $0.20/M output tokens   https://openrouter.ai/openai/gpt-oss-20b
+    Perplexity__Sonar              : str = "perplexity/sonar"                               # Created Jan 27, 2025   127,072 context $1   /M input tokens  $1   /M output tokens   https://openrouter.ai/perplexity/sonar
+    Perplexity__Sonar_Pro          : str = "perplexity/sonar-pro"                           # Created Mar  7, 2025   200,000 context $3   /M input tokens  $15  /M output tokens   https://openrouter.ai/perplexity/sonar-pro
+    Open_AI__GPT_4o_Search_Preview : str = "openai/gpt-4o-search-preview"                   # Created Mar 12, 2025   128,000 context $2.50/M input tokens  $10  /M output tokens   https://openrouter.ai/openai/gpt-4o-search-preview

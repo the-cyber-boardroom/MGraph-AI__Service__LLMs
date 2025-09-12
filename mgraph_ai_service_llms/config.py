@@ -1,5 +1,5 @@
+from osbot_utils.type_safe.primitives.domains.files.safe_str.Safe_Str__File__Path                    import Safe_Str__File__Path
 from mgraph_ai_service_llms                                                                          import package_name
-from osbot_utils.type_safe.primitives.safe_str.filesystem.Safe_Str__File__Path                                               import Safe_Str__File__Path
 from mgraph_ai_service_llms.service.llms.providers.open_router.Schema__Open_Router__Supported_Models import Schema__Open_Router__Supported_Models
 
 SERVICE_NAME                             = package_name

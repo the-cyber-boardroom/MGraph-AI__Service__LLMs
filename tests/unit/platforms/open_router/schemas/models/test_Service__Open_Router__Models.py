@@ -1,8 +1,8 @@
 import pytest
 from unittest                                                                                               import TestCase
 from osbot_utils.type_safe.Type_Safe                                                                        import Type_Safe
-from osbot_utils.type_safe.primitives.safe_int                                                              import Safe_Int
-from osbot_utils.type_safe.primitives.safe_str.web.Safe_Str__Url                                            import Safe_Str__Url
+from osbot_utils.type_safe.primitives.core.Safe_Int                                                              import Safe_Int
+from osbot_utils.type_safe.primitives.domains.web.safe_str.Safe_Str__Url                                            import Safe_Str__Url
 from osbot_utils.type_safe.type_safe_core.collections.Type_Safe__List                                       import Type_Safe__List
 from osbot_utils.utils.Objects                                                                              import base_classes
 from osbot_utils.utils.Misc                                                                                 import list_set

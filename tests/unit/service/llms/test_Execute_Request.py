@@ -1,8 +1,7 @@
 import pytest
 from unittest                                                                                        import TestCase
-
-from osbot_utils.helpers.llms.schemas.Safe_Str__LLM__Model_Name import Safe_Str__LLM__Model_Name
 from osbot_utils.helpers.llms.schemas.Schema__LLM_Request__Message__Role                             import Schema__LLM_Request__Message__Role
+from osbot_utils.type_safe.primitives.domains.llm.safe_str.Safe_Str__LLM__Model_Id import Safe_Str__LLM__Model_Id
 from osbot_utils.utils.Env                                                                           import get_env
 from osbot_utils.utils.Misc                                                                          import list_set
 from mgraph_ai_service_llms.config                                                                   import TEST_DATA__SIMPLE_TEXT
@@ -24,7 +23,7 @@ class test_Execute_Request(TestCase):
             pytest.skip('This test requires OpenAI API Key to run')
         cls.prompt_extract_facts  = LLM__Prompt__Extract_Facts()
         cls.llm_execute_request   = LLM__Execute_Request().setup()
-        cls.model_to_use          = Safe_Str__LLM__Model_Name(Schema__Open_Router__Supported_Models.Google__Gemini_2_0.value)
+        cls.model_to_use          = Safe_Str__LLM__Model_Id(Schema__Open_Router__Supported_Models.Google__Gemini_2_0.value)
         cls.text_content          = TEST_DATA__SIMPLE_TEXT
 
 
@@ -53,4 +52,4 @@ class test_Execute_Request(TestCase):
 
         with self.llm_execute_request as _:
             request_hash = _.extract_facts__request_hash(text_content=self.text_content, model_to_use=self.model_to_use)
-            assert request_hash == '4b20d32f03'         # this should always be same (given the same text and model)
+            assert request_hash == '7cec971ca8'         # this should always be same (given the same text and model)

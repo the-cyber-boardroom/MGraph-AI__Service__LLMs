@@ -1,7 +1,7 @@
 from unittest                                                                   import TestCase
 from osbot_aws.testing.Temp__Random__AWS_Credentials                            import OSBOT_AWS__LOCAL_STACK__AWS_ACCOUNT_ID, OSBOT_AWS__LOCAL_STACK__AWS_DEFAULT_REGION
 from osbot_aws.utils.AWS_Sanitization                                           import str_to_valid_s3_bucket_name
-from osbot_utils.type_safe.primitives.safe_str.filesystem.Safe_Str__File__Path  import Safe_Str__File__Path
+from osbot_utils.type_safe.primitives.domains.files.safe_str.Safe_Str__File__Path  import Safe_Str__File__Path
 from osbot_utils.utils.Json                                                     import json_to_bytes
 from osbot_utils.utils.Misc                                                     import random_string_short
 from osbot_aws.AWS_Config                                                       import aws_config

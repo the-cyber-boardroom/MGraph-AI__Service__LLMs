@@ -1,6 +1,6 @@
 from typing                                                                                          import Dict, Any
 from osbot_fast_api.api.routes.Fast_API__Routes                                                      import Fast_API__Routes
-from osbot_utils.helpers.llms.schemas.Safe_Str__LLM__Model_Name                                      import Safe_Str__LLM__Model_Name
+from osbot_utils.type_safe.primitives.domains.llm.safe_str.Safe_Str__LLM__Model_Id                   import Safe_Str__LLM__Model_Id
 from osbot_utils.utils.Env                                                                           import load_dotenv
 from mgraph_ai_service_llms.config                                                                   import LLM__MODEL_TO_USE__DEFAULT, TEST_DATA__SIMPLE_TEXT
 from mgraph_ai_service_llms.service.llms.LLM__Execute_Request                                        import LLM__Execute_Request
@@ -59,14 +59,14 @@ class Routes__LLMs(Fast_API__Routes):
 
         # Execute fact extraction with caching
         result = self.llm_execute_request.extract_facts(text_content  =text_content,
-                                                        model_to_use = Safe_Str__LLM__Model_Name(model.value),
+                                                        model_to_use = Safe_Str__LLM__Model_Id(model.value),
                                                         provider     = provider )
         return result
 
     def extract_facts_request_hash(self, text_content: str                                   = TEST_DATA__SIMPLE_TEXT,
                                          model       : Schema__Open_Router__Supported_Models = LLM__MODEL_TO_USE__DEFAULT
                                     ) -> dict:
-        result = self.llm_execute_request.extract_facts__request_hash(text_content=text_content, model_to_use=Safe_Str__LLM__Model_Name(model.value))
+        result = self.llm_execute_request.extract_facts__request_hash(text_content=text_content, model_to_use=Safe_Str__LLM__Model_Id(model.value))
         return { 'text_content' : text_content,
                  'model'        : model       ,
                  'result'       : result      }

@@ -1,8 +1,8 @@
 
 from typing                                                                               import  Dict
 from osbot_utils.type_safe.Type_Safe                                                      import Type_Safe
-from osbot_utils.type_safe.primitives.safe_float.Safe_Float                               import Safe_Float
-from osbot_utils.type_safe.primitives.safe_str.Safe_Str                                   import Safe_Str
+from osbot_utils.type_safe.primitives.core.Safe_Float                               import Safe_Float
+from osbot_utils.type_safe.primitives.core.Safe_Str                                   import Safe_Str
 from mgraph_ai_service_llms.platforms.open_router.schemas.Safe_Str__Open_Router__Model_ID import Safe_Str__Open_Router__Model_ID
 
 

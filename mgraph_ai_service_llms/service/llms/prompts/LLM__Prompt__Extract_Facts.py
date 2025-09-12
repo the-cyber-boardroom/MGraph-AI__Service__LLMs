@@ -1,12 +1,11 @@
-from osbot_utils.helpers.llms.schemas.Safe_Str__LLM__Model_Name         import Safe_Str__LLM__Model_Name
-from osbot_utils.type_safe.type_safe_core.decorators.type_safe          import type_safe
-from osbot_utils.helpers.llms.builders.LLM_Request__Builder__Open_AI    import LLM_Request__Builder__Open_AI
-from osbot_utils.helpers.llms.schemas.Schema__LLM_Request               import Schema__LLM_Request
-from osbot_utils.helpers.llms.schemas.Schema__LLM_Response              import Schema__LLM_Response
-from osbot_utils.type_safe.Type_Safe                                    import Type_Safe
-from osbot_utils.utils.Json                                             import str_to_json
-
-from mgraph_ai_service_llms.service.llms.prompts.schemas.Schema__Facts import Schema__Facts
+from osbot_utils.type_safe.primitives.domains.llm.safe_str.Safe_Str__LLM__Model_Id import Safe_Str__LLM__Model_Id
+from osbot_utils.type_safe.type_safe_core.decorators.type_safe                     import type_safe
+from osbot_utils.helpers.llms.builders.LLM_Request__Builder__Open_AI               import LLM_Request__Builder__Open_AI
+from osbot_utils.helpers.llms.schemas.Schema__LLM_Request                          import Schema__LLM_Request
+from osbot_utils.helpers.llms.schemas.Schema__LLM_Response                         import Schema__LLM_Response
+from osbot_utils.type_safe.Type_Safe                                               import Type_Safe
+from osbot_utils.utils.Json                                                        import str_to_json
+from mgraph_ai_service_llms.service.llms.prompts.schemas.Schema__Facts             import Schema__Facts
 
 SYSTEM_PROMPT__EXTRACT_FACTS = """You are a fact extraction expert that identifies and extracts key factual information from text.
 
@@ -47,7 +46,7 @@ Extract:
 class LLM__Prompt__Extract_Facts(Type_Safe):
     request_builder: LLM_Request__Builder__Open_AI
 
-    def llm_request(self, text_content: str, model_to_use: Safe_Str__LLM__Model_Name = None) -> Schema__LLM_Request:
+    def llm_request(self, text_content: str, model_to_use: Safe_Str__LLM__Model_Id = None) -> Schema__LLM_Request:
         system_prompt = SYSTEM_PROMPT__EXTRACT_FACTS
         user_prompt   = USER_PROMPT__EXTRACT_FACTS.format(text_content=text_content)
 

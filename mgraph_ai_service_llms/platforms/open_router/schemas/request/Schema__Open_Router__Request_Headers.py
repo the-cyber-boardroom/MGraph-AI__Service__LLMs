@@ -11,10 +11,10 @@ from mgraph_ai_service_llms.platforms.open_router.schemas.request.Safe_Str__Requ
     provider routing, and response formatting.
 """
 
-from typing                                                         import Optional, List, Dict
-from osbot_utils.type_safe.Type_Safe                                import Type_Safe
-from osbot_utils.type_safe.primitives.safe_str.Safe_Str             import Safe_Str
-from osbot_utils.type_safe.primitives.safe_str.web.Safe_Str__Url    import Safe_Str__Url
+from typing                                                               import Optional, List, Dict
+from osbot_utils.type_safe.Type_Safe                                      import Type_Safe
+from osbot_utils.type_safe.primitives.core.Safe_Str                       import Safe_Str
+from osbot_utils.type_safe.primitives.domains.web.safe_str.Safe_Str__Url  import Safe_Str__Url
 
 
 class Schema__Open_Router__Request_Headers(Type_Safe):

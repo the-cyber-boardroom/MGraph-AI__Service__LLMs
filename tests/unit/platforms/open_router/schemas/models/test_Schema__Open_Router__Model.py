@@ -2,7 +2,7 @@ from typing                                                                     
 from unittest                                                                                           import TestCase
 from osbot_utils.helpers.duration.decorators.print_duration                                             import print_duration
 from osbot_utils.type_safe.Type_Safe                                                                    import Type_Safe
-from osbot_utils.type_safe.primitives.safe_str.Safe_Str                                                 import Safe_Str
+from osbot_utils.type_safe.primitives.core.Safe_Str                                                 import Safe_Str
 from mgraph_ai_service_llms.platforms.open_router.service.Service__Open_Router__Models                  import Service__Open_Router__Models
 from mgraph_ai_service_llms.platforms.open_router.schemas.models.Schema__Open_Router__Model             import Schema__Open_Router__Model
 from mgraph_ai_service_llms.platforms.open_router.schemas.models.Schema__Open_Router__Models__Response  import Schema__Open_Router__Models__Response

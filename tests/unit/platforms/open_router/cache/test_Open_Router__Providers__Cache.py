@@ -1,12 +1,12 @@
 from datetime                                                                           import datetime
 from unittest                                                                           import TestCase
-from osbot_utils.type_safe.primitives.safe_str.identifiers.Safe_Id                      import Safe_Id
+from osbot_utils.type_safe.primitives.domains.identifiers.Safe_Id                      import Safe_Id
 from memory_fs.file_fs.File_FS                                                          import File_FS
 from osbot_aws.aws.s3.S3                                                                import S3
 from osbot_aws.testing.Temp__Random__AWS_Credentials                                    import OSBOT_AWS__LOCAL_STACK__AWS_ACCOUNT_ID, OSBOT_AWS__LOCAL_STACK__AWS_DEFAULT_REGION
 from osbot_aws.utils.AWS_Sanitization                                                   import str_to_valid_s3_bucket_name
 from osbot_utils.type_safe.Type_Safe                                                    import Type_Safe
-from osbot_utils.type_safe.primitives.safe_int.Timestamp_Now                            import Timestamp_Now
+from osbot_utils.type_safe.primitives.domains.identifiers.Timestamp_Now                            import Timestamp_Now
 from osbot_utils.utils.Misc                                                             import random_string_short, list_set
 from osbot_utils.utils.Objects                                                          import base_classes
 from osbot_aws.AWS_Config                                                               import aws_config

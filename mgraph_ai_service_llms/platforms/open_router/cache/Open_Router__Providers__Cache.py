@@ -1,7 +1,7 @@
-from osbot_utils.type_safe.primitives.safe_str.identifiers.Safe_Id               import Safe_Id
+from osbot_utils.type_safe.primitives.domains.identifiers.Safe_Id               import Safe_Id
 from memory_fs.file_fs.File_FS                                                   import File_FS
 from osbot_utils.type_safe.Type_Safe                                             import Type_Safe
-from osbot_utils.type_safe.primitives.safe_int.Timestamp_Now                     import Timestamp_Now
+from osbot_utils.type_safe.primitives.domains.identifiers.Timestamp_Now                     import Timestamp_Now
 from mgraph_ai_service_llms.platforms.open_router.cache.Open_Router__Cache       import Open_Router__Cache
 
 FILE_ID__OPEN_ROUTER__PROVIDERS = "openrouter-providers"

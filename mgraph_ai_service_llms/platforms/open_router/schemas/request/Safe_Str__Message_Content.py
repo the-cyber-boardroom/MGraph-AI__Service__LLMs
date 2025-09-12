@@ -1,5 +1,5 @@
 import re
-from osbot_utils.type_safe.primitives.safe_str.Safe_Str import Safe_Str
+from osbot_utils.type_safe.primitives.core.Safe_Str import Safe_Str
 
 OPEN_ROUTER__MESSAGE__CONTENT__MAX_SIZE = 32768                                      # todo: see if this should be user controlable
 

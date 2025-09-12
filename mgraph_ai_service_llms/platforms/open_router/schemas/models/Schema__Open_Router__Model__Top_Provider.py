@@ -1,6 +1,6 @@
 from typing                                             import Optional
 from osbot_utils.type_safe.Type_Safe                    import Type_Safe
-from osbot_utils.type_safe.primitives.safe_int.Safe_Int import Safe_Int
+from osbot_utils.type_safe.primitives.core.Safe_Int import Safe_Int
 
 
 class Schema__Open_Router__Model__Top_Provider(Type_Safe):

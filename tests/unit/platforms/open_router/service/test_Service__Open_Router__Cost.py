@@ -1,7 +1,7 @@
 import pytest
 from unittest                                                                                                import TestCase
 from osbot_utils.type_safe.Type_Safe                                                                         import Type_Safe
-from osbot_utils.type_safe.primitives.safe_float.Safe_Float                                                  import Safe_Float
+from osbot_utils.type_safe.primitives.core.Safe_Float                                                  import Safe_Float
 from osbot_utils.utils.Objects                                                                               import base_classes
 from mgraph_ai_service_llms.platforms.open_router.schemas.cost.Schema__Open_Router__Cost_Breakdown           import Schema__Open_Router__Cost_Breakdown
 from mgraph_ai_service_llms.platforms.open_router.schemas.models.Schema__Open_Router__Model__Pricing         import Schema__Open_Router__Model__Pricing

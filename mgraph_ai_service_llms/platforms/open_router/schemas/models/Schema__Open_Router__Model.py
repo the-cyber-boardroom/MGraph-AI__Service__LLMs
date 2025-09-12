@@ -1,6 +1,6 @@
 from typing                                                                                                     import List, Optional
 from osbot_utils.type_safe.Type_Safe                                                                            import Type_Safe
-from osbot_utils.type_safe.primitives.safe_int.Safe_Int                                                         import Safe_Int
+from osbot_utils.type_safe.primitives.core.Safe_Int                                                             import Safe_Int
 from mgraph_ai_service_llms.platforms.open_router.schemas.Safe_Str__Open_Router__Description                    import Safe_Str__Open_Router__Description
 from mgraph_ai_service_llms.platforms.open_router.schemas.Safe_Str__Open_Router__Model_ID                       import Safe_Str__Open_Router__Model_ID
 from mgraph_ai_service_llms.platforms.open_router.schemas.Safe_Str__Open_Router__Model_Name                     import Safe_Str__Open_Router__Model_Name

@@ -5,7 +5,7 @@ from memory_fs.helpers.Memory_FS__Latest_Temporal                   import Memor
 from memory_fs.helpers.Memory_FS__Temporal                          import Memory_FS__Temporal
 from memory_fs.schemas.Schema__Memory_FS__File__Type                import Schema__Memory_FS__File__Type
 from osbot_utils.type_safe.Type_Safe                                import Type_Safe
-from osbot_utils.type_safe.primitives.safe_str.identifiers.Safe_Id  import Safe_Id
+from osbot_utils.type_safe.primitives.domains.identifiers.Safe_Id  import Safe_Id
 from mgraph_ai_service_llms.service.s3.Storage_FS__S3               import Storage_FS__S3
 
 class Open_Router__Cache(Type_Safe):
