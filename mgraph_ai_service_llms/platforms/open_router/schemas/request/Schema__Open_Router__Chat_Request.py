@@ -3,6 +3,10 @@ from osbot_utils.type_safe.Type_Safe                                            
 from osbot_utils.type_safe.primitives.core.Safe_Float                                                 import Safe_Float
 from osbot_utils.type_safe.primitives.core.Safe_Str                                                     import Safe_Str
 from osbot_utils.type_safe.primitives.core.Safe_Int                                                     import Safe_Int
+from osbot_utils.type_safe.primitives.domains.llm.safe_float.Safe_Float__LLM__Temperature import Safe_Float__LLM__Temperature
+from osbot_utils.type_safe.primitives.domains.llm.safe_float.Safe_Float__LLM__Top_P import Safe_Float__LLM__Top_P
+from osbot_utils.type_safe.primitives.domains.llm.safe_uint.Safe_UInt__LLM__Max_Tokens import Safe_UInt__LLM__Max_Tokens
+
 from mgraph_ai_service_llms.platforms.open_router.schemas.Safe_Str__Open_Router__Model_ID                   import Safe_Str__Open_Router__Model_ID
 from mgraph_ai_service_llms.platforms.open_router.schemas.Safe_Str__Open_Router__Model_Name                 import Safe_Str__Open_Router__Model_Name
 from mgraph_ai_service_llms.platforms.open_router.schemas.request.Safe_Str__Message_Content                 import Safe_Str__Message_Content
@@ -25,14 +29,14 @@ class Schema__Open_Router__Chat_Request(Type_Safe):
     messages      : List[Schema__Open_Router__Message]  # Conversation messages
 
     # Standard parameters
-    temperature        : Optional[Safe_Float] = None  # 0.0 to 2.0                    # todo: use more specific version of Safe_Float
-    max_tokens         : Optional[Safe_Int  ] = None  # Maximum tokens to generate
-    top_p              : Optional[Safe_Float] = None     # Nucleus sampling
-    top_k              : Optional[Safe_Int  ] = None  # Top-k sampling
-    frequency_penalty  : Optional[Safe_Float] = None     # -2.0 to 2.0
-    presence_penalty   : Optional[Safe_Float] = None     # -2.0 to 2.0
-    repetition_penalty : Optional[Safe_Float] = None     # 0.0 to 2.0
-    seed               : Optional[Safe_Int  ] = None  # For deterministic sampling
+    temperature        : Safe_Float__LLM__Temperature = None  # 0.0 to 2.0                    # todo: use more specific version of Safe_Float
+    max_tokens         : Safe_UInt__LLM__Max_Tokens   = None  # Maximum tokens to generate
+    top_p              : Safe_Float__LLM__Top_P       = None  # Nucleus sampling
+    top_k              : Safe_Int                     = None  # Top-k sampling
+    frequency_penalty  : Safe_Float                   = None  # -2.0 to 2.0
+    presence_penalty   : Safe_Float                   = None  # -2.0 to 2.0
+    repetition_penalty : Safe_Float                   = None  # 0.0 to 2.0
+    seed               : Safe_Int                     = None  # For deterministic sampling
 
     # Response control
     response_format    : Optional[Schema__Open_Router__Response_Format] = None
@@ -40,7 +44,7 @@ class Schema__Open_Router__Chat_Request(Type_Safe):
 
     # Tools/Functions
     tools              : Optional[List[Schema__Open_Router__Tool]] = None
-    tool_choice        : Optional[Safe_Str] = None  # "auto", "none", or specific tool
+    tool_choice        : Dict               #Optional[Safe_Str] = None  # "auto", "none", or specific tool
 
     # Streaming
     stream             : bool = False                # Enable SSE streaming
