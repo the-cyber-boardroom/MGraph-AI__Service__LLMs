@@ -1,4 +1,3 @@
-# mgraph_ai_service_llms/platforms/open_router/service/Service__Open_Router.py
 import json
 import requests
 from typing                                                                                                 import Dict, Any, Optional, Iterator

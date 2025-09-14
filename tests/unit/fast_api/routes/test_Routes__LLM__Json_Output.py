@@ -8,7 +8,7 @@ from mgraph_ai_service_llms.platforms.open_router.schemas.json_output.Schema__Js
 from mgraph_ai_service_llms.platforms.open_router.schemas.json_output.Schema__Json_Extract__Response     import Schema__Json_Extract__Response
 from mgraph_ai_service_llms.platforms.open_router.service.Service__LLM__Json_Output                      import Service__LLM__Json_Output
 from mgraph_ai_service_llms.service.llms.prompts.schemas.Schema__Facts                                   import Schema__Facts
-from mgraph_ai_service_llms.service.llms.providers.open_router.Schema__Open_Router__Providers import Schema__Open_Router__Providers
+from mgraph_ai_service_llms.service.llms.providers.open_router.Schema__Open_Router__Providers            import Schema__Open_Router__Providers
 from tests.unit.Service__Fast_API__Test_Objs                                                             import setup__service_fast_api_test_objs
 
 
