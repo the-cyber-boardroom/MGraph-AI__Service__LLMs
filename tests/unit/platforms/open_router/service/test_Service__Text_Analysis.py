@@ -199,11 +199,11 @@ class test_Service__Text_Analysis(TestCase):
 
     def test_provider_configuration(self):                                                                # Test different provider configuration
         service = Service__Text_Analysis()
-        service.provider = Schema__Open_Router__Providers.CEREBRAS
-        service.temperature = 0.5
+        service.provider = Schema__Open_Router__Providers.GROQ
+        service.temperature = 0.0
 
         result = service.extract_facts("Test text with different provider.")
-        assert result["provider"] == "cerebras"
+        assert result["provider"] == "groq"
 
     def test_long_text_handling(self):                                                                    # Test with longer text
         long_text = " ".join([self.test_text_complex] * 5)                                               # Repeat text 5 times

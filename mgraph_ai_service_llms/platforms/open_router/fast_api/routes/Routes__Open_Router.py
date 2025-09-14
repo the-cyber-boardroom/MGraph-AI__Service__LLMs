@@ -28,8 +28,7 @@ class Routes__Open_Router(Fast_API__Routes):
                        system_prompt : Optional[str  ]                          = None ,
                        temperature   : float                                    = 0.7  ,
                        max_tokens    : int                                      = 1000 ,
-                       provider      : Optional[Schema__Open_Router__Providers] = None ,
-                       max_cost      : Optional[float]                          = None
+                       provider      : Optional[Schema__Open_Router__Providers] = None
                  ) -> Dict[str, Any]:
         try:
             provider_str = provider.value if provider else None
@@ -40,9 +39,7 @@ class Routes__Open_Router(Fast_API__Routes):
                 system_prompt = system_prompt          ,
                 temperature   = temperature            ,
                 max_tokens    = max_tokens             ,
-                provider      = provider_str           ,
-                max_cost      = max_cost
-            )
+                provider      = provider_str           )
 
             return { "cache_id" : response.get("cache_id")                             ,
                      "status"   : "success"                                            ,
@@ -60,13 +57,11 @@ class Routes__Open_Router(Fast_API__Routes):
                                detail      = f"Internal error: {str(e)}")
 
     def complete_stream(self, prompt       : str                                               ,         # Streaming chat completion endpoint
-                              model         : Schema__Open_Router__Supported_Models           ,
-                              system_prompt : Optional[str  ]                          = None ,
-                              temperature   : float                                     = 0.7  ,
+                              model         : Schema__Open_Router__Supported_Models            ,
+                              system_prompt : Optional[str  ]                           = None ,
+                              temperature   : float                                     = 0.0  ,
                               max_tokens    : int                                       = 1000 ,
-                              provider      : Optional[Schema__Open_Router__Providers] = None ,
-                              max_cost      : Optional[float]                          = None
-                        ):
+                              provider      : Optional[Schema__Open_Router__Providers] = None  ):
 
         def generate():                                                                                  # Generator function for streaming response
             try:
@@ -78,8 +73,7 @@ class Routes__Open_Router(Fast_API__Routes):
                     system_prompt = system_prompt     ,
                     temperature   = temperature       ,
                     max_tokens    = max_tokens        ,
-                    provider      = provider_str      ,
-                    max_cost      = max_cost
+                    provider      = provider_str
                 ):
                     yield f"data: {json.dumps(chunk)}\n\n"                                              # SSE format
 
@@ -129,9 +123,8 @@ class Routes__Open_Router(Fast_API__Routes):
                                detail      = f"Failed to estimate cost: {str(e)}"    )
 
     def providers(self) -> Dict[str, Any]:                                                              # List available providers
-        return { "providers" : [ { "id"          : provider.value                      ,
-                                   "name"        : provider.name                        ,
-                                   "header_value": provider.header_value()              }
+        return { "providers" : [ { "id"          : provider.value                       ,
+                                   "name"        : provider.name                        }
                                  for provider in Schema__Open_Router__Providers       ] }
 
 

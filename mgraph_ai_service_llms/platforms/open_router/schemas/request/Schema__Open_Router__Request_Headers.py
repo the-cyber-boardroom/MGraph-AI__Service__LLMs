@@ -80,8 +80,8 @@ class Schema__Open_Router__Request_Headers(Type_Safe):
             headers["X-Request-ID"] = str(self.x_request_id)
 
         # Add cost control
-        if self.x_max_cost is not None:
-            headers["X-Max-Cost"] = str(self.x_max_cost)
+        if self.x_max_cost is not None:                                             # todo: see if works
+            headers["X-Max-Cost"] = str(self.x_max_cost)                            #       and if we actually use it
 
         return headers
 

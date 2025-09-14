@@ -53,14 +53,6 @@ class test_Schema__Open_Router__Request_Headers(TestCase):
         assert headers_dict["order"]   == "groq,cerebras,together"
         assert headers_dict["require"] == "streaming,function-calling"
 
-    def test__to_headers_dict__with_cost_control(self):
-        """Test headers with cost control"""
-        self.headers.x_max_cost = 0.5  # 50 cents maximum
-
-        headers_dict = self.headers.to_headers_dict()
-
-        assert headers_dict["X-Max-Cost"] == "0.5"
-
     def test__to_headers_dict__with_request_tracking(self):
         """Test headers with request tracking"""
         self.headers.x_request_id = "req-12345-67890"
@@ -95,20 +87,17 @@ class test_Schema__Open_Router__Request_Headers(TestCase):
                         .create_default     ("test-key")
                         .with_provider      ("anthropic")
                         .with_provider_order("anthropic", "openai", "groq")
-                        .with_requirements  ("streaming", "json-mode")
-                        .with_max_cost      (1.0))
+                        .with_requirements  ("streaming", "json-mode"))
 
         assert headers.x_provider == "anthropic"
         assert headers.order      == ["anthropic", "openai", "groq"]
         assert headers.require    == ["streaming", "json-mode"]
-        assert headers.x_max_cost == 1.0
 
         # Verify in headers dict
         headers_dict = headers.to_headers_dict()
         assert headers_dict["X-Provider"] == "anthropic"
         assert headers_dict["order"]      == "anthropic,openai,groq"
         assert headers_dict["require"]    == "streaming,json-mode"
-        assert headers_dict["X-Max-Cost"] == "1.0"
 
     def test__all_fields_populated(self):
         """Test with all possible fields populated"""
@@ -121,18 +110,14 @@ class test_Schema__Open_Router__Request_Headers(TestCase):
             x_include_provider = True                            ,
             order              = ["anthropic", "openai"]         ,
             require            = ["streaming"]                   ,
-            x_request_id       = "req-full-test"                 ,
-            x_max_cost         = 2.5                             ,
-        )
+            x_request_id       = "req-full-test"                 )
 
         headers_dict = headers.to_headers_dict()
 
         # Verify all headers present
-        expected_keys = [
-            "Authorization", "HTTP-Referer", "X-Title", "X-Provider",
-            "providers", "X-Include-Provider", "order", "require",
-            "X-Request-ID", "X-Max-Cost"
-        ]
+        expected_keys = ["Authorization", "HTTP-Referer", "X-Title", "X-Provider",
+                         "providers", "X-Include-Provider", "order", "require",
+                         "X-Request-ID"]
 
         assert sorted(headers_dict.keys()) == sorted(expected_keys)
 
@@ -146,4 +131,3 @@ class test_Schema__Open_Router__Request_Headers(TestCase):
         assert headers_dict["order"]               == "anthropic,openai"
         assert headers_dict["require"]             == "streaming"
         assert headers_dict["X-Request-ID"]        == "req-full-test"
-        assert headers_dict["X-Max-Cost"]          == "2.5"

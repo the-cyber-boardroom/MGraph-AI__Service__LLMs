@@ -1,6 +1,6 @@
-from typing                                             import Optional, List, Literal
+from typing                                             import List, Literal
 from osbot_utils.type_safe.Type_Safe                    import Type_Safe
-from osbot_utils.type_safe.primitives.core.Safe_Str import Safe_Str
+from osbot_utils.type_safe.primitives.core.Safe_Str     import Safe_Str
 
 
 class Schema__Open_Router__Provider_Preferences(Type_Safe):                 # Provider-specific preferences and settings"""
@@ -10,8 +10,8 @@ class Schema__Open_Router__Provider_Preferences(Type_Safe):                 # Pr
     ignore_providers           : List[Safe_Str          ] = None            # Providers to exclude
     order                      : List[Safe_Str          ] = None            # Provider preference order
 
-    def json(self):
-        data = dict(allow_fallbacks=self.allow_fallbacks,
+    def json(self):                                                         # todo: see if a) we still needs this, and b) if there isn't a better way to do it
+        data = dict(allow_fallbacks=self.allow_fallbacks,                   #       since this feels like a bug in Type_Safe
                     data_collection=self.data_collection)
         if self.order:
             data['order'] = self.order.json()

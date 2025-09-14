@@ -13,11 +13,11 @@ class test_Schema__Open_Router__Model(TestCase):
 
     def test__regression__not_all_models_serialise_ok(self):
         #skip__if_not__in_github_actions()
-        with print_duration(action_name='download data'):                                   # ~ 0.744 seconds
+        #with print_duration(action_name='download data'):                                   # ~ 0.744 seconds
             raw_data        = Service__Open_Router__Models().download__api__models()
             raw_models_data = raw_data.get('data')
             assert len(raw_models_data) > 300
-        with print_duration(action_name='convert to model (each one at the time)'):         # ~ 0.156 seconds
+        #with print_duration(action_name='convert to model (each one at the time)'):         # ~ 0.156 seconds
             for raw_model_data in raw_models_data:       #there are 300(ish) models
                 model_id   = raw_model_data.get('id'  , 'NA')
                 model_name = raw_model_data.get('name', 'NA')
@@ -29,10 +29,10 @@ class test_Schema__Open_Router__Model(TestCase):
                 else:
                     print(f'fails for match for: {model_id}')
                     #assert model.round_trip_json() == raw_model_data
-        with print_duration(action_name='convert to model (all at once)'):                  # ~ 0.092 seconds
+        #with print_duration(action_name='convert to model (all at once)'):                  # ~ 0.092 seconds
             models_response = Schema__Open_Router__Models__Response.from_json(raw_data)
 
-        with print_duration(action_name='create json'):                                     # ~ 0.016 seconds
+        #with print_duration(action_name='create json'):                                     # ~ 0.016 seconds
             assert models_response.json() == raw_data
 
             # try:

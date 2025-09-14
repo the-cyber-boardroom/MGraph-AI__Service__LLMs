@@ -20,7 +20,7 @@ class Service__LLM__Simple(Type_Safe):
 
     def execute_completion(self, user_prompt   : str                                             ,      # Execute LLM completion with provider routing
                                  system_prompt : Optional[str]                            = None ,
-                                 model_key     : str                                      = "gpt-oss-120b",
+                                 model_key     : str                                      = "gpt-oss-20b",
                                  provider_name : Optional[Schema__Open_Router__Providers] = None
                            ) -> Dict[str, Any]:
 
@@ -39,8 +39,7 @@ class Service__LLM__Simple(Type_Safe):
             system_prompt = system_prompt  ,
             temperature   = 0              ,
             max_tokens    = 20000          ,
-            provider      = provider_value ,
-            max_cost      = 0.5            )
+            provider      = provider_value )
 
         duration = time.perf_counter() - start_time
 
@@ -77,8 +76,7 @@ class Service__LLM__Simple(Type_Safe):
     #         system_prompt = system_prompt  ,
     #         temperature   = 0.7            ,
     #         max_tokens    = 500            ,
-    #         provider      = provider_value ,
-    #         max_cost      = 0.5            )
+    #         provider      = provider_value )
     #
     #     duration = time.perf_counter() - start_time
     #

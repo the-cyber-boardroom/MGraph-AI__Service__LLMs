@@ -11,7 +11,7 @@ ROUTES_PATHS__LLM_SIMPLE = [f'/{TAG__ROUTES_LLM_SIMPLE}/complete']
 class User_Prompt_Simple(Type_Safe):                                                                # Simple LLM completion
     user_prompt   : str                            = "Hello, what is your name and model"
     system_prompt : Optional[str]                  = "Reply in CamelCase"
-    model         : str                            = "gpt-oss-120b"
+    model         : str                            = "gpt-oss-20b"
     provider      : Schema__Open_Router__Providers = Schema__Open_Router__Providers.GROQ
 
 class Routes__LLM__Simple(Fast_API__Routes):

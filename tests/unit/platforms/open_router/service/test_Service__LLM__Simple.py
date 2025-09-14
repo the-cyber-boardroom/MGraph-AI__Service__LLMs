@@ -48,7 +48,7 @@ class test_Service__LLM__Simple(TestCase):
         assert "provider_used"    in result
         assert "response_text"    in result
 
-        assert result["model_used"]          == "openai/gpt-oss-120b"
+        assert result["model_used"]          == "openai/gpt-oss-20b"
         assert type(result["duration_seconds"]) is float
         assert result["duration_seconds"]      > 0
         assert len(result["response_text"])    > 0
@@ -57,7 +57,7 @@ class test_Service__LLM__Simple(TestCase):
         result = self.service.execute_completion(user_prompt   = "Say 'hello'"                         ,
                                                  provider_name = Schema__Open_Router__Providers.GROQ   )
 
-        assert result["model_used"]         == "openai/gpt-oss-120b"
+        assert result["model_used"]         == "openai/gpt-oss-20b"
         assert "provider_used"              in result
         assert len(result["response_text"]) > 0
         assert result["provider_used"]      == "Groq"
@@ -67,7 +67,7 @@ class test_Service__LLM__Simple(TestCase):
                                                  system_prompt = "Count simply"                             ,
                                                  provider_name = Schema__Open_Router__Providers.CEREBRAS    )
 
-        assert result["model_used"] == "openai/gpt-oss-120b"
+        assert result["model_used"] == "openai/gpt-oss-20b"
         assert len(result["response_text"]) > 0
 
     def test_execute_completion_different_model_gpt5_nano(self):                                             # Test with gpt-5-nano model

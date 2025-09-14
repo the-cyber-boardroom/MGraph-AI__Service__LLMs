@@ -92,20 +92,6 @@ class test_Routes__Open_Router(TestCase):
         assert result['status'] == 'success'
         assert 'provider' in result
 
-    def test_complete__with_max_cost(self):
-        if get_env(ENV_NAME_OPEN_ROUTER__API_KEY) is None:
-            pytest.skip('This test requires OPEN_ROUTER__API_KEY to be set')
-
-        result = self.routes.complete(
-            prompt    = "Say 'hi'",
-            model     = Schema__Open_Router__Supported_Models.Mistral_AI__Mistral_Small__Free,
-            max_cost  = 0.001,
-            max_tokens = 5
-        )
-
-        assert result['status'] == 'success'
-        # Should work with free model regardless of cost limit
-
     def test_complete__error_handling(self):
         if get_env(ENV_NAME_OPEN_ROUTER__API_KEY) is None:
             # Test error when no API key
@@ -310,11 +296,10 @@ class test_Routes__Open_Router(TestCase):
         for provider in providers:
             assert 'id'           in provider
             assert 'name'         in provider
-            assert 'header_value' in provider
 
         # Check specific providers
         provider_ids = [p['id'] for p in providers]
-        assert 'auto'      in provider_ids
+        assert None        in provider_ids
         assert 'cerebras'  in provider_ids
         assert 'groq'      in provider_ids
         assert 'together'  in provider_ids
@@ -344,9 +329,7 @@ class test_Routes__Open_Router(TestCase):
             system_prompt = "Be brief",
             temperature   = 0.5,
             max_tokens    = 5,
-            provider      = Schema__Open_Router__Providers.AUTO,
-            max_cost      = 0.01
-        )
+            provider      = Schema__Open_Router__Providers.AUTO)
 
         assert result['status'] == 'success'
         assert len(result['response']) > 0

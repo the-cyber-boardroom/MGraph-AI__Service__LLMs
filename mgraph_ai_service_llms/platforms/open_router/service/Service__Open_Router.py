@@ -3,7 +3,12 @@ import json
 import requests
 from typing                                                                                                 import Dict, Any, Optional, Iterator
 from osbot_utils.decorators.methods.cache_on_self                                                           import cache_on_self
+from osbot_utils.helpers.duration.decorators.capture_duration                                               import capture_duration
 from osbot_utils.type_safe.Type_Safe                                                                        import Type_Safe
+from osbot_utils.type_safe.primitives.domains.common.safe_str.Safe_Str__Text                                import Safe_Str__Text
+from osbot_utils.type_safe.primitives.domains.llm.safe_float.Safe_Float__LLM__Temperature                   import Safe_Float__LLM__Temperature
+from osbot_utils.type_safe.primitives.domains.llm.safe_str.Safe_Str__LLM__Prompt                            import Safe_Str__LLM__Prompt
+from osbot_utils.type_safe.primitives.domains.llm.safe_uint.Safe_UInt__LLM__Max_Tokens                      import Safe_UInt__LLM__Max_Tokens
 from osbot_utils.utils.Env                                                                                  import get_env
 from mgraph_ai_service_llms.platforms.open_router.cache.Open_Router__Chat__Cache                            import Open_Router__Chat__Cache
 from mgraph_ai_service_llms.platforms.open_router.schemas.Safe_Str__Open_Router__Model_ID                   import Safe_Str__Open_Router__Model_ID
@@ -42,13 +47,13 @@ class Service__Open_Router(Type_Safe):                                          
     def chat_completion_url(self) -> str:                                                                # Get chat completion endpoint URL
         return f"{self.api_base_url}/v1/chat/completions"
 
-    def create_headers(self, max_cost      : Optional[float] = None ,                                    # Create request headers with optional parameters
-                             provider       : Optional[str  ] = None ,
-                             include_provider : bool          = True
-                       ) -> Schema__Open_Router__Request_Headers:
+    def create_headers(self, max_cost         : Optional[float] = None ,                                    # Create request headers with optional parameters
+                             provider         : Optional[str  ] = None ,
+                             include_provider : bool            = True
+                        ) -> Schema__Open_Router__Request_Headers:
         headers = Schema__Open_Router__Request_Headers.create_default(api_key = self.api_key())
 
-        if max_cost is not None:
+        if max_cost is not None:                                 # todo: see if we still use this
             headers.with_max_cost(max_cost)
 
         if provider:
@@ -58,13 +63,12 @@ class Service__Open_Router(Type_Safe):                                          
 
         return headers
 
-    def chat_completion(self, prompt       : str                                        ,                # Execute standard chat completion request
-                              model         : str                                        ,
-                              system_prompt : Optional[str  ]                    = None ,
-                              temperature   : float                               = 0.7  ,
-                              max_tokens    : int                                = 5000 ,
-                              provider      : Optional[str  ]                    = None ,
-                              max_cost      : Optional[float]                    = None
+    def chat_completion(self, prompt        : Safe_Str__LLM__Prompt              ,                # Execute standard chat completion request
+                              model         : Safe_Str__Open_Router__Model_ID    ,
+                              system_prompt : Safe_Str__LLM__Prompt              = None ,
+                              temperature   : Safe_Float__LLM__Temperature       = 0.0 ,
+                              max_tokens    : Safe_UInt__LLM__Max_Tokens         = 5000 ,
+                              provider      : Safe_Str__Text                     = None
                         ) -> Dict[str, Any]:
         kwargs = dict(model         = Safe_Str__Open_Router__Model_ID(model)      ,
                       prompt        = Safe_Str__Message_Content(prompt)           ,
@@ -74,39 +78,32 @@ class Service__Open_Router(Type_Safe):                                          
         if provider:
             kwargs['provider'] = Schema__Open_Router__Provider_Preferences(order=[provider], allow_fallbacks=False)
 
-        request = Schema__Open_Router__Chat_Request.create_simple(**kwargs)
+        chat_request = Schema__Open_Router__Chat_Request.create_simple(**kwargs)
+        return self.chat_completion__execute_request(chat_request = chat_request)
 
-        request_data = request.json()
-
-        cache_id = self.chat_cache().generate_cache_id(request_data)
+    def chat_completion__execute_request(self, chat_request: Schema__Open_Router__Chat_Request):
+        request_data    = chat_request.json()
+        cache_id        = self.chat_cache().generate_cache_id(request_data)
         cached_response = self.chat_cache().get_cached_response(request_data)
         if cached_response:
             cached_response['from_cache'] = True
             cached_response['cache_id'  ] = str(cache_id)  # Add cache_id here
             return cached_response
 
+        headers = self.create_headers()#max_cost        = max_cost ,
+                                       #provider        = provider ,
+                                       #include_provider = True    )
 
-        headers = self.create_headers(max_cost        = max_cost ,
-                                      provider        = provider ,
-                                      include_provider = True    )
-
-        response = requests.post(url     = self.chat_completion_url()     ,
-                                 headers = headers.to_headers_dict()       ,
-                                 json    = request.to_api_dict()           )
-        response.raise_for_status()                                                                      # Raise exception for HTTP errors
+        with capture_duration() as duration:
+            response = requests.post(url     = self.chat_completion_url()     ,
+                                     headers = headers.to_headers_dict()      ,
+                                     json    = chat_request.to_api_dict()     )
+        if response.status_code != 200:
+            raise Exception(response.text)                      # do this so that we get the error message from Open Router
+            #response.raise_for_status()                                                                      # Raise exception for HTTP errors
         response_data = response.json()
 
-        if "usage" in response_data:                                                                     # Calculate costs if usage data available
-            try:
-                cost_breakdown = self.cost_service.calculate_cost(
-                    model_id = Safe_Str__Open_Router__Model_ID(model),
-                    usage    = response_data["usage"]                 ,
-                    provider = response_data.get("provider")
-                )
-                response_data["cost_breakdown"] = cost_breakdown.to_display_dict()
-            except Exception:
-                pass                                                                                      # Ignore cost calculation errors
-
+        response_data['duration'] = duration.seconds                        # todo: this should be part of a Type_Safe object
         self.chat_cache().cache_chat_response(request_data, response_data)
         response_data['cache_id'] = str(cache_id)
 
@@ -118,9 +115,8 @@ class Service__Open_Router(Type_Safe):                                          
                                      system_prompt : Optional[str  ]     = None ,
                                      temperature   : float                = 0.7  ,
                                      max_tokens    : int                  = 1000 ,
-                                     provider      : Optional[str  ]     = None ,
-                                     max_cost      : Optional[float]     = None
-                               ) -> Iterator[Dict[str, Any]]:
+                                     provider      : Optional[str  ]     = None
+                                ) -> Iterator[Dict[str, Any]]:
 
         messages = []
         if system_prompt:
@@ -137,9 +133,9 @@ class Service__Open_Router(Type_Safe):                                          
             stream      = True                                                                           # Enable streaming
         )
 
-        headers = self.create_headers(max_cost        = max_cost ,
-                                      provider        = provider ,
-                                      include_provider = True    )
+        headers = self.create_headers()#max_cost        = max_cost ,
+                                       #provider        = provider ,
+                                       #include_provider = True    )
 
         response = requests.post(url     = self.chat_completion_url()               ,                    # Use requests for streaming
                                 headers = headers.to_headers_dict()                 ,

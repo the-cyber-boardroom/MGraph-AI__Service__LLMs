@@ -4,7 +4,7 @@ from osbot_utils.type_safe.Type_Safe                                            
 from mgraph_ai_service_llms.platforms.open_router.service.Service__Open_Router                       import Service__Open_Router
 from mgraph_ai_service_llms.service.llms.providers.open_router.Schema__Open_Router__Providers        import Schema__Open_Router__Providers
 
-DEFAULT_MODEL    = "openai/gpt-oss-120b"
+DEFAULT_MODEL    = "openai/gpt-oss-20b"
 DEFAULT_PROVIDER = Schema__Open_Router__Providers.GROQ
 DEFAULT_PROMPT_TEXT = "The company reported Q3 revenue of $5.2 million, a 30% increase year-over-year. CEO Jane Smith announced plans to hire 50 new employees by December."
 
@@ -57,8 +57,7 @@ class Service__Text_Analysis(Type_Safe):
             system_prompt = system_prompt              ,
             temperature   = self.temperature           ,
             max_tokens    = self.max_tokens            ,
-            provider      = self.provider.value        ,
-            max_cost      = 0.5                        )
+            provider      = self.provider.value        )
 
         response_text = response.get("choices", [{}])[0].get("message", {}).get("content", "")
         cache_id      = response.get("cache_id", None)

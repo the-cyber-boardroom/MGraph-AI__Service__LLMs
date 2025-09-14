@@ -7,7 +7,7 @@ from mgraph_ai_service_llms.platforms.open_router.schemas.tools.Schema__LLM__Too
 from mgraph_ai_service_llms.service.llms.providers.open_router.Schema__Open_Router__Providers               import Schema__Open_Router__Providers
 from mgraph_ai_service_llms.service.llms.providers.open_router.Schema__Open_Router__Supported_Models        import Schema__Open_Router__Supported_Models
 
-DEFAULT__LLM__TOOL__MODEL = Schema__Open_Router__Supported_Models.Open_AI__GPT_OSS_120b
+DEFAULT__LLM__TOOL__MODEL = Schema__Open_Router__Supported_Models.Open_AI__GPT_OSS_20b
 
 class Schema__LLM__Tool__Request(Type_Safe):                                                       # Request for LLM completion with tool/function support
     user_prompt      : Safe_Str__LLM__Prompt                                                       # User prompt that may trigger tool use

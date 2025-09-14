@@ -46,10 +46,6 @@ class test_Service__Open_Router(TestCase):
         assert type(headers)           is Schema__Open_Router__Request_Headers
         assert headers.x_include_provider is True
 
-        # Test with max_cost
-        headers = self.service.create_headers(max_cost = 0.01)
-        assert headers.x_max_cost == 0.01
-
         # Test with provider
         headers = self.service.create_headers(provider = "openai")
         assert str(headers.x_provider) == "openai"
@@ -257,19 +253,6 @@ class test_Service__Open_Router(TestCase):
         # Provider info might be in response if x_include_provider was true
         if 'provider' in response:
             assert response['provider'] == 'OpenAI'
-
-    def test_chat_completion__with_max_cost(self):
-
-        # Test with max cost limit
-        response = self.service.chat_completion(
-            prompt    = "Say 'test'",
-            model     = "mistralai/mistral-small-3.2-24b-instruct:free",
-            max_cost  = 0.001,  # Very low cost limit
-            max_tokens = 5
-        )
-
-        # Should still work with free model
-        assert 'choices' in response
 
     @pytest.mark.skip(reason="needs cache support")
     def test_chat_completion_stream__with_system_prompt(self):

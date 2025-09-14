@@ -1,12 +1,11 @@
 from typing                                                                                                 import Optional, List, Dict, Any, Literal
 from osbot_utils.type_safe.Type_Safe                                                                        import Type_Safe
-from osbot_utils.type_safe.primitives.core.Safe_Float                                                 import Safe_Float
-from osbot_utils.type_safe.primitives.core.Safe_Str                                                     import Safe_Str
-from osbot_utils.type_safe.primitives.core.Safe_Int                                                     import Safe_Int
-from osbot_utils.type_safe.primitives.domains.llm.safe_float.Safe_Float__LLM__Temperature import Safe_Float__LLM__Temperature
-from osbot_utils.type_safe.primitives.domains.llm.safe_float.Safe_Float__LLM__Top_P import Safe_Float__LLM__Top_P
-from osbot_utils.type_safe.primitives.domains.llm.safe_uint.Safe_UInt__LLM__Max_Tokens import Safe_UInt__LLM__Max_Tokens
-
+from osbot_utils.type_safe.primitives.core.Safe_Float                                                       import Safe_Float
+from osbot_utils.type_safe.primitives.core.Safe_Str                                                         import Safe_Str
+from osbot_utils.type_safe.primitives.core.Safe_Int                                                         import Safe_Int
+from osbot_utils.type_safe.primitives.domains.llm.safe_float.Safe_Float__LLM__Temperature                   import Safe_Float__LLM__Temperature
+from osbot_utils.type_safe.primitives.domains.llm.safe_float.Safe_Float__LLM__Top_P                         import Safe_Float__LLM__Top_P
+from osbot_utils.type_safe.primitives.domains.llm.safe_uint.Safe_UInt__LLM__Max_Tokens                      import Safe_UInt__LLM__Max_Tokens
 from mgraph_ai_service_llms.platforms.open_router.schemas.Safe_Str__Open_Router__Model_ID                   import Safe_Str__Open_Router__Model_ID
 from mgraph_ai_service_llms.platforms.open_router.schemas.Safe_Str__Open_Router__Model_Name                 import Safe_Str__Open_Router__Model_Name
 from mgraph_ai_service_llms.platforms.open_router.schemas.request.Safe_Str__Message_Content                 import Safe_Str__Message_Content
@@ -23,7 +22,6 @@ including streaming, tools, response formats, and provider routing.
 
 # todo: move the methods below to an Open_Router__Chat_Request class
 class Schema__Open_Router__Chat_Request(Type_Safe):
-
     # Required fields
     model         : Safe_Str__Open_Router__Model_ID     # Model identifier
     messages      : List[Schema__Open_Router__Message]  # Conversation messages
@@ -44,13 +42,13 @@ class Schema__Open_Router__Chat_Request(Type_Safe):
 
     # Tools/Functions
     tools              : Optional[List[Schema__Open_Router__Tool]] = None
-    tool_choice        : Dict               #Optional[Safe_Str] = None  # "auto", "none", or specific tool
+    tool_choice        : Safe_Str                                  = None  # "auto", "none", or "required"
 
     # Streaming
     stream             : bool = False                # Enable SSE streaming
 
     # Provider routing
-    provider           : Optional[Schema__Open_Router__Provider_Preferences] = None
+    provider           : Schema__Open_Router__Provider_Preferences    = None
 
     # Advanced features
     transforms         : List[Literal["middle-out"]                 ] = None  # ["middle-out"]

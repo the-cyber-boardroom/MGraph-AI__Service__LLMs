@@ -30,7 +30,7 @@ class test_Schema__LLM__Tool__Request(TestCase):
             assert _.user_prompt     == ''                                                           # Safe_Str__Text empty
             assert _.system_prompt   is None                                                         # Optional field
             assert type(_.tool_definition) is Schema__LLM__Tool__Definition                          # Auto-initialized
-            assert _.model           == Schema__Open_Router__Supported_Models.Open_AI__GPT_OSS_120b  # Explicit default
+            assert _.model           == Schema__Open_Router__Supported_Models.Open_AI__GPT_OSS_20b   # Explicit default
             assert _.provider        is None                                                         # Optional provider
             assert _.temperature     == 0.0                                                          # Lower temp for tools
             assert _.max_tokens      == 5000                                                         # Enough for tool calls
@@ -41,7 +41,7 @@ class test_Schema__LLM__Tool__Request(TestCase):
             _.user_prompt     = "Calculate 40 + 2"
             _.system_prompt   = "You are a math assistant"
             _.tool_definition = self.test_tool
-            _.model           = Schema__Open_Router__Supported_Models.Open_AI__GPT_OSS_120b
+            _.model           = Schema__Open_Router__Supported_Models.Open_AI__GPT_OSS_20b
             _.provider        = Schema__Open_Router__Providers.GROQ
             _.temperature     = 0.1
             _.max_tokens      = 500
@@ -54,7 +54,7 @@ class test_Schema__LLM__Tool__Request(TestCase):
                                        force_tool_use = False                                     ))
 
             # Verify enums
-            assert _.model    == Schema__Open_Router__Supported_Models.Open_AI__GPT_OSS_120b
+            assert _.model    == Schema__Open_Router__Supported_Models.Open_AI__GPT_OSS_20b
             assert _.provider == Schema__Open_Router__Providers.GROQ
 
 

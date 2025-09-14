@@ -43,7 +43,7 @@ class test_Schema__LLM__Tool__Response(TestCase):
         with Schema__LLM__Tool__Response() as _:
             _.response_content = "I need to use the weather tool to answer your question"
             _.requires_action = False                                                               # No tools needed
-            _.model_used = "openai/gpt-oss-120b"
+            _.model_used = "openai/gpt-oss-20b"
 
             assert _.response_content == "I need to use the weather tool to answer your question"
             assert _.requires_action is False
