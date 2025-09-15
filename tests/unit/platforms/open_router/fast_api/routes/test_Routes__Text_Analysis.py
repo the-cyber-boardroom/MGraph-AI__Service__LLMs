@@ -172,9 +172,9 @@ class test_Routes__Text_Analysis(TestCase):
 
     def test_narrative_text(self):                                                                        # Test with narrative content
         narrative_text = """
-        After three months of development, the team successfully launched the new feature.
-        Initial user feedback has been overwhelmingly positive, with engagement increasing significantly.
-        However, some performance issues were reported during peak hours.
+        The project is behind schedule by two weeks due to unexpected technical challenges.
+        Budget has increased by 15% but stakeholder approval is pending.
+        Three team members have requested additional resources.
         """
 
         response = self.client.post(self.base_path + "/text-analysis/hypotheses",
