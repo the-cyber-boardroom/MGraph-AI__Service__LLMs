@@ -1,8 +1,20 @@
 from unittest                                                                                            import TestCase
 from osbot_fast_api.api.transformers.Type_Safe__To__Json                                                 import Type_Safe__To__Json
 from osbot_utils.testing.__                                                                              import __, __SKIP__
+from osbot_utils.type_safe.primitives.core.Safe_Float import Safe_Float
+from osbot_utils.type_safe.primitives.core.Safe_Str import Safe_Str
+from osbot_utils.type_safe.primitives.core.Safe_UInt import Safe_UInt
+from osbot_utils.type_safe.primitives.domains.common.safe_str.Safe_Str__Text import Safe_Str__Text
+from osbot_utils.type_safe.primitives.domains.common.safe_str.Safe_Str__Text__Dangerous import Safe_Str__Text__Dangerous
+from osbot_utils.type_safe.primitives.domains.identifiers.safe_str.Safe_Str__Display_Name import Safe_Str__Display_Name
+from osbot_utils.type_safe.primitives.domains.identifiers.safe_str.Safe_Str__Topic import Safe_Str__Topic
+from osbot_utils.type_safe.primitives.domains.numerical.safe_float.Safe_Float__Money import Safe_Float__Money
+from osbot_utils.type_safe.primitives.domains.numerical.safe_float.Safe_Float__Percentage_Exact import Safe_Float__Percentage_Exact
+from osbot_utils.utils.Env import get_env, load_dotenv
+
 from mgraph_ai_service_llms.platforms.open_router.fast_api.Open_Router__Fast_API                         import FAST_API__BASE_PATH__OPEN_ROUTER
 from mgraph_ai_service_llms.platforms.open_router.schemas.json_output.Schema__Json_Extract__Response     import Schema__Json_Extract__Response
+from mgraph_ai_service_llms.platforms.open_router.schemas.request.Safe_Str__Message_Content import Safe_Str__Message_Content
 from mgraph_ai_service_llms.service.llms.prompts.schemas.Schema__Facts                                   import Schema__Facts
 from tests.unit.Service__Fast_API__Test_Objs                                                             import setup__service_fast_api_test_objs, TEST_API_KEY__NAME, TEST_API_KEY__VALUE
 
